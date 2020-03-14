@@ -1,0 +1,10 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+[[mods]]
+modId="jeitweaker"
+version="${file.jarVersion}"
+displayName="JEI Tweaker"
+authors="Jaredlll08"
+description='''
+Adds JEI integration for CraftTweaker
+'''

@@ -1,0 +1,100 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '1.0.0'
+group = 'com.blamejared.jeitweaker'
+archivesBaseName = 'JEITweaker'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: '20200225-1.15.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            mods {
+                jeitweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            mods {
+                jeitweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            args '--mod', 'jeitweaker', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                jeitweaker {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    maven {
+        url "https://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url "https://maven.blamejared.com"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.19'
+    compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2");
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.2:6.0.0.9");
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "JEITweaker",
+            "Specification-Vendor": "BlameJared",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"BlameJared",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
