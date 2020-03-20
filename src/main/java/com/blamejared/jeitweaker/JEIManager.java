@@ -16,6 +16,8 @@ public class JEIManager {
     public static final List<IItemStack> HIDDEN_ITEMS = new ArrayList<>();
     public static final List<String> HIDDEN_RECIPE_CATEGORIES = new ArrayList<>();
     
+    public static final Map<IItemStack, String[]> ITEM_DESCRIPTIONS = new HashMap<>();
+    
     
     @ZenCodeType.Method
     public static void hideItem(IItemStack stack) {
@@ -36,6 +38,27 @@ public class JEIManager {
             }
         });
     }
+    
+    @ZenCodeType.Method
+    public static void addInfo(IItemStack stack, String[] string) {
+        CraftTweakerAPI.apply(new IRuntimeAction() {
+            @Override
+            public void apply() {
+                ITEM_DESCRIPTIONS.put(stack, string);
+            }
+            
+            @Override
+            public String describe() {
+                return "Adding JEI Info for: " + stack.getCommandString();
+            }
+            
+            @Override
+            public boolean shouldApplyOn(LogicalSide side) {
+                return side.isClient();
+            }
+        });
+    }
+    
     
     @ZenCodeType.Method
     public static void hideCategory(String category) {

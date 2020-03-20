@@ -2,8 +2,8 @@ package com.blamejared.jeitweaker;
 
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import mezz.jei.api.*;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.ingredients.*;
+import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.*;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +13,14 @@ import java.util.stream.Collectors;
 
 @JeiPlugin
 public class JEIAddonPlugin implements IModPlugin {
+    
+    @Override
+    public void registerRecipes(IRecipeRegistration registration) {
+        IIngredientManager ingredientManager = registration.getIngredientManager();
+        IIngredientType<ItemStack> type = ingredientManager.getIngredientType(ItemStack.class);
+        JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), type, value));
+        JEIManager.ITEM_DESCRIPTIONS.clear();
+    }
     
     @Override
     public void onRuntimeAvailable(IJeiRuntime iJeiRuntime) {
