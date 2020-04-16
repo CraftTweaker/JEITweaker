@@ -2,14 +2,13 @@ package com.blamejared.jeitweaker;
 
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import mezz.jei.api.*;
-import mezz.jei.api.ingredients.*;
-import mezz.jei.api.registration.*;
+import mezz.jei.api.ingredients.IIngredientType;
+import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.*;
-import net.minecraft.item.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.stream.Collectors;
-
 
 @JeiPlugin
 public class JEIAddonPlugin implements IModPlugin {
