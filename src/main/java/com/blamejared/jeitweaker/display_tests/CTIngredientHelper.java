@@ -1,7 +1,6 @@
 package com.blamejared.jeitweaker.display_tests;
 
 import com.blamejared.crafttweaker.api.item.*;
-import com.blamejared.crafttweaker.impl.item.*;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.*;
 
@@ -9,46 +8,46 @@ import javax.annotation.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CTIngredientHelper implements IIngredientHelper<IItemStack> {
+public class CTIngredientHelper implements IIngredientHelper<IIngredient> {
     
     @Nullable
     @Override
-    public IItemStack getMatch(Iterable<IItemStack> ingredients, IItemStack ingredientToMatch) {
+    public IIngredient getMatch(Iterable<IIngredient> ingredients, IIngredient ingredientToMatch) {
         return null;
     }
     
     @Override
-    public String getDisplayName(IItemStack ingredient) {
+    public String getDisplayName(IIngredient ingredient) {
         return ingredient.getCommandString();
     }
     
     @Override
-    public String getUniqueId(IItemStack ingredient) {
+    public String getUniqueId(IIngredient ingredient) {
         return ingredient.getCommandString();
     }
     
     @Override
-    public String getWildcardId(IItemStack ingredient) {
+    public String getWildcardId(IIngredient ingredient) {
         return ingredient.getCommandString();
     }
     
     @Override
-    public String getModId(IItemStack ingredient) {
-        return ingredient.getInternal().getItem().delegate.name().getNamespace();
+    public String getModId(IIngredient ingredient) {
+        return "crafttweaker";
     }
     
     @Override
-    public String getResourceId(IItemStack ingredient) {
-        return ingredient.getInternal().getItem().delegate.name().toString();
+    public String getResourceId(IIngredient ingredient) {
+        return "crafttweaker";
     }
     
     @Override
-    public IItemStack copyIngredient(IItemStack ingredient) {
-        return new MCItemStack(ingredient.getInternal().copy());
+    public IIngredient copyIngredient(IIngredient ingredient) {
+        return ingredient;
     }
     
     @Override
-    public String getErrorInfo(@Nullable IItemStack ingredient) {
+    public String getErrorInfo(@Nullable IIngredient ingredient) {
         return "NO ERROR";
     }
 }

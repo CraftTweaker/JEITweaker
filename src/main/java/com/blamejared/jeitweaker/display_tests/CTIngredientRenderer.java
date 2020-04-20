@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.display_tests;
 
 import com.blamejared.crafttweaker.api.item.*;
+import com.blamejared.crafttweaker.impl.item.transformed.*;
 import com.mojang.blaze3d.platform.*;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.*;
@@ -15,19 +16,23 @@ import java.util.*;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class CTIngredientRenderer implements IIngredientRenderer<IItemStack> {
+public class CTIngredientRenderer implements IIngredientRenderer<IIngredient> {
     
     public static CTIngredientRenderer INSTANCE = new CTIngredientRenderer();
     
-    private CTIngredientRenderer(){}
+    public CTIngredientRenderer() {
+    }
     
     @Override
-    public void render(int xPosition, int yPosition, @Nullable IItemStack ingredient) {
+    public void render(int xPosition, int yPosition, @Nullable IIngredient ingredient) {
+        
+        
         if(ingredient == null) {
             return;
         }
-    
-        final ItemStack stack = ingredient.getInternal();
+        
+        final IItemStack[] items = ingredient.getItems();
+        final ItemStack stack = items[(int) (System.currentTimeMillis() % 1000 % items.length)].getInternal();
         
         //Code stolen from ItemStackRenderer
         GlStateManager.enableDepthTest();
@@ -42,7 +47,18 @@ public class CTIngredientRenderer implements IIngredientRenderer<IItemStack> {
     }
     
     @Override
-    public List<String> getTooltip(IItemStack ingredient, ITooltipFlag tooltipFlag) {
-        return Collections.singletonList("Matching items: " + ingredient.getItems().length);
+    public List<String> getTooltip(IIngredient ingredient, ITooltipFlag tooltipFlag) {
+        final ArrayList<String> out = new ArrayList<>();
+        out.add("Matching items:"  + ingredient.getItems().length);
+        if(ingredient instanceof MCIngredientTransformed) {
+            final List<String> transformerExplanation = ((MCIngredientTransformed<?>) ingredient).getTransformer()
+                    .explain(ingredient);
+            if(!transformerExplanation.isEmpty()) {
+                out.add("");
+                out.addAll(transformerExplanation);
+            }
+        }
+        
+        return out;
     }
 }

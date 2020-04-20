@@ -62,12 +62,15 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
+    flatDir {
+        dirs 'sources'
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.2.4'
     compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18");
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.1.174");
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.2");
 }
 
 jar {

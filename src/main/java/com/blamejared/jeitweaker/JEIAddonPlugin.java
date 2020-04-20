@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.impl.recipes.*;
 import com.blamejared.jeitweaker.display_tests.*;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientType;
-import mezz.jei.api.ingredients.subtypes.*;
+import mezz.jei.api.recipe.*;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.*;
 import net.minecraft.item.ItemStack;
@@ -20,11 +20,33 @@ import java.util.stream.Collectors;
 @MethodsReturnNonnullByDefault
 public class JEIAddonPlugin implements IModPlugin {
     
-    public static final IIngredientType<IItemStack> I_INGREDIENT_TYPE = () -> IItemStack.class;
+    public static final IIngredientType<IIngredient> I_INGREDIENT_TYPE = () -> IIngredient.class;
+    public static IRecipeManager recipeManager = null;
     
     @Override
     public void registerIngredients(IModIngredientRegistration registration) {
         registration.register(I_INGREDIENT_TYPE, new ArrayList<>(), new CTIngredientHelper(), CTIngredientRenderer.INSTANCE);
+    }
+    
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    }
+    
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+    }
+    
+    @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+    }
+    
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+    }
+    
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+    
     }
     
     @Override
@@ -46,8 +68,8 @@ public class JEIAddonPlugin implements IModPlugin {
         if(!collect.isEmpty()) {
             ingredientManager.removeIngredientsAtRuntime(type, collect);
         }
-        
-        JEIManager.HIDDEN_RECIPE_CATEGORIES.stream().map(ResourceLocation::new).forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
+        recipeManager = iJeiRuntime.getRecipeManager();
+        JEIManager.HIDDEN_RECIPE_CATEGORIES.stream().map(ResourceLocation::new).forEach(recipeManager::hideRecipeCategory);
         JEIManager.HIDDEN_ITEMS.clear();
         JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
     }
@@ -60,5 +82,10 @@ public class JEIAddonPlugin implements IModPlugin {
     @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
         registration.getCraftingCategory().addCategoryExtension(CTRecipeShaped.class, CTCraftingRecipeExtension::new);
+    }
+    
+    @Override
+    public void registerAdvanced(IAdvancedRegistration registration) {
+        registration.addRecipeManagerPlugin(new CTRecipeManagerPlugin());
     }
 }

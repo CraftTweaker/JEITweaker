@@ -42,14 +42,12 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     @Override
     public void setIngredients(IIngredients ingredients) {
-        final List<List<IItemStack>> inputs = new ArrayList<>();
+        final List<IIngredient> inputs = new ArrayList<>();
         
         for(IIngredient[] row : this.ingredients) {
-            for(IIngredient ingredient : row) {
-                inputs.add(Arrays.asList(ingredient.getItems()));
-            }
+            Collections.addAll(inputs, row);
         }
-        ingredients.setInputLists(JEIAddonPlugin.I_INGREDIENT_TYPE, inputs);
+        ingredients.setInputs(JEIAddonPlugin.I_INGREDIENT_TYPE, inputs);
         ingredients.setOutput(JEIAddonPlugin.I_INGREDIENT_TYPE, new MCItemStack(recipe.getRecipeOutput()));
         
         
@@ -87,20 +85,19 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
-        final IGuiIngredientGroup<IItemStack> ingredientsGroup = recipeLayout.getIngredientsGroup(JEIAddonPlugin.I_INGREDIENT_TYPE);
+        final IGuiIngredientGroup<IIngredient> ingredientsGroup = recipeLayout.getIngredientsGroup(JEIAddonPlugin.I_INGREDIENT_TYPE);
         
-        ingredientsGroup.init(0, false, CTIngredientRenderer.INSTANCE, 94, 18, GuiIngredientProperties
+        ingredientsGroup.init(0, false, new CTIngredientRenderer(), 94, 18, GuiIngredientProperties
                 .getWidth(1), GuiIngredientProperties.getHeight(1), 1, 1);
         ingredientsGroup.set(0, new MCItemStack(recipe.getRecipeOutput()));
         
         
         for(int i = 1; i < 10; i++) {
-            ingredientsGroup.init(i, true, CTIngredientRenderer.INSTANCE, (i - 1) % 3 * 18, (i - 1) / 3 * 18, GuiIngredientProperties
+            ingredientsGroup.init(i, true, new CTIngredientRenderer() , (i - 1) % 3 * 18, (i - 1) / 3 * 18, GuiIngredientProperties
                     .getWidth(1), GuiIngredientProperties.getHeight(1), 1, 1);
             final IIngredient iIngredient = getIIngredient(i);
             if(iIngredient != null) {
-                final IItemStack[] stacks = iIngredient.getItems();
-                ingredientsGroup.set(i, Arrays.asList(stacks));
+                ingredientsGroup.set(i, iIngredient);
             }
         }
         
