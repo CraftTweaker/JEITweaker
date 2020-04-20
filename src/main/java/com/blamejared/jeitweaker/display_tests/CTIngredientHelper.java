@@ -8,46 +8,46 @@ import javax.annotation.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CTIngredientHelper implements IIngredientHelper<IIngredient> {
+public class CTIngredientHelper implements IIngredientHelper<CTIngredientInfo> {
     
     @Nullable
     @Override
-    public IIngredient getMatch(Iterable<IIngredient> ingredients, IIngredient ingredientToMatch) {
+    public CTIngredientInfo getMatch(Iterable<CTIngredientInfo> ingredients, CTIngredientInfo ingredientToMatch) {
         return null;
     }
     
     @Override
-    public String getDisplayName(IIngredient ingredient) {
-        return ingredient.getCommandString();
+    public String getDisplayName(CTIngredientInfo ingredient) {
+        return ingredient.getOriginal().getCommandString();
     }
     
     @Override
-    public String getUniqueId(IIngredient ingredient) {
-        return ingredient.getCommandString();
+    public String getUniqueId(CTIngredientInfo ingredient) {
+        return ingredient.getOriginal().getCommandString();
     }
     
     @Override
-    public String getWildcardId(IIngredient ingredient) {
-        return ingredient.getCommandString();
+    public String getWildcardId(CTIngredientInfo ingredient) {
+        return ingredient.getOriginal().getCommandString();
     }
     
     @Override
-    public String getModId(IIngredient ingredient) {
+    public String getModId(CTIngredientInfo ingredient) {
         return "crafttweaker";
     }
     
     @Override
-    public String getResourceId(IIngredient ingredient) {
+    public String getResourceId(CTIngredientInfo ingredient) {
         return "crafttweaker";
     }
     
     @Override
-    public IIngredient copyIngredient(IIngredient ingredient) {
+    public CTIngredientInfo copyIngredient(CTIngredientInfo ingredient) {
         return ingredient;
     }
     
     @Override
-    public String getErrorInfo(@Nullable IIngredient ingredient) {
+    public String getErrorInfo(@Nullable CTIngredientInfo ingredient) {
         return "NO ERROR";
     }
 }

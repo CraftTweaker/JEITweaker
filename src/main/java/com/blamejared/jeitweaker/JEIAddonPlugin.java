@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @MethodsReturnNonnullByDefault
 public class JEIAddonPlugin implements IModPlugin {
     
-    public static final IIngredientType<IIngredient> I_INGREDIENT_TYPE = () -> IIngredient.class;
+    public static final IIngredientType<CTIngredientInfo> I_INGREDIENT_TYPE = () -> CTIngredientInfo.class;
     public static IRecipeManager recipeManager = null;
     
     @Override

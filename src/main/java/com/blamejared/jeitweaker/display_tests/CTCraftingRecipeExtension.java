@@ -28,6 +28,7 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     public CTCraftingRecipeExtension(CTRecipeShaped recipe) {
         this.recipe = recipe;
+        CTRecipeManagerPlugin.ALL_SHAPED.add(recipe);
         IIngredient[][] toSet = null;
         try {
             final Field ingredients = CTRecipeShaped.class.getDeclaredField("ingredients");
@@ -42,13 +43,20 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     @Override
     public void setIngredients(IIngredients ingredients) {
-        final List<IIngredient> inputs = new ArrayList<>();
+        final List<List<CTIngredientInfo>> inputs = new ArrayList<>();
         
         for(IIngredient[] row : this.ingredients) {
-            Collections.addAll(inputs, row);
+            for(IIngredient ingredient : row) {
+                final List<CTIngredientInfo> infos = new ArrayList<>();
+                for(IItemStack item : ingredient.getItems()) {
+                    infos.add(new CTIngredientInfo(item, ingredient));
+                }
+                inputs.add(infos);
+            }
         }
-        ingredients.setInputs(JEIAddonPlugin.I_INGREDIENT_TYPE, inputs);
-        ingredients.setOutput(JEIAddonPlugin.I_INGREDIENT_TYPE, new MCItemStack(recipe.getRecipeOutput()));
+        ingredients.setInputLists(JEIAddonPlugin.I_INGREDIENT_TYPE, inputs);
+        ingredients.setOutput(JEIAddonPlugin.I_INGREDIENT_TYPE, new CTIngredientInfo(new MCItemStack(recipe
+                .getRecipeOutput())));
         
         
         //Leave them in for now for JEI matching
@@ -85,19 +93,23 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
-        final IGuiIngredientGroup<IIngredient> ingredientsGroup = recipeLayout.getIngredientsGroup(JEIAddonPlugin.I_INGREDIENT_TYPE);
+        final IGuiIngredientGroup<CTIngredientInfo> ingredientsGroup = recipeLayout.getIngredientsGroup(JEIAddonPlugin.I_INGREDIENT_TYPE);
         
-        ingredientsGroup.init(0, false, new CTIngredientRenderer(), 94, 18, GuiIngredientProperties
-                .getWidth(1), GuiIngredientProperties.getHeight(1), 1, 1);
-        ingredientsGroup.set(0, new MCItemStack(recipe.getRecipeOutput()));
+        ingredientsGroup.init(0, false, new CTIngredientRenderer(), 94, 18, GuiIngredientProperties.getWidth(1), GuiIngredientProperties
+                .getHeight(1), 1, 1);
+        ingredientsGroup.set(0, new CTIngredientInfo(new MCItemStack(recipe.getRecipeOutput())));
         
         
         for(int i = 1; i < 10; i++) {
-            ingredientsGroup.init(i, true, new CTIngredientRenderer() , (i - 1) % 3 * 18, (i - 1) / 3 * 18, GuiIngredientProperties
+            ingredientsGroup.init(i, true, new CTIngredientRenderer(), (i - 1) % 3 * 18, (i - 1) / 3 * 18, GuiIngredientProperties
                     .getWidth(1), GuiIngredientProperties.getHeight(1), 1, 1);
             final IIngredient iIngredient = getIIngredient(i);
             if(iIngredient != null) {
-                ingredientsGroup.set(i, iIngredient);
+                final ArrayList<CTIngredientInfo> ctIngredientInfos = new ArrayList<>();
+                for(IItemStack item : iIngredient.getItems()) {
+                    ctIngredientInfos.add(new CTIngredientInfo(item, iIngredient));
+                }
+                ingredientsGroup.set(i, ctIngredientInfos);
             }
         }
         
