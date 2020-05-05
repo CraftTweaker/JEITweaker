@@ -25,7 +25,9 @@ public class JEIAddonPlugin implements IModPlugin {
     public void onRuntimeAvailable(IJeiRuntime iJeiRuntime) {
         IIngredientManager ingredientManager = iJeiRuntime.getIngredientManager();
         IIngredientType<ItemStack> type = ingredientManager.getIngredientType(ItemStack.class);
-        ingredientManager.removeIngredientsAtRuntime(type, JEIManager.HIDDEN_ITEMS.stream().map(IItemStack::getInternal).collect(Collectors.toList()));
+        if(!JEIManager.HIDDEN_ITEMS.isEmpty()) {
+            ingredientManager.removeIngredientsAtRuntime(type, JEIManager.HIDDEN_ITEMS.stream().map(IItemStack::getInternal).collect(Collectors.toList()));
+        }
         JEIManager.HIDDEN_RECIPE_CATEGORIES.stream().map(ResourceLocation::new).forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
         JEIManager.HIDDEN_ITEMS.clear();
         JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
