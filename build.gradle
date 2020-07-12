@@ -31,8 +31,19 @@ archivesBaseName = 'JEITweaker'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
+repositories {
+    maven {
+        url "https://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        url "https://maven.blamejared.com"
+    }
+    maven {
+        url 'https://dogforce-games.com/maven'
+    }
+}
 minecraft {
-    mappings channel: 'snapshot', version: '20200225-1.15.1'
+    mappings channel: 'snapshot', version: '20200712-1.16.1'
     runs {
         client {
             workingDirectory project.file('run')
@@ -68,14 +79,6 @@ minecraft {
     }
 }
 
-repositories {
-    maven {
-        url "https://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        url "https://maven.blamejared.com"
-    }
-}
 
 task genGitChangelog() {
     def stdout = new ByteArrayOutputStream()
@@ -103,9 +106,9 @@ task genGitChangelog() {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.1.19'
-    compile fg.deobf("mezz.jei:jei-1.15.2:6.0.0.2");
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.15.2:6.0.0.13");
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.63'
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.1:7.0.0.5");
+    compile fg.deobf("mezz.jei:jei-1.16.1:7.0.0.6");
 }
 
 jar {
@@ -218,7 +221,7 @@ task updateVersionTracker {
         def body = [
                 'author'        : "${project.findProperty('versionTrackerAuthor')}",
                 'projectName'   : "JEITweaker",
-                'gameVersion'   : "1.15.2",
+                'gameVersion'   : "1.16.1",
                 'projectVersion': "${version}",
                 'homepage'      : "${project.findProperty('versionTrackerHomepage')}",
                 'uid'           : "${project.findProperty('versionTrackerKey')}"

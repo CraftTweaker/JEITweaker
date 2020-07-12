@@ -1,11 +1,11 @@
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[32,)"
 [[mods]]
 modId="jeitweaker"
 version="${file.jarVersion}"
 displayName="JEI Tweaker"
 authors="Jaredlll08"
-updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.15.2"
+updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.1"
 description='''
 Adds JEI integration for CraftTweaker
 '''
