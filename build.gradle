@@ -80,7 +80,7 @@ repositories {
 task genGitChangelog() {
     def stdout = new ByteArrayOutputStream()
     // first commit to check from, in our case the first commit of the branch
-    String firstCommit = "d9f8022a44a11fc4282253eed44869eb1f155eec";
+    String firstCommit = "2ef7eec799e38d7b2a4068a63d835504e3ee9bb6";
     String repoLink = "https://github.com/CraftTweaker/JEITweaker/commit/"
     // was having issues with grep and spaces in the regex
     exec {
