@@ -1,7 +1,8 @@
 package com.blamejared.jeitweaker;
 
+import com.blamejared.crafttweaker.CraftTweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.*;
+import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import net.minecraftforge.fml.LogicalSide;
@@ -34,7 +35,7 @@ public class JEIManager {
             
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
-                return side.isClient();
+                return !CraftTweaker.serverOverride && side.isClient();
             }
         });
     }
@@ -54,7 +55,7 @@ public class JEIManager {
             
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
-                return side.isClient();
+                return !CraftTweaker.serverOverride && side.isClient();
             }
         });
     }
@@ -75,7 +76,7 @@ public class JEIManager {
             
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
-                return side.isClient();
+                return !CraftTweaker.serverOverride && side.isClient();
             }
         });
     }
