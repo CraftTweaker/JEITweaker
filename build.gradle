@@ -27,7 +27,7 @@ if (System.getenv('BUILD_NUMBER') != null) {
     version += "." + System.getenv('BUILD_NUMBER')
 }
 group = 'com.blamejared.jeitweaker'
-archivesBaseName = 'JEITweaker-1.16.2'
+archivesBaseName = 'JEITweaker-1.16.3'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -43,7 +43,7 @@ repositories {
     }
 }
 minecraft {
-    mappings channel: 'snapshot', version: '20200712-1.16.1'
+    mappings channel: 'snapshot', version: '20200916-1.16.2'
     runs {
         client {
             workingDirectory project.file('run')
@@ -106,9 +106,9 @@ task genGitChangelog() {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.37'
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.2:7.0.0.27");
-    compile fg.deobf("mezz.jei:jei-1.16.2:7.3.2.25");
+    minecraft 'net.minecraftforge:forge:1.16.3-34.1.0'
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.3:7.0.0.45");
+    compile fg.deobf("mezz.jei:jei-1.16.3:7.3.2.36");
 }
 
 jar {
@@ -221,7 +221,7 @@ task updateVersionTracker {
         def body = [
                 'author'        : "${project.findProperty('versionTrackerAuthor')}",
                 'projectName'   : "JEITweaker",
-                'gameVersion'   : "1.16.2",
+                'gameVersion'   : "1.16.3",
                 'projectVersion': "${version}",
                 'homepage'      : "${project.findProperty('versionTrackerHomepage')}",
                 'uid'           : "${project.findProperty('versionTrackerKey')}"
