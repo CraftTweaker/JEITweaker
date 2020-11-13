@@ -6,7 +6,7 @@ modId="jeitweaker"
 version="${file.jarVersion}"
 displayName="JEI Tweaker"
 authors="Jaredlll08"
-updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.3"
+updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.4"
 description='''
 Adds JEI integration for CraftTweaker
 '''
