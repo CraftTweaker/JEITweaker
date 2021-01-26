@@ -7,6 +7,7 @@ import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.*;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.stream.Collectors;
 
@@ -17,9 +18,12 @@ public class JEIAddonPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         IIngredientManager ingredientManager = registration.getIngredientManager();
-        IIngredientType<ItemStack> type = ingredientManager.getIngredientType(ItemStack.class);
-        JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), type, value));
+        IIngredientType<ItemStack> itemType = ingredientManager.getIngredientType(ItemStack.class);
+        IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
+        JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), itemType, value));
+        JEIManager.FLUID_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), fluidType, value));
         JEIManager.ITEM_DESCRIPTIONS.clear();
+        JEIManager.FLUID_DESCRIPTIONS.clear();
     }
     
     @Override

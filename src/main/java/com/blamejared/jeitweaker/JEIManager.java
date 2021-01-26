@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.CraftTweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import net.minecraftforge.fml.LogicalSide;
 import org.openzen.zencode.java.ZenCodeType;
@@ -18,6 +19,8 @@ public class JEIManager {
     public static final List<String> HIDDEN_RECIPE_CATEGORIES = new ArrayList<>();
     
     public static final Map<IItemStack, String[]> ITEM_DESCRIPTIONS = new HashMap<>();
+    public static final Map<IFluidStack, String[]> FLUID_DESCRIPTIONS = new HashMap<>();
+    
     
     
     @ZenCodeType.Method
@@ -46,6 +49,26 @@ public class JEIManager {
             @Override
             public void apply() {
                 ITEM_DESCRIPTIONS.put(stack, string);
+            }
+            
+            @Override
+            public String describe() {
+                return "Adding JEI Info for: " + stack.getCommandString();
+            }
+            
+            @Override
+            public boolean shouldApplyOn(LogicalSide side) {
+                return !CraftTweaker.serverOverride && side.isClient();
+            }
+        });
+    }
+    
+    @ZenCodeType.Method
+    public static void addInfo(IFluidStack stack, String[] string) {
+        CraftTweakerAPI.apply(new IRuntimeAction() {
+            @Override
+            public void apply() {
+                FLUID_DESCRIPTIONS.put(stack, string);
             }
             
             @Override
