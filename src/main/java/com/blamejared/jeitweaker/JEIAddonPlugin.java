@@ -1,5 +1,6 @@
 package com.blamejared.jeitweaker;
 
+import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.*;
@@ -29,12 +30,18 @@ public class JEIAddonPlugin implements IModPlugin {
     @Override
     public void onRuntimeAvailable(IJeiRuntime iJeiRuntime) {
         IIngredientManager ingredientManager = iJeiRuntime.getIngredientManager();
-        IIngredientType<ItemStack> type = ingredientManager.getIngredientType(ItemStack.class);
+        IIngredientType<ItemStack> itemType = ingredientManager.getIngredientType(ItemStack.class);
+        IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
+    
         if(!JEIManager.HIDDEN_ITEMS.isEmpty()) {
-            ingredientManager.removeIngredientsAtRuntime(type, JEIManager.HIDDEN_ITEMS.stream().map(IItemStack::getInternal).collect(Collectors.toList()));
+            ingredientManager.removeIngredientsAtRuntime(itemType, JEIManager.HIDDEN_ITEMS.stream().map(IItemStack::getInternal).collect(Collectors.toList()));
+        }
+        if(!JEIManager.HIDDEN_FLUIDS.isEmpty()) {
+            ingredientManager.removeIngredientsAtRuntime(fluidType, JEIManager.HIDDEN_FLUIDS.stream().map(IFluidStack::getInternal).collect(Collectors.toList()));
         }
         JEIManager.HIDDEN_RECIPE_CATEGORIES.stream().map(ResourceLocation::new).forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
         JEIManager.HIDDEN_ITEMS.clear();
+        JEIManager.HIDDEN_FLUIDS.clear();
         JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
     }
     

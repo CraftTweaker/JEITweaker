@@ -16,6 +16,8 @@ import java.util.*;
 public class JEIManager {
     
     public static final List<IItemStack> HIDDEN_ITEMS = new ArrayList<>();
+    public static final List<IFluidStack> HIDDEN_FLUIDS = new ArrayList<>();
+    
     public static final List<String> HIDDEN_RECIPE_CATEGORIES = new ArrayList<>();
     
     public static final Map<IItemStack, String[]> ITEM_DESCRIPTIONS = new HashMap<>();
@@ -34,6 +36,26 @@ public class JEIManager {
             @Override
             public String describe() {
                 return "JEI Hiding Item: " + stack.getCommandString();
+            }
+            
+            @Override
+            public boolean shouldApplyOn(LogicalSide side) {
+                return !CraftTweaker.serverOverride && side.isClient();
+            }
+        });
+    }
+    
+    @ZenCodeType.Method
+    public static void hideFluid(IFluidStack stack) {
+        CraftTweakerAPI.apply(new IRuntimeAction() {
+            @Override
+            public void apply() {
+                HIDDEN_FLUIDS.add(stack);
+            }
+            
+            @Override
+            public String describe() {
+                return "JEI Hiding Fluid: " + stack.getCommandString();
             }
             
             @Override
