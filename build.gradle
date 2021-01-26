@@ -107,7 +107,7 @@ task genGitChangelog() {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.0.15'
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.4:7.0.0.59");
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.4:7.1.0.82");
     compile fg.deobf("mezz.jei:jei-1.16.4:7.6.0.58");
 }
 
