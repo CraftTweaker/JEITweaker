@@ -9,10 +9,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class JEITweaker {
     
     public JEITweaker() {
+        
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
     }
     
     private void setupClient(final FMLClientSetupEvent event) {
+        
         MinecraftForge.EVENT_BUS.register(new Events());
     }
+    
 }

@@ -1,12 +1,12 @@
-modLoader="javafml"
-loaderVersion="[32,)"
-license="MIT"
+modLoader = "javafml"
+loaderVersion = "[32,)"
+license = "MIT"
 [[mods]]
-modId="jeitweaker"
-version="${file.jarVersion}"
-displayName="JEI Tweaker"
-authors="Jaredlll08"
-updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.5"
-description='''
+modId = "jeitweaker"
+version = "${file.jarVersion}"
+displayName = "JEI Tweaker"
+authors = "Jaredlll08"
+updateJSONURL = "https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.5"
+description = '''
 Adds JEI integration for CraftTweaker
 '''
