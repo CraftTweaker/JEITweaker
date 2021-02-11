@@ -29,7 +29,7 @@ public class JEIManager {
     public static final Map<IFluidStack, String[]> FLUID_DESCRIPTIONS = new HashMap<>();
     
     @ZenCodeType.Method
-    public static void hideMod(String modid, @ZenCodeType.Optional("(name as string) => {return true;}") IRecipeManager.RecipeFilter exclude) {
+    public static void hideMod(String modid, @ZenCodeType.Optional("(name as string) => {return false;}") IRecipeManager.RecipeFilter exclude) {
         CraftTweakerAPI.apply(new IRuntimeAction() {
             @Override
             public void apply() {
