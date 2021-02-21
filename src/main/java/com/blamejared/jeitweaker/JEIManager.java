@@ -9,8 +9,10 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.tuple.Pair;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.*;
@@ -24,6 +26,8 @@ public class JEIManager {
     public static final List<IFluidStack> HIDDEN_FLUIDS = new ArrayList<>();
     
     public static final List<String> HIDDEN_RECIPE_CATEGORIES = new ArrayList<>();
+    public static final List<Pair<String, String>> HIDDEN_RECIPES = new ArrayList<>();
+    
     
     public static final Map<IItemStack, String[]> ITEM_DESCRIPTIONS = new HashMap<>();
     public static final Map<IFluidStack, String[]> FLUID_DESCRIPTIONS = new HashMap<>();
@@ -206,6 +210,29 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
+                return !CraftTweaker.serverOverride && side.isClient();
+            }
+        });
+    }
+    
+    @ZenCodeType.Method
+    public static void hideRecipe(String category, String recipeName){
+        CraftTweakerAPI.apply(new IRuntimeAction() {
+            @Override
+            public void apply() {
+            
+                HIDDEN_RECIPES.add(Pair.of(category, recipeName));
+            }
+        
+            @Override
+            public String describe() {
+            
+                return "JEI Hiding recipe: " + recipeName + " in category: " + category;
+            }
+        
+            @Override
+            public boolean shouldApplyOn(LogicalSide side) {
+            
                 return !CraftTweaker.serverOverride && side.isClient();
             }
         });

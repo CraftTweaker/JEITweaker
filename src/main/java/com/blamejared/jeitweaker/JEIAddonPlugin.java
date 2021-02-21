@@ -1,13 +1,16 @@
 package com.blamejared.jeitweaker;
 
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
+import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -55,9 +58,24 @@ public class JEIAddonPlugin implements IModPlugin {
         JEIManager.HIDDEN_RECIPE_CATEGORIES.stream()
                 .map(ResourceLocation::new)
                 .forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
+        
+        JEIManager.HIDDEN_RECIPES
+                .forEach(val -> {
+                    ResourceLocation category = new ResourceLocation(val.getLeft());
+                    ResourceLocation recipeName = new ResourceLocation(val.getRight());
+                    Optional<? extends IRecipe<?>> recipe = CTCraftingTableManager.recipeManager.getRecipe(recipeName);
+                    
+                    if(recipe.isPresent()) {
+                        iJeiRuntime.getRecipeManager().hideRecipe(recipe.get(), category);
+                    } else {
+                        CraftTweakerAPI.logger.throwingErr("Cannot hide recipe with ID: " + val + " as it does not exist!", new IllegalArgumentException("Cannot hide recipe with ID: " + val + " as it does not exist!"));
+                    }
+                });
+        
         JEIManager.HIDDEN_ITEMS.clear();
         JEIManager.HIDDEN_FLUIDS.clear();
         JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
+        JEIManager.HIDDEN_RECIPES.clear();
         JEI_CATEGORIES.clear();
         JEI_CATEGORIES.addAll(iJeiRuntime.getRecipeManager()
                 .getRecipeCategories()
