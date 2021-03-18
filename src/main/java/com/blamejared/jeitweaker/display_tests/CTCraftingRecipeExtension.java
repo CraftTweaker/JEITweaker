@@ -4,20 +4,22 @@ package com.blamejared.jeitweaker.display_tests;
 import com.blamejared.crafttweaker.api.item.*;
 import com.blamejared.crafttweaker.impl.item.*;
 import com.blamejared.crafttweaker.impl.recipes.*;
-import com.blamejared.jeitweaker.*;
+import com.mojang.blaze3d.platform.*;
 import mezz.jei.api.*;
 import mezz.jei.api.constants.*;
 import mezz.jei.api.gui.*;
-import mezz.jei.api.gui.ingredient.*;
 import mezz.jei.api.ingredients.*;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.*;
-import mezz.jei.gui.ingredients.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.*;
 import net.minecraft.util.*;
 import net.minecraftforge.common.util.*;
 
 import javax.annotation.*;
-import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.*;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -25,47 +27,109 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     private final CTRecipeShaped recipe;
     private final IIngredient[][] ingredients;
+    private final IIngredient[] ingredients1d;
     
     public CTCraftingRecipeExtension(CTRecipeShaped recipe) {
         this.recipe = recipe;
         CTRecipeManagerPlugin.ALL_SHAPED.add(recipe);
-        IIngredient[][] toSet = null;
-        try {
-            final Field ingredients = CTRecipeShaped.class.getDeclaredField("ingredients");
-            ingredients.setAccessible(true);
-            toSet = (IIngredient[][]) ingredients.get(recipe);
-        } catch(IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
+        this.ingredients = recipe.getIIngredients();
+        this.ingredients1d = new IIngredient[9];
+        for(int row = 0; row < 3; row++) {
+            if(ingredients.length <= row) {
+                continue;
+            }
+            final IIngredient[] ingredientRow = ingredients[row];
+            for(int i = 0; i < 3; i++) {
+                if(ingredientRow.length > i) {
+                    ingredients1d[row * 3 + i] = ingredientRow[i];
+                }
+            }
         }
-        
-        this.ingredients = toSet;
     }
     
     @Override
     public void setIngredients(IIngredients ingredients) {
-        final List<List<CTIngredientInfo>> inputs = new ArrayList<>();
+        //Leave them in for now for JEI matching
+        final int reduce = Arrays.stream(ingredients1d)
+                .filter(Objects::nonNull)
+                .mapToInt(i -> i.getItems().length)
+                .filter(i -> i != 0)
+                .reduce(1, (left, right) -> left * right);
         
-        for(IIngredient[] row : this.ingredients) {
-            for(IIngredient ingredient : row) {
-                final List<CTIngredientInfo> infos = new ArrayList<>();
-                for(IItemStack item : ingredient.getItems()) {
-                    infos.add(new CTIngredientInfo(item, ingredient));
+        final List<List<ItemStack>> inputs = new ArrayList<>(9);
+        for(int i = 0; i < 9; i++) {
+            inputs.add(new ArrayList<>());
+        }
+        
+        final List<ItemStack> outputs = new ArrayList<>(reduce);
+        
+        calculateCheckedCombinations().forEach(grid -> {
+            final IItemStack output = recipe.getOutput(grid);
+            if(output.isEmpty()) {
+                return;
+            }
+            
+            outputs.add(output.getInternal());
+            
+            for(int i = 0; i < 9; i++) {
+                final ItemStack internal = grid[i / 3][i % 3].getInternal();
+                if(!internal.isEmpty()) {
+                    inputs.get(i).add(internal);
                 }
-                inputs.add(infos);
+            }
+        });
+        
+        
+        ingredients.setInputLists(VanillaTypes.ITEM, inputs);
+        ingredients.setOutputs(VanillaTypes.ITEM, outputs);
+        
+        //ingredients.setInputIngredients(recipe.getIngredients());
+        //ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    }
+    
+    public Stream<IItemStack[][]> calculateCheckedCombinations() {
+        final NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        if(ingredients.isEmpty()) {
+            return Stream.empty();
+        }
+        
+        int possibleCombinations = ingredients.stream()
+                .mapToInt(value -> value.getMatchingStacks().length)
+                .filter(i -> i != 0)
+                .reduce(1, (left, right) -> left * right);
+        return IntStream.range(0, possibleCombinations).mapToObj(this::rowNo);
+    }
+    
+    public IItemStack[][] rowNo(int i) {
+        final IItemStack[][] output = new IItemStack[3][3];
+        
+        int index = -1;
+        for(IIngredient ingredient : ingredients1d) {
+            index++;
+            final IItemStack[] matchingStacks = ingredient != null ? ingredient.getItems() : new IItemStack[0];
+            final IItemStack matchingStack = matchingStacks.length == 0 ? MCItemStack.EMPTY.get() : matchingStacks[i % matchingStacks.length];
+            output[index / 3][index % 3] = matchingStack;
+            if(matchingStacks.length > 0) {
+                i = i / matchingStacks.length;
             }
         }
-        ingredients.setInputLists(JEIAddonPlugin.I_INGREDIENT_TYPE, inputs);
-        ingredients.setOutput(JEIAddonPlugin.I_INGREDIENT_TYPE, new CTIngredientInfo(new MCItemStack(recipe
-                .getRecipeOutput())));
         
         
-        //Leave them in for now for JEI matching
-        ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        return output;
     }
     
     @Override
     public void drawInfo(int recipeWidth, int recipeHeight, double mouseX, double mouseY) {
+        final ItemStack stack = new ItemStack(Items.PUMPKIN);
+        GlStateManager.enableDepthTest();
+        RenderHelper.enableGUIStandardItemLighting();
+        Minecraft minecraft = Minecraft.getInstance();
+        ItemRenderer itemRenderer = minecraft.getItemRenderer();
+        itemRenderer.renderItemAndEffectIntoGUI(null, stack, (int) mouseX - 16, (int) mouseY - 16);
+        GlStateManager.disableBlend();
+        RenderHelper.disableStandardItemLighting();
+        
+        
     }
     
     @Override
@@ -93,74 +157,6 @@ public class CTCraftingRecipeExtension implements ICustomCraftingCategoryExtensi
     
     @Override
     public void setRecipe(IRecipeLayout recipeLayout, IIngredients ingredients) {
-        final IGuiIngredientGroup<CTIngredientInfo> ingredientsGroup = recipeLayout.getIngredientsGroup(JEIAddonPlugin.I_INGREDIENT_TYPE);
-        
-        ingredientsGroup.init(0, false, new CTIngredientRenderer(), 94, 18, GuiIngredientProperties.getWidth(1), GuiIngredientProperties
-                .getHeight(1), 1, 1);
-        ingredientsGroup.set(0, new CTIngredientInfo(new MCItemStack(recipe.getRecipeOutput())));
-        
-        
-        for(int i = 1; i < 10; i++) {
-            ingredientsGroup.init(i, true, new CTIngredientRenderer(), (i - 1) % 3 * 18, (i - 1) / 3 * 18, GuiIngredientProperties
-                    .getWidth(1), GuiIngredientProperties.getHeight(1), 1, 1);
-            final IIngredient iIngredient = getIIngredient(i);
-            if(iIngredient != null) {
-                final ArrayList<CTIngredientInfo> ctIngredientInfos = new ArrayList<>();
-                for(IItemStack item : iIngredient.getItems()) {
-                    ctIngredientInfos.add(new CTIngredientInfo(item, iIngredient));
-                }
-                ingredientsGroup.set(i, ctIngredientInfos);
-            }
-        }
-        
-        ingredientsGroup.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            final IIngredient iIngredient = getIIngredient(slotIndex);
-            if(iIngredient instanceof IngredientExpansion.MCIngredientWithJEIText) {
-                final String text = ((IngredientExpansion.MCIngredientWithJEIText) iIngredient).getText();
-                tooltip.add(tooltip.size() - 1, text);
-            }
-        });
-        
-        
-        /*
-        final IGuiItemStackGroup ingredientsGroup = recipeLayout.getItemStacks();
-        ingredientsGroup.set(0, recipe.getRecipeOutput());
-        
-        for(int i = 1; i < 10; i++) {
-            final IIngredient iIngredient = getIIngredient(i);
-            if(iIngredient != null) {
-                final ItemStack[] stacks = iIngredient.asVanillaIngredient().getMatchingStacks();
-                ingredientsGroup.set(i, Arrays.asList(stacks));
-            }
-        }
-        
-        ingredientsGroup.addTooltipCallback((slotIndex, input, ingredient, tooltip) -> {
-            final IIngredient iIngredient = getIIngredient(slotIndex);
-            if(iIngredient instanceof IngredientExpansion.MCIngredientWithJEIText) {
-                final IngredientExpansion.MCIngredientWithJEIText withJEIText = (IngredientExpansion.MCIngredientWithJEIText) iIngredient;
-                //-1 to add it before the Mod name
-                tooltip.add(tooltip.size() - 1, withJEIText.getText());
-            }
-        });
-        */
-    }
-    
-    @Nullable
-    public IIngredient getIIngredient(int slotIndex) {
-        //Index 0 is output
-        if(slotIndex == 0) {
-            return new MCItemStack(recipe.getRecipeOutput());
-        }
-        
-        slotIndex--;
-        
-        final int row = slotIndex / 3;
-        if(this.ingredients.length <= row) {
-            return null;
-        }
-        
-        final int column = slotIndex % 3;
-        final IIngredient[] ingredient = this.ingredients[row];
-        return ingredient.length > column ? ingredient[column] : null;
+        recipeLayout.getItemStacks().set(ingredients);
     }
 }

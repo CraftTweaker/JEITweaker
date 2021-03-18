@@ -1,6 +1,5 @@
 package com.blamejared.jeitweaker.display_tests;
 
-import com.blamejared.crafttweaker.api.item.*;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.*;
 
