@@ -74,7 +74,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -121,7 +121,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -156,7 +156,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -193,7 +193,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -230,7 +230,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -267,7 +267,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -305,7 +305,7 @@ public class JEIManager {
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
                 
-                return !CraftTweaker.serverOverride && side.isClient();
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
@@ -341,8 +341,8 @@ public class JEIManager {
             
             @Override
             public boolean shouldApplyOn(LogicalSide side) {
-                
-                return !CraftTweaker.serverOverride && side.isClient();
+            
+                return !CraftTweakerAPI.isServer();
             }
         });
     }
