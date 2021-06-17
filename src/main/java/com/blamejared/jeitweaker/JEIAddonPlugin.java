@@ -31,8 +31,8 @@ public class JEIAddonPlugin implements IModPlugin {
         IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
         JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), itemType, value));
         JEIManager.FLUID_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), fluidType, value));
-//        JEIManager.ITEM_DESCRIPTIONS.clear();
-//        JEIManager.FLUID_DESCRIPTIONS.clear();
+        //        JEIManager.ITEM_DESCRIPTIONS.clear();
+        //        JEIManager.FLUID_DESCRIPTIONS.clear();
     }
     
     @Override
@@ -55,9 +55,22 @@ public class JEIAddonPlugin implements IModPlugin {
                     .map(IFluidStack::getInternal)
                     .collect(Collectors.toList()));
         }
-        JEIManager.HIDDEN_RECIPE_CATEGORIES.stream()
-                .map(ResourceLocation::new)
-                .forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
+        Set<ResourceLocation> changingCategories = JEIManager.HIDDEN_RECIPE_CATEGORIES.stream()
+                .map(ResourceLocation::new).collect(Collectors.toSet());
+        
+        Set<ResourceLocation> foundCategories = changingCategories.stream()
+                .filter(rl -> iJeiRuntime.getRecipeManager()
+                        .getRecipeCategories()
+                        .stream()
+                        .anyMatch(iRecipeCategory -> iRecipeCategory.getUid().equals(rl)))
+                .collect(Collectors.toSet());
+        foundCategories.forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
+        
+        changingCategories.removeAll(foundCategories);
+        
+        changingCategories.forEach(resourceLocation -> {
+            CraftTweakerAPI.logError("Unable to find JEI category with name: `" + resourceLocation.toString() + "`");
+        });
         
         JEIManager.HIDDEN_RECIPES
                 .forEach(val -> {
@@ -72,10 +85,10 @@ public class JEIAddonPlugin implements IModPlugin {
                     }
                 });
         
-//        JEIManager.HIDDEN_ITEMS.clear();
-//        JEIManager.HIDDEN_FLUIDS.clear();
-//        JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
-//        JEIManager.HIDDEN_RECIPES.clear();
+        //        JEIManager.HIDDEN_ITEMS.clear();
+        //        JEIManager.HIDDEN_FLUIDS.clear();
+        //        JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
+        //        JEIManager.HIDDEN_RECIPES.clear();
         JEI_CATEGORIES.clear();
         JEI_CATEGORIES.addAll(iJeiRuntime.getRecipeManager()
                 .getRecipeCategories()
