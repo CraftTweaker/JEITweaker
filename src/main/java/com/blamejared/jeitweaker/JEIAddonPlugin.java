@@ -69,7 +69,7 @@ public class JEIAddonPlugin implements IModPlugin {
         changingCategories.removeAll(foundCategories);
         
         changingCategories.forEach(resourceLocation -> {
-            CraftTweakerAPI.logError("Unable to find JEI category with name: `" + resourceLocation.toString() + "`");
+            CraftTweakerAPI.logError("Unable to find JEI category with uid: `" + resourceLocation.toString() + "`");
         });
         
         JEIManager.HIDDEN_RECIPES
