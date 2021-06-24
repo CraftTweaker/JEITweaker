@@ -2,21 +2,22 @@ package com.blamejared.jeitweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
+import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
 import mezz.jei.api.*;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.*;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 
 @JeiPlugin
 public class JEIAddonPlugin implements IModPlugin {
@@ -31,8 +32,18 @@ public class JEIAddonPlugin implements IModPlugin {
         IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
         JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), itemType, value));
         JEIManager.FLUID_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), fluidType, value));
-        //        JEIManager.ITEM_DESCRIPTIONS.clear();
-        //        JEIManager.FLUID_DESCRIPTIONS.clear();
+    }
+    
+    
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        
+        Item[] items = JEIManager.CUSTOM_ITEMS.stream()
+                .filter(iItemStack -> !registration.hasSubtypeInterpreter(iItemStack.getInternal()))
+                .map(iItemStack -> iItemStack.getInternal().getItem())
+                .distinct()
+                .toArray(Item[]::new);
+        registration.useNbtForSubtypes(items);
     }
     
     @Override
@@ -69,7 +80,8 @@ public class JEIAddonPlugin implements IModPlugin {
         changingCategories.removeAll(foundCategories);
         
         changingCategories.forEach(resourceLocation -> {
-            CraftTweakerAPI.logError("JEITweaker: Unable to remove JEI category with uid: `" + resourceLocation.toString() + "` as it is not a valid category!");
+            CraftTweakerAPI.logError("JEITweaker: Unable to remove JEI category with uid: `%s` as it is not a valid category!", resourceLocation
+                    .toString());
         });
         
         JEIManager.HIDDEN_RECIPES
@@ -85,10 +97,12 @@ public class JEIAddonPlugin implements IModPlugin {
                     }
                 });
         
-        //        JEIManager.HIDDEN_ITEMS.clear();
-        //        JEIManager.HIDDEN_FLUIDS.clear();
-        //        JEIManager.HIDDEN_RECIPE_CATEGORIES.clear();
-        //        JEIManager.HIDDEN_RECIPES.clear();
+        iJeiRuntime.getIngredientManager()
+                .addIngredientsAtRuntime(VanillaTypes.ITEM, JEIManager.CUSTOM_ITEMS.stream()
+                        .map(IItemStack::getInternal)
+                        .collect(Collectors.toList()));
+        
+        
         JEI_CATEGORIES.clear();
         JEI_CATEGORIES.addAll(iJeiRuntime.getRecipeManager()
                 .getRecipeCategories()
