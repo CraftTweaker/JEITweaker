@@ -51,6 +51,9 @@ public class JEIAddonPlugin implements IModPlugin {
                 .map(iItemStack -> iItemStack.getInternal().getItem())
                 .distinct()
                 .toArray(Item[]::new);
+        if(items.length == 0){
+            return;
+        }
         registration.useNbtForSubtypes(items);
     }
     
@@ -105,10 +108,12 @@ public class JEIAddonPlugin implements IModPlugin {
                     }
                 });
         
-        iJeiRuntime.getIngredientManager()
-                .addIngredientsAtRuntime(VanillaTypes.ITEM, JEIManager.CUSTOM_ITEMS.stream()
-                        .map(IItemStack::getInternal)
-                        .collect(Collectors.toList()));
+        if(!JEIManager.CUSTOM_ITEMS.isEmpty()) {
+            iJeiRuntime.getIngredientManager()
+                    .addIngredientsAtRuntime(VanillaTypes.ITEM, JEIManager.CUSTOM_ITEMS.stream()
+                            .map(IItemStack::getInternal)
+                            .collect(Collectors.toList()));
+        }
         
         
         JEI_CATEGORIES.clear();
