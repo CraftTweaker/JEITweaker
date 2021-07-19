@@ -5,18 +5,26 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
-import mezz.jei.api.*;
+import mezz.jei.api.IModPlugin;
+import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredientType;
+import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.*;
-import net.minecraft.item.*;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.api.runtime.IJeiRuntime;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @JeiPlugin
@@ -52,6 +60,7 @@ public class JEIAddonPlugin implements IModPlugin {
         IIngredientManager ingredientManager = iJeiRuntime.getIngredientManager();
         IIngredientType<ItemStack> itemType = ingredientManager.getIngredientType(ItemStack.class);
         IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
+        IRecipeManager recipeManager = iJeiRuntime.getRecipeManager();
         
         if(!JEIManager.HIDDEN_ITEMS.isEmpty()) {
             List<ItemStack> collect = ingredientManager.getAllIngredients(itemType)
@@ -69,20 +78,19 @@ public class JEIAddonPlugin implements IModPlugin {
         Set<ResourceLocation> changingCategories = JEIManager.HIDDEN_RECIPE_CATEGORIES.stream()
                 .map(ResourceLocation::new).collect(Collectors.toSet());
         
+        
         Set<ResourceLocation> foundCategories = changingCategories.stream()
-                .filter(rl -> iJeiRuntime.getRecipeManager()
-                        .getRecipeCategories()
+                .filter(rl -> recipeManager
+                        .getRecipeCategories(null, true)
                         .stream()
                         .anyMatch(iRecipeCategory -> iRecipeCategory.getUid().equals(rl)))
                 .collect(Collectors.toSet());
-        foundCategories.forEach(iJeiRuntime.getRecipeManager()::hideRecipeCategory);
+        foundCategories.forEach(recipeManager::hideRecipeCategory);
         
         changingCategories.removeAll(foundCategories);
         
-        changingCategories.forEach(resourceLocation -> {
-            CraftTweakerAPI.logError("JEITweaker: Unable to remove JEI category with uid: `%s` as it is not a valid category!", resourceLocation
-                    .toString());
-        });
+        changingCategories.forEach(resourceLocation -> CraftTweakerAPI.logError("JEITweaker: Unable to remove JEI category with uid: `%s` as it is not a valid category!", resourceLocation
+                .toString()));
         
         JEIManager.HIDDEN_RECIPES
                 .forEach(val -> {
@@ -91,7 +99,7 @@ public class JEIAddonPlugin implements IModPlugin {
                     Optional<? extends IRecipe<?>> recipe = CTCraftingTableManager.recipeManager.getRecipe(recipeName);
                     
                     if(recipe.isPresent()) {
-                        iJeiRuntime.getRecipeManager().hideRecipe(recipe.get(), category);
+                        recipeManager.hideRecipe(recipe.get(), category);
                     } else {
                         CraftTweakerAPI.logger.throwingErr("Cannot hide recipe with ID: " + val + " as it does not exist!", new IllegalArgumentException("Cannot hide recipe with ID: " + val + " as it does not exist!"));
                     }
@@ -104,8 +112,8 @@ public class JEIAddonPlugin implements IModPlugin {
         
         
         JEI_CATEGORIES.clear();
-        JEI_CATEGORIES.addAll(iJeiRuntime.getRecipeManager()
-                .getRecipeCategories()
+        JEI_CATEGORIES.addAll(recipeManager
+                .getRecipeCategories(null, true)
                 .stream()
                 .map(IRecipeCategory::getUid)
                 .collect(Collectors.toList()));

@@ -93,8 +93,8 @@ modTemplate {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.0.4'
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.106");
-    compileOnly "mezz.jei:jei-1.16.4:7.6.0.58:api"
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.58");
+    compileOnly "mezz.jei:jei-1.16.5:7.7.1.110:api"
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.110");
 }
 
 jar {

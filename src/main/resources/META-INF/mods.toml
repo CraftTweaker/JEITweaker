@@ -10,3 +10,10 @@ updateJSONURL = "https://updates.blamejared.com/get?n=JEITweaker&gv=1.16.5"
 description = '''
 Adds JEI integration for CraftTweaker
 '''
+
+[[dependencies.jeitweaker]]
+modId = "jei"
+mandatory = true
+versionRange = "[7.7.1.110,)"
+ordering = "NONE"
+side = "BOTH"
