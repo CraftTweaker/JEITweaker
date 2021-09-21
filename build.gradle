@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath group: 'com.blamejared', name: 'ModTemplate', version: '1.+', changing: true
     }
 }
@@ -21,14 +21,22 @@ version = '1.0.1'
 group = 'com.blamejared.jeitweaker'
 archivesBaseName = 'JEITweaker-1.16.5'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_1_8.majorVersion)
+}
 
 repositories {
     maven {
         url "https://dvs1.progwml6.com/files/maven"
+        content {
+            includeGroup("mezz.jei")
+        }
     }
     maven {
         url "https://maven.blamejared.com"
+        content {
+            includeGroup("com.blamejared.crafttweaker")
+        }
     }
 }
 minecraft {
@@ -91,10 +99,11 @@ modTemplate {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.4'
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.0.106");
-    compileOnly "mezz.jei:jei-1.16.5:7.7.1.110:api"
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.110");
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
+    annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.431"
+    implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.16.5:7.1.2.431")
+    compileOnly "mezz.jei:jei-1.16.5:7.7.1.121:api"
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.121");
 }
 
 jar {
