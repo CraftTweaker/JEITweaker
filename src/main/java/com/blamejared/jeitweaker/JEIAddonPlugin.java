@@ -19,16 +19,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @JeiPlugin
 public class JEIAddonPlugin implements IModPlugin {
+    
+    private static final ResourceLocation ID = new ResourceLocation(JEITweaker.MOD_ID, "main");
     
     public static final List<ResourceLocation> JEI_CATEGORIES = new ArrayList<>();
     
@@ -36,10 +43,8 @@ public class JEIAddonPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         
         IIngredientManager ingredientManager = registration.getIngredientManager();
-        IIngredientType<ItemStack> itemType = ingredientManager.getIngredientType(ItemStack.class);
-        IIngredientType<FluidStack> fluidType = ingredientManager.getIngredientType(FluidStack.class);
-        JEIManager.ITEM_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), itemType, value));
-        JEIManager.FLUID_DESCRIPTIONS.forEach((key, value) -> registration.addIngredientInfo(key.getInternal(), fluidType, value));
+        this.registerDescriptionsFor(registration, JEIManager.ITEM_DESCRIPTIONS, ingredientManager.getIngredientType(ItemStack.class), IItemStack::getInternal);
+        this.registerDescriptionsFor(registration, JEIManager.FLUID_DESCRIPTIONS, ingredientManager.getIngredientType(FluidStack.class), IFluidStack::getInternal);
     }
     
     
@@ -127,7 +132,17 @@ public class JEIAddonPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
         
-        return new ResourceLocation("jeitweaker:main");
+        return ID;
+    }
+    
+    private <T, U> void registerDescriptionsFor(final IRecipeRegistration registration, final Map<T, String[]> descriptions,
+                                                final IIngredientType<U> type, final Function<T, U> converter) {
+        
+        descriptions.forEach((key, desc) -> {
+            
+            final ITextComponent[] translatableDesc = Arrays.stream(desc).map(TranslationTextComponent::new).toArray(ITextComponent[]::new);
+            registration.addIngredientInfo(converter.apply(key), type, translatableDesc);
+        });
     }
     
 }

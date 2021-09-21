@@ -5,8 +5,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod("jeitweaker")
+@Mod(JEITweaker.MOD_ID)
 public class JEITweaker {
+    public static final String MOD_ID = "jeitweaker";
     
     public JEITweaker() {
         
