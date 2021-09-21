@@ -1,15 +1,15 @@
 package com.blamejared.jeitweaker.zen;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
-import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.state.JeiTweakerIngredientType;
-import org.openzen.zencode.java.ZenCodeType;
 
+/*
+ TODO("Uncomment when generic type inference has gotten better")
 @Document("mods/JEITweaker/JeiIngredient")
 @ZenCodeType.Name("mods.jei.JeiIngredient")
 @ZenRegister
-public final class JeiIngredient<T extends CommandStringDisplayable, U> implements CommandStringDisplayable {
+ */
+public final class JeiIngredient<T extends CommandStringDisplayable, U> implements HackyJeiIngredientToMakeZenCodeHappy {
     private final JeiTweakerIngredientType<T, U> type;
     private final T wrapped;
     

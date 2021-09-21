@@ -3,7 +3,8 @@ package com.blamejared.jeitweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.commands.CTCommandCollectionEvent;
 import com.blamejared.crafttweaker.impl.commands.CommandCaller;
-import net.minecraft.util.ResourceLocation;
+import com.blamejared.jeitweaker.state.JeiStateManager;
+
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,9 +18,10 @@ public class Events {
         event.registerDump("jeiCategories", "Lists the different JEI categories", (CommandCaller) commandContext -> {
             
             CraftTweakerAPI.logDump("List of all known JEI categories: ");
-            for(ResourceLocation recipeCategory : JEIAddonPlugin.JEI_CATEGORIES) {
-                CraftTweakerAPI.logDump("- %s", recipeCategory.toString());
-            }
+            JeiStateManager.INSTANCE.getCurrentJeiCategories().stream()
+                    .map(it -> "- " + it)
+                    .sorted()
+                    .forEach(CraftTweakerAPI::logDump);
             
             // TODO("Move to Translatable Text Components")
             final StringTextComponent message = new StringTextComponent(TextFormatting.GREEN + "Categories written to the log" + TextFormatting.RESET);

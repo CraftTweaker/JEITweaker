@@ -2,14 +2,15 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.jeitweaker.JEIManager;
+import com.blamejared.jeitweaker.state.JeiStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.LogicalSide;
 
-public class ActionHideCategory implements IUndoableAction {
+public final class ActionHideCategory implements IUndoableAction {
     
-    private final String category;
+    private final ResourceLocation category;
     
-    public ActionHideCategory(String category) {
+    public ActionHideCategory(final ResourceLocation category) {
         
         this.category = category;
     }
@@ -17,25 +18,25 @@ public class ActionHideCategory implements IUndoableAction {
     @Override
     public void apply() {
         
-        JEIManager.HIDDEN_RECIPE_CATEGORIES.add(category);
+        JeiStateManager.INSTANCE.hideRecipeCategory(this.category);
     }
     
     @Override
     public void undo() {
         
-        JEIManager.HIDDEN_RECIPE_CATEGORIES.remove(category);
+        JeiStateManager.INSTANCE.showRecipeCategory(this.category);
     }
     
     @Override
     public String describeUndo() {
         
-        return "Undoing JEI hiding Category: " + category;
+        return "Undoing JEI Category hiding: " + this.category;
     }
     
     @Override
     public String describe() {
         
-        return "JEI Hiding Category: " + category;
+        return "Hiding Category '" + this.category + "' from JEI";
     }
     
     @Override

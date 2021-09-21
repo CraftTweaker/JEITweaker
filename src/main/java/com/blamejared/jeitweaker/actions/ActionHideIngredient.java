@@ -7,47 +7,43 @@ import com.blamejared.jeitweaker.state.JeiStateManager;
 import com.blamejared.jeitweaker.zen.JeiIngredient;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.Map;
-
-public final class ActionAddInfo<T extends CommandStringDisplayable, U> implements IUndoableAction {
+public final class ActionHideIngredient<T extends CommandStringDisplayable, U> implements IUndoableAction {
     
     private final JeiIngredient<T, U> ingredient;
-    private final String[] description;
     
-    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final String... description) {
+    public ActionHideIngredient(final JeiIngredient<T, U> ingredient) {
         
         this.ingredient = ingredient;
-        this.description = description;
     }
     
     @Override
     public void apply() {
-        
-        JeiStateManager.INSTANCE.addDescription(this.ingredient, this.description);
+    
+        JeiStateManager.INSTANCE.hide(this.ingredient);
     }
     
     @Override
     public void undo() {
         
-        JeiStateManager.INSTANCE.removeDescription(this.ingredient);
+        JeiStateManager.INSTANCE.show(this.ingredient);
     }
+    
     
     @Override
     public String describeUndo() {
         
-        return "Undoing adding JEI Info for: " + this.ingredient.getCommandString();
+        return "Undoing JEI hiding ingredient: " + this.ingredient.getCommandString();
     }
     
     @Override
     public String describe() {
         
-        return "Adding JEI Info for: " + this.ingredient.getCommandString();
+        return "Hiding Ingredient " + this.ingredient.getCommandString() + " from JEI";
     }
     
     @Override
-    public boolean shouldApplyOn(LogicalSide side) {
+    public boolean shouldApplyOn(final LogicalSide side) {
         
         return !CraftTweakerAPI.isServer();
     }
-    
 }

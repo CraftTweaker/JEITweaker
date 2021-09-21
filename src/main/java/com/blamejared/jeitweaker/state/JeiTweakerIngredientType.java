@@ -11,17 +11,17 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public final class JeiTweakerIngredientType<T, U> {
-    public static final JeiTweakerIngredientType<IItemStack, ItemStack> ITEM = of(IItemStack.class, ItemStack.class, IItemStack::getInternal, MCItemStack::new, IItemStack::matches);
-    public static final JeiTweakerIngredientType<IFluidStack, FluidStack> FLUID = of(IFluidStack.class, FluidStack.class, IFluidStack::getInternal, MCFluidStack::new, Objects::equals);
     
     private static final Collection<JeiTweakerIngredientType<?, ?>> VALUES = new ArrayList<>();
-    private static final Collection<JeiTweakerIngredientType<?, ?>> UNMODIFIABLE_VALUES_VIEW = Collections.unmodifiableCollection(VALUES);
+    
+    public static final JeiTweakerIngredientType<IItemStack, ItemStack> ITEM = of(IItemStack.class, ItemStack.class, IItemStack::getInternal, MCItemStack::new, IItemStack::matches);
+    public static final JeiTweakerIngredientType<IFluidStack, FluidStack> FLUID = of(IFluidStack.class, FluidStack.class, IFluidStack::getInternal, MCFluidStack::new, Objects::equals);
     
     private final Class<T> jeiTweakerClassType;
     private final Class<U> internalClassType;
@@ -44,8 +44,9 @@ public final class JeiTweakerIngredientType<T, U> {
         VALUES.add(this);
     }
     
-    public static Collection<JeiTweakerIngredientType<?, ?>> values() {
-        return UNMODIFIABLE_VALUES_VIEW;
+    public static Stream<JeiTweakerIngredientType<?, ?>> values() {
+        
+        return VALUES.stream();
     }
     
     private static <T, U> JeiTweakerIngredientType<T, U> of(
@@ -55,6 +56,7 @@ public final class JeiTweakerIngredientType<T, U> {
             final Function<U, T> toJeiTweaker,
             final BiPredicate<T, T> matcher
     ) {
+        
         return new JeiTweakerIngredientType<>(jeiTweakerType, internalType, toInternal, toJeiTweaker, matcher, manager -> manager.getIngredientType(internalType));
     }
     
