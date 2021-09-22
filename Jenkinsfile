@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+def branchName = "1.16";
+
 pipeline {
     agent any
     tools {
@@ -32,6 +34,9 @@ pipeline {
         }
 
         stage('Publish') {
+            when {
+                branch branchName
+            }
             steps {
                 withCredentials([file(credentialsId: 'mod_build_secrets', variable: 'ORG_GRADLE_PROJECT_secretFile')]) {
                     echo 'Updating version'
