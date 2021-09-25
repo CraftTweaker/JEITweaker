@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.zen;
+package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;

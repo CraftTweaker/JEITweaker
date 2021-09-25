@@ -6,14 +6,13 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.jeitweaker.state.JeiStateManager;
-import com.blamejared.jeitweaker.zen.HackyJeiIngredientToMakeZenCodeHappy;
-import com.blamejared.jeitweaker.zen.IItemStackExpansions;
-import com.blamejared.jeitweaker.zen.JeiIngredient;
+import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
+import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

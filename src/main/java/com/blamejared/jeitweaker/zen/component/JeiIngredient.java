@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.zen;
+package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
 import com.blamejared.jeitweaker.state.JeiTweakerIngredientType;
@@ -9,7 +9,7 @@ import com.blamejared.jeitweaker.state.JeiTweakerIngredientType;
 @ZenCodeType.Name("mods.jei.JeiIngredient")
 @ZenRegister
  */
-public final class JeiIngredient<T extends CommandStringDisplayable, U> implements HackyJeiIngredientToMakeZenCodeHappy {
+public final class JeiIngredient<T, U> implements HackyJeiIngredientToMakeZenCodeHappy {
     private final JeiTweakerIngredientType<T, U> type;
     private final T wrapped;
     
@@ -32,7 +32,12 @@ public final class JeiIngredient<T extends CommandStringDisplayable, U> implemen
     @Override
     public String getCommandString() {
         
-        return this.wrapped.getCommandString();
+        if (this.wrapped instanceof CommandStringDisplayable) {
+            
+            return ((CommandStringDisplayable) this.wrapped).getCommandString();
+        }
+        
+        return "TODO: MISSING COMMAND STRING FOR " + this.wrapped;
     }
     
     @Override
@@ -52,6 +57,6 @@ public final class JeiIngredient<T extends CommandStringDisplayable, U> implemen
     @Override
     public String toString() {
         
-        return String.format("JeiIngredient{%s}", this.getCommandString());
+        return this.getCommandString();
     }
 }

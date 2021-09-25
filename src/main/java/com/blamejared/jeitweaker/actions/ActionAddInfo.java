@@ -2,14 +2,11 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
 import com.blamejared.jeitweaker.state.JeiStateManager;
-import com.blamejared.jeitweaker.zen.JeiIngredient;
+import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.Map;
-
-public final class ActionAddInfo<T extends CommandStringDisplayable, U> implements IUndoableAction {
+public final class ActionAddInfo<T, U> implements IUndoableAction {
     
     private final JeiIngredient<T, U> ingredient;
     private final String[] description;

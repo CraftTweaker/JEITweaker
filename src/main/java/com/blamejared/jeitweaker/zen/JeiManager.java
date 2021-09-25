@@ -13,6 +13,9 @@ import com.blamejared.jeitweaker.actions.ActionHideIngredient;
 import com.blamejared.jeitweaker.actions.ActionHideMod;
 import com.blamejared.jeitweaker.actions.ActionHideRecipe;
 import com.blamejared.jeitweaker.actions.ActionHideRegex;
+import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.IFluidStackExpansions;
+import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 

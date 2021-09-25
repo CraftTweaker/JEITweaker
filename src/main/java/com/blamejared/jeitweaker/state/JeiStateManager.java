@@ -1,8 +1,6 @@
 package com.blamejared.jeitweaker.state;
 
-import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
-import com.blamejared.jeitweaker.zen.HackyJeiIngredientToMakeZenCodeHappy;
-import com.blamejared.jeitweaker.zen.JeiIngredient;
+import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
@@ -39,7 +37,7 @@ public enum JeiStateManager {
                 .forEach(this.currentJeiCategories::add);
     }
     
-    public <T extends CommandStringDisplayable, U> void hide(final JeiIngredient<T, U> ingredient) {
+    public <T, U> void hide(final JeiIngredient<T, U> ingredient) {
         
         this.hiddenIngredients.put(ingredient.getType(), ingredient.getWrapped());
     }
@@ -54,19 +52,19 @@ public enum JeiStateManager {
         this.hiddenRecipes.add(Pair.of(category, recipe));
     }
     
-    public <T extends CommandStringDisplayable, U> void addDescription(final JeiIngredient<T, U> ingredient, final String... description) {
+    public <T, U> void addDescription(final JeiIngredient<T, U> ingredient, final String... description) {
         
         // TODO("Maybe merging?")
         this.descriptions.computeIfAbsent(ingredient.getType(), it -> new HashMap<>())
                 .put(ingredient.getWrapped(), description);
     }
     
-    public <T extends CommandStringDisplayable, U> void addCustomIngredient(final JeiIngredient<T, U> ingredient) {
+    public <T, U> void addCustomIngredient(final JeiIngredient<T, U> ingredient) {
         
         this.customIngredients.put(ingredient.getType(), ingredient.getWrapped());
     }
     
-    public <T extends CommandStringDisplayable, U> void show(final JeiIngredient<T, U> ingredient) {
+    public <T, U> void show(final JeiIngredient<T, U> ingredient) {
         
         this.hiddenIngredients.remove(ingredient.getType(), ingredient.getWrapped());
     }
@@ -81,13 +79,13 @@ public enum JeiStateManager {
         this.hiddenRecipes.remove(Pair.of(category, recipe));
     }
     
-    public <T extends CommandStringDisplayable, U> void removeDescription(final JeiIngredient<T, U> ingredient) {
+    public <T, U> void removeDescription(final JeiIngredient<T, U> ingredient) {
         
         this.descriptions.computeIfAbsent(ingredient.getType(), it -> new HashMap<>())
                 .remove(ingredient.getWrapped());
     }
     
-    public <T extends CommandStringDisplayable, U> void removeCustomIngredient(final JeiIngredient<T, U> ingredient) {
+    public <T, U> void removeCustomIngredient(final JeiIngredient<T, U> ingredient) {
         
         this.customIngredients.remove(ingredient.getType(), ingredient.getWrapped());
     }
