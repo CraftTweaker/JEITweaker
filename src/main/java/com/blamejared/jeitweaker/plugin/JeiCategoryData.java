@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.state;
+package com.blamejared.jeitweaker.plugin;
 
 import net.minecraft.util.ResourceLocation;
 

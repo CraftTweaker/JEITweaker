@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.state;
+package com.blamejared.jeitweaker.plugin;
 
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;

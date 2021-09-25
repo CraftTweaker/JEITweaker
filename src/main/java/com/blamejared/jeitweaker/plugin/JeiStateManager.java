@@ -1,5 +1,6 @@
-package com.blamejared.jeitweaker.state;
+package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -8,14 +9,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.stream.Stream;
 
 public enum JeiStateManager {
     INSTANCE;
@@ -29,6 +33,7 @@ public enum JeiStateManager {
     private final Map<JeiTweakerIngredientType<?, ?>, Map<Object, String[]>> descriptions = new HashMap<>();
     
     private final Multimap<JeiTweakerIngredientType<?, ?>, Object> customIngredients = LinkedHashMultimap.create();
+    private final List<JeiCategory> customCategories = new ArrayList<>();
     
     public void replaceJeiCategoriesWith(final Set<ResourceLocation> allCategories, final Set<ResourceLocation> nonHiddenCategories) {
         this.currentJeiCategories.clear();
@@ -64,6 +69,11 @@ public enum JeiStateManager {
         this.customIngredients.put(ingredient.getType(), ingredient.getWrapped());
     }
     
+    public void addCustomCategory(final JeiCategory category) {
+        
+        this.customCategories.add(category);
+    }
+    
     public <T, U> void show(final JeiIngredient<T, U> ingredient) {
         
         this.hiddenIngredients.remove(ingredient.getType(), ingredient.getWrapped());
@@ -90,6 +100,11 @@ public enum JeiStateManager {
         this.customIngredients.remove(ingredient.getType(), ingredient.getWrapped());
     }
     
+    public void removeCustomCategory(final JeiCategory category) {
+        
+        this.customCategories.remove(category);
+    }
+    
     public Set<JeiCategoryData> getCurrentJeiCategories() {
         
         return Collections.unmodifiableSet(this.currentJeiCategories);
@@ -103,6 +118,11 @@ public enum JeiStateManager {
     public Set<ResourceLocation> getCategoriesToHide() {
         
         return Collections.unmodifiableSet(this.hiddenRecipeCategories);
+    }
+    
+    public Stream<JeiCategory> getCustomCategories() {
+        
+        return this.customCategories.stream();
     }
     
     public void onHiddenRecipes(final BiConsumer<ResourceLocation, ResourceLocation> consumer) {

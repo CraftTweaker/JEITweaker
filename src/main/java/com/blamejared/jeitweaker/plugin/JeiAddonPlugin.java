@@ -1,17 +1,26 @@
-package com.blamejared.jeitweaker;
+package com.blamejared.jeitweaker.plugin;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
-import com.blamejared.jeitweaker.state.JeiStateManager;
-import com.blamejared.jeitweaker.state.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.JEITweaker;
+import com.blamejared.jeitweaker.zen.category.JeiCategory;
+import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
 import com.google.common.collect.Sets;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.registration.IAdvancedRegistration;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IModIngredientRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.fluid.Fluid;
@@ -21,6 +30,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -32,22 +42,62 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @JeiPlugin
-public class JeiAddonPlugin implements IModPlugin {
+public final class JeiAddonPlugin implements IModPlugin {
     
     private static final ResourceLocation ID = new ResourceLocation(JEITweaker.MOD_ID, "main");
     
     @Override
-    public void registerRecipes(final IRecipeRegistration registration) {
+    public ResourceLocation getPluginUid() {
         
-        JeiTweakerIngredientType.values().forEach(type -> this.registerDescriptionsFor(registration, type));
+        return ID;
     }
     
     @Override
     public void registerItemSubtypes(final ISubtypeRegistration registration) {
         
         this.registerSubtypesFor(JeiTweakerIngredientType.ITEM, registration::hasSubtypeInterpreter, ItemStack::getItem, Item[]::new, registration::useNbtForSubtypes);
+    }
+    
+    @Override
+    public void registerFluidSubtypes(final ISubtypeRegistration registration) {
+    
         this.registerSubtypesFor(JeiTweakerIngredientType.FLUID, registration::hasSubtypeInterpreter, FluidStack::getFluid, Fluid[]::new, registration::useNbtForSubtypes);
     }
+    
+    @Override
+    public void registerIngredients(final IModIngredientRegistration registration) {}
+    
+    @Override
+    public void registerCategories(final IRecipeCategoryRegistration registration) {
+        
+        final IJeiHelpers helpers = registration.getJeiHelpers();
+        registration.addRecipeCategories(JeiStateManager.INSTANCE.getCustomCategories().map(it -> new JeiTweakerCategory(it, helpers)).toArray(IRecipeCategory[]::new));
+    }
+    
+    @Override
+    public void registerVanillaCategoryExtensions(final IVanillaCategoryExtensionRegistration registration) {}
+    
+    @Override
+    public void registerRecipes(final IRecipeRegistration registration) {
+        
+        JeiTweakerIngredientType.values().forEach(type -> this.registerDescriptionsFor(registration, type));
+        JeiStateManager.INSTANCE.getCustomCategories().forEach(category -> this.registerRecipeFor(registration, category));
+    }
+    
+    @Override
+    public void registerRecipeTransferHandlers(final IRecipeTransferRegistration registration) {}
+    
+    @Override
+    public void registerRecipeCatalysts(final IRecipeCatalystRegistration registration) {
+        
+        JeiStateManager.INSTANCE.getCustomCategories().forEach(category -> this.registerCatalystsFor(registration, category));
+    }
+    
+    @Override
+    public void registerGuiHandlers(final IGuiHandlerRegistration registration) {}
+    
+    @Override
+    public void registerAdvanced(final IAdvancedRegistration registration) {}
     
     @Override
     public void onRuntimeAvailable(final IJeiRuntime iJeiRuntime) {
@@ -64,12 +114,6 @@ public class JeiAddonPlugin implements IModPlugin {
         this.hideRecipeCategories(recipeManager);
         this.hideRecipes(recipeManager);
         this.storeCurrentCategories(recipeManager);
-    }
-    
-    @Override
-    public ResourceLocation getPluginUid() {
-        
-        return ID;
     }
     
     private <T, U, R> void registerSubtypesFor(final JeiTweakerIngredientType<T, U> type, final Predicate<U> hasSubtype, final Function<U, R> flatter,
@@ -94,21 +138,25 @@ public class JeiAddonPlugin implements IModPlugin {
                 registration.addIngredientInfo(type.toInternal(ingredient), type.toJeiType(registration.getIngredientManager()), description));
     }
     
-    private <T, U> void addItemsFor(final IIngredientManager manager, final JeiTweakerIngredientType<T, U> type) {
+    private void registerRecipeFor(final IRecipeRegistration registration, final JeiCategory category) {
         
-        final IIngredientType<U> jeiType = type.toJeiType(manager);
-        final Collection<U> additions = JeiStateManager.INSTANCE.getCustomIngredientsForType(type)
-                .stream()
-                .map(type::toInternal)
-                .collect(Collectors.toList());
+        registration.addRecipes(
+                category.getTargetRecipes().stream().map(JeiTweakerRecipe::new).collect(Collectors.toList()),
+                category.id()
+        );
+    }
+    
+    private void registerCatalystsFor(final IRecipeCatalystRegistration registration, final JeiCategory category) {
         
-        if (additions.isEmpty()) return;
-        
-        manager.addIngredientsAtRuntime(jeiType, additions);
+        final ResourceLocation id = category.id();
+        Arrays.stream(category.catalysts())
+                .map(HackyJeiIngredientToMakeZenCodeHappy::cast)
+                .map(ingredient -> ingredient.getType().toInternal(ingredient.getWrapped()))
+                .forEach(catalyst -> registration.addRecipeCatalyst(catalyst, id));
     }
     
     private <T, U> void hideIngredientsFor(final IIngredientManager manager, final JeiTweakerIngredientType<T, U> type) {
-    
+        
         final Collection<T> hiddenIngredients = JeiStateManager.INSTANCE.getHiddenIngredientsForType(type);
         final IIngredientType<U> jeiType = type.toJeiType(manager);
         final List<U> removals = manager.getAllIngredients(jeiType)
@@ -121,6 +169,19 @@ public class JeiAddonPlugin implements IModPlugin {
         if (removals.isEmpty()) return;
         
         manager.removeIngredientsAtRuntime(jeiType, removals);
+    }
+    
+    private <T, U> void addItemsFor(final IIngredientManager manager, final JeiTweakerIngredientType<T, U> type) {
+        
+        final IIngredientType<U> jeiType = type.toJeiType(manager);
+        final Collection<U> additions = JeiStateManager.INSTANCE.getCustomIngredientsForType(type)
+                .stream()
+                .map(type::toInternal)
+                .collect(Collectors.toList());
+        
+        if (additions.isEmpty()) return;
+        
+        manager.addIngredientsAtRuntime(jeiType, additions);
     }
     
     private void hideRecipeCategories(final IRecipeManager manager) {

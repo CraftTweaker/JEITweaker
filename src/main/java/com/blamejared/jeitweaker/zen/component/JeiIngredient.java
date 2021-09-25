@@ -1,12 +1,12 @@
 package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
-import com.blamejared.jeitweaker.state.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 
 /*
  TODO("Uncomment when generic type inference has gotten better")
-@Document("mods/JEITweaker/JeiIngredient")
-@ZenCodeType.Name("mods.jei.JeiIngredient")
+@Document("mods/JEITweaker/Component/JeiIngredient")
+@ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
  */
 public final class JeiIngredient<T, U> implements HackyJeiIngredientToMakeZenCodeHappy {

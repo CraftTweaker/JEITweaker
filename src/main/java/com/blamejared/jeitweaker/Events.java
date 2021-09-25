@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.commands.CTCommandCollectionEvent;
 import com.blamejared.crafttweaker.impl.commands.CommandCaller;
-import com.blamejared.jeitweaker.state.JeiStateManager;
+import com.blamejared.jeitweaker.plugin.JeiStateManager;
 
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;

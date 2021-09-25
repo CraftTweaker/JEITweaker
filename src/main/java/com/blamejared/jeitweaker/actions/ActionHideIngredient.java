@@ -2,7 +2,7 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.jeitweaker.state.JeiStateManager;
+import com.blamejared.jeitweaker.plugin.JeiStateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraftforge.fml.LogicalSide;
 

@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
-@Document("mods/JEITweaker/component/JeiIngredient")
+@Document("mods/JEITweaker/Component/JeiIngredient")
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
 // TODO("Replace all usages of this with JeiIngredient once generic inference is better")
