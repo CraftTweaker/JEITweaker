@@ -8,11 +8,13 @@ import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.actions.ActionAddInfo;
 import com.blamejared.jeitweaker.actions.ActionAddIngredient;
+import com.blamejared.jeitweaker.actions.ActionAddRecipeCategory;
 import com.blamejared.jeitweaker.actions.ActionHideCategory;
 import com.blamejared.jeitweaker.actions.ActionHideIngredient;
 import com.blamejared.jeitweaker.actions.ActionHideMod;
 import com.blamejared.jeitweaker.actions.ActionHideRecipe;
 import com.blamejared.jeitweaker.actions.ActionHideRegex;
+import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
 import com.blamejared.jeitweaker.zen.component.IFluidStackExpansions;
 import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
@@ -25,15 +27,21 @@ import org.openzen.zencode.java.ZenCodeType;
 public final class JeiManager {
     
     @ZenCodeType.Method
-    public static void addIngredient(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+    public static void addCategory(final JeiCategory category) {
         
-        CraftTweakerAPI.apply(new ActionAddIngredient<>(ingredient.cast()));
+        CraftTweakerAPI.apply(new ActionAddRecipeCategory(category));
     }
     
     @ZenCodeType.Method
     public static void addDescription(final HackyJeiIngredientToMakeZenCodeHappy ingredient, final String... description) {
         
         CraftTweakerAPI.apply(new ActionAddInfo<>(ingredient.cast(), description));
+    }
+    
+    @ZenCodeType.Method
+    public static void addIngredient(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+        
+        CraftTweakerAPI.apply(new ActionAddIngredient<>(ingredient.cast()));
     }
     
     @Deprecated
