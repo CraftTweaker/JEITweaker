@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -23,22 +24,26 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public final class JeiTweakerRecipe {
+    
     @FunctionalInterface
     private interface IngredientSetter {
+        
         <U> void set(final IIngredientType<U> ingredientType, final List<List<U>> inputs);
     }
     
     private final JeiRecipe recipe;
     private final IIngredientManager manager;
-    private final Supplier<Map<JeiTweakerIngredientType<?, ?>, List<List<?>>>> ingredients;
-    private final Supplier<Map<JeiTweakerIngredientType<?, ?>, List<List<?>>>> results;
+    private final Supplier<Map<IIngredientType<?>, List<List<?>>>> ingredients;
+    private final Supplier<Map<IIngredientType<?>, List<List<?>>>> results;
+    private final Supplier<Set<IIngredientType<?>>> consideredTypes;
     
     JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager) {
         
         this.recipe = recipe;
         this.manager = manager;
-        this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.recipe.getInputs()));
-        this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.recipe.getOutputs()));
+        this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getInputs()));
+        this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getOutputs()));
+        this.consideredTypes = Suppliers.memoize(() -> this.computeJeiTypes(this.ingredients.get(), this.results.get()));
     }
     
     JeiCategory getOwningCategory() {
@@ -48,54 +53,53 @@ public final class JeiTweakerRecipe {
     
     void setIngredients(final IIngredients ingredients) {
         
-        this.setIngredients(this.manager, this.ingredients.get(), ingredients::setInputLists);
-        this.setIngredients(this.manager, this.results.get(), ingredients::setOutputLists);
+        this.setIngredients(this.ingredients.get(), ingredients::setInputLists);
+        this.setIngredients(this.results.get(), ingredients::setOutputLists);
     }
     
     void setRecipe(final IRecipeLayout layout, final Consumer<IGuiIngredientGroup<?>> layoutMaker, final long slotsData) {
         
-        this.initializeRecipeGui(this.manager, layout, layoutMaker);
-        this.placeIngredients(this.manager, layout, (int) slotsData, (int) (slotsData >>> 32));
+        this.initializeRecipeGui(layout, layoutMaker);
+        this.placeIngredients(layout, (int) slotsData, (int) (slotsData >>> 32));
     }
     
-    private void setIngredients(final IIngredientManager manager, final Map<JeiTweakerIngredientType<?, ?>, List<List<?>>> data, final IngredientSetter setter) {
+    private void setIngredients(final Map<IIngredientType<?>, List<List<?>>> data, final IngredientSetter setter) {
         
-        data.forEach((type, ingredient) -> setter.set(type.toJeiType(manager), this.uncheck(ingredient)));
+        data.forEach((type, ingredient) -> setter.set(type, this.uncheck(ingredient)));
     }
     
-    private void initializeRecipeGui(final IIngredientManager manager, final IRecipeLayout layout, final Consumer<IGuiIngredientGroup<?>> layoutMaker) {
-    
-        Stream.concat(this.ingredients.get().keySet().stream(), this.results.get().keySet().stream())
-                .map(type -> type.toJeiType(manager))
+    private void initializeRecipeGui(final IRecipeLayout layout, final Consumer<IGuiIngredientGroup<?>> layoutMaker) {
+        
+        this.consideredTypes.get()
+                .stream()
                 .map(layout::getIngredientsGroup)
                 .forEach(layoutMaker);
     }
     
-    private void placeIngredients(final IIngredientManager manager, final IRecipeLayout layout, final int inSlots, final int outSlots) {
+    private void placeIngredients(final IRecipeLayout layout, final int inSlots, final int outSlots) {
         
-        this.placeIngredientsIn(manager, layout, this.ingredients.get(), 0, inSlots);
-        this.placeIngredientsIn(manager, layout, this.results.get(), inSlots, outSlots);
+        this.placeIngredientsIn(layout, this.ingredients.get(), 0, inSlots);
+        this.placeIngredientsIn(layout, this.results.get(), inSlots, outSlots);
     }
     
     private void placeIngredientsIn(
-            final IIngredientManager manager,
             final IRecipeLayout layout,
-            final Map<JeiTweakerIngredientType<?, ?>, List<List<?>>> data,
+            final Map<IIngredientType<?>, List<List<?>>> data,
             final int startIndex,
             final int slotAmount
     ) {
         
         data.forEach((type, slots) -> {
     
-            final IGuiIngredientGroup<?> group = layout.getIngredientsGroup(type.toJeiType(manager));
+            final IGuiIngredientGroup<?> group = layout.getIngredientsGroup(type);
             IntStream.range(0, Math.min(slots.size(), slotAmount)).forEach(slot -> group.set(slot + startIndex, this.uncheckIngredientList(slots.get(slot))));
         });
     }
     
-    private Map<JeiTweakerIngredientType<?, ?>, List<List<?>>> computeJeiMaps(final HackyJeiIngredientToMakeZenCodeHappy[][] array) {
+    private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final HackyJeiIngredientToMakeZenCodeHappy[][] array) {
         
         final List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> jeiLists = this.computeJeiList(array);
-        final Map<JeiTweakerIngredientType<?, ?>, List<List<?>>> returnValue = new LinkedHashMap<>();
+        final Map<IIngredientType<?>, List<List<?>>> returnValue = new LinkedHashMap<>();
     
         IntStream.range(0, jeiLists.size()).forEach(slot -> {
             
@@ -103,7 +107,7 @@ public final class JeiTweakerRecipe {
             
             validElementsForSlot.forEach(ingredientData -> {
                 
-                final JeiTweakerIngredientType<?, ?> type = ingredientData.getFirst();
+                final IIngredientType<?> type = ingredientData.getFirst().toJeiType(manager);
                 final List<List<?>> ingredientTypedSlots = returnValue.computeIfAbsent(type, it -> new ArrayList<>());
                 
                 // All previous slots are assumed empty, so we fill the list with that information
@@ -131,6 +135,11 @@ public final class JeiTweakerRecipe {
                 )
                 .map(this::uncheckList)
                 .collect(Collectors.toList());
+    }
+    
+    private Set<IIngredientType<?>> computeJeiTypes(final Map<IIngredientType<?>, ?> in, final Map<IIngredientType<?>, ?> out) {
+    
+        return Stream.concat(in.keySet().stream(), out.keySet().stream()).collect(Collectors.toSet());
     }
     
     @SuppressWarnings("unchecked")
