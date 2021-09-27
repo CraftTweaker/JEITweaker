@@ -71,7 +71,11 @@ public final class JeiAddonPlugin implements IModPlugin {
     public void registerCategories(final IRecipeCategoryRegistration registration) {
         
         final IJeiHelpers helpers = registration.getJeiHelpers();
-        registration.addRecipeCategories(JeiStateManager.INSTANCE.getCustomCategories().map(it -> new JeiTweakerCategory(it, helpers)).toArray(IRecipeCategory[]::new));
+        final IRecipeCategory<?>[] categories = JeiStateManager.INSTANCE.getCustomCategories().map(it -> new JeiTweakerCategory(it, helpers)).toArray(IRecipeCategory[]::new);
+        
+        if (categories.length == 0) return;
+        
+        registration.addRecipeCategories(categories);
     }
     
     @Override
@@ -140,8 +144,9 @@ public final class JeiAddonPlugin implements IModPlugin {
     
     private void registerRecipeFor(final IRecipeRegistration registration, final JeiCategory category) {
         
+        final IIngredientManager ingredientManager = registration.getIngredientManager();
         registration.addRecipes(
-                category.getTargetRecipes().stream().map(JeiTweakerRecipe::new).collect(Collectors.toList()),
+                category.getTargetRecipes().stream().map(it -> new JeiTweakerRecipe(it, ingredientManager)).collect(Collectors.toList()),
                 category.id()
         );
     }

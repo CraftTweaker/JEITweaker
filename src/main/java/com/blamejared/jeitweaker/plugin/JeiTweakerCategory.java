@@ -1,7 +1,6 @@
 package com.blamejared.jeitweaker.plugin;
 
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.google.common.base.Suppliers;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -13,21 +12,16 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecipe> {
     
     private final JeiCategory zenCategory;
     private final IJeiHelpers helpers;
-    private final Supplier<IDrawable> backgroundGetter;
-    private final Supplier<IDrawable> iconGetter;
     
     JeiTweakerCategory(final JeiCategory zenCategory, final IJeiHelpers helpers) {
         
         this.zenCategory = zenCategory;
         this.helpers = helpers;
-        this.backgroundGetter = Suppliers.memoize(() -> this.zenCategory.background().getDrawable(this.helpers.getGuiHelper()));
-        this.iconGetter = Suppliers.memoize(() -> this.zenCategory.icon().getDrawable(this.helpers.getGuiHelper()));
     }
     
     @Override
@@ -52,23 +46,27 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public IDrawable getBackground() {
         
-        return this.backgroundGetter.get();
+        return this.zenCategory.background().getDrawable(this.helpers.getGuiHelper());
     }
     
     @Override
     public IDrawable getIcon() {
-        
-        return this.iconGetter.get();
+    
+        return this.zenCategory.icon().getDrawable(this.helpers.getGuiHelper());
     }
     
     @Override
     public void setIngredients(final JeiTweakerRecipe recipe, final IIngredients ingredients) {
-        // TODO("")
+        
+        recipe.setIngredients(ingredients);
     }
     
     @Override
     public void setRecipe(final IRecipeLayout recipeLayout, final JeiTweakerRecipe recipe, final IIngredients ingredients) {
-        // TODO("")
+        
+        final JeiCategoryPluginBridge bridge = this.zenCategory.getBridge();
+        final long slotsData = ((long) bridge.getOutputSlotsAmount()) << 32 | ((long) bridge.getInputSlotsAmount());
+        recipe.setRecipe(recipeLayout, bridge::initializeGui, slotsData);
     }
     
     @Override
