@@ -1,5 +1,6 @@
 package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.google.common.collect.LinkedHashMultimap;
@@ -7,7 +8,6 @@ import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public enum JeiStateManager {
     private final Set<ResourceLocation> hiddenRecipeCategories = new LinkedHashSet<>();
     private final Set<Pair<ResourceLocation, ResourceLocation>> hiddenRecipes = new LinkedHashSet<>();
     
-    private final Map<JeiTweakerIngredientType<?, ?>, Map<Object, String[]>> descriptions = new HashMap<>();
+    private final Map<JeiTweakerIngredientType<?, ?>, Map<Object, MCTextComponent[]>> descriptions = new HashMap<>();
     
     private final Multimap<JeiTweakerIngredientType<?, ?>, Object> customIngredients = LinkedHashMultimap.create();
     private final List<JeiCategory> customCategories = new ArrayList<>();
@@ -57,7 +57,7 @@ public enum JeiStateManager {
         this.hiddenRecipes.add(Pair.of(category, recipe));
     }
     
-    public <T, U> void addDescription(final JeiIngredient<T, U> ingredient, final String... description) {
+    public <T, U> void addDescription(final JeiIngredient<T, U> ingredient, final MCTextComponent... description) {
         
         // TODO("Maybe merging?")
         this.descriptions.computeIfAbsent(ingredient.getType(), it -> new HashMap<>())
@@ -135,7 +135,7 @@ public enum JeiStateManager {
         
         this.descriptions.getOrDefault(type, Collections.emptyMap())
                 .forEach((ingredient, description) ->
-                        consumer.accept((T) ingredient, Arrays.stream(description).map(TranslationTextComponent::new).toArray(ITextComponent[]::new)));
+                        consumer.accept((T) ingredient, Arrays.stream(description).map(MCTextComponent::getInternal).toArray(ITextComponent[]::new)));
     }
     
     public <T, U> Collection<T> getCustomIngredientsForType(final JeiTweakerIngredientType<T, U> type) {

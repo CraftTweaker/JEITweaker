@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.plugin.JeiStateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraftforge.fml.LogicalSide;
@@ -9,9 +10,9 @@ import net.minecraftforge.fml.LogicalSide;
 public final class ActionAddInfo<T, U> implements IUndoableAction {
     
     private final JeiIngredient<T, U> ingredient;
-    private final String[] description;
+    private final MCTextComponent[] description;
     
-    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final String... description) {
+    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final MCTextComponent... description) {
         
         this.ingredient = ingredient;
         this.description = description;

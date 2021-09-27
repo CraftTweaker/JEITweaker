@@ -5,6 +5,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.actions.ActionAddInfo;
 import com.blamejared.jeitweaker.actions.ActionAddIngredient;
@@ -21,6 +22,8 @@ import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Arrays;
+
 @Document("mods/JEITweaker/JEI")
 @ZenCodeType.Name("mods.jei.JEI")
 @ZenRegister
@@ -33,7 +36,7 @@ public final class JeiManager {
     }
     
     @ZenCodeType.Method
-    public static void addDescription(final HackyJeiIngredientToMakeZenCodeHappy ingredient, final String... description) {
+    public static void addDescription(final HackyJeiIngredientToMakeZenCodeHappy ingredient, final MCTextComponent... description) {
         
         CraftTweakerAPI.apply(new ActionAddInfo<>(ingredient.cast(), description));
     }
@@ -55,14 +58,14 @@ public final class JeiManager {
     @ZenCodeType.Method
     public static void addInfo(final IItemStack stack, final String... description) {
         
-        addDescription(IItemStackExpansions.asJeiIngredient(stack), description);
+        addDescription(IItemStackExpansions.asJeiIngredient(stack), Arrays.stream(description).map(MCTextComponent::createTranslationTextComponent).toArray(MCTextComponent[]::new));
     }
     
     @Deprecated
     @ZenCodeType.Method
     public static void addInfo(final IFluidStack stack, final String... description) {
         
-        addDescription(IFluidStackExpansions.asJeiIngredient(stack), description);
+        addDescription(IFluidStackExpansions.asJeiIngredient(stack), Arrays.stream(description).map(MCTextComponent::createTranslationTextComponent).toArray(MCTextComponent[]::new));
     }
     
     @ZenCodeType.Method
