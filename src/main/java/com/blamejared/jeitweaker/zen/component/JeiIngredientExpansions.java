@@ -12,6 +12,6 @@ public final class JeiIngredientExpansions {
     @ZenCodeType.Caster(implicit = true)
     public static JeiDrawable asJeiDrawable(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
         
-        return (helper) -> helper.createDrawableIngredient(ingredient.cast().getType().toInternal(ingredient.cast().getWrapped()));
+        return JeiDrawable.of(ingredient);
     }
 }
