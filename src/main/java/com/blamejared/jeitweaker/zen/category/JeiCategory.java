@@ -1,8 +1,10 @@
 package com.blamejared.jeitweaker.zen.category;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.logger.ILogger;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import com.blamejared.jeitweaker.plugin.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -10,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.List;
+import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
 @Document("mods/JEITweaker/Category/JeiCategory")
@@ -21,7 +24,7 @@ public interface JeiCategory {
     static <T extends JeiCategory> JeiCategory create(
             final Class<T> typeToken,
             final String id,
-            final String name,
+            final MCTextComponent name,
             final JeiDrawable icon,
             final HackyJeiIngredientToMakeZenCodeHappy[] catalysts
     ) {
@@ -33,7 +36,7 @@ public interface JeiCategory {
     static <T extends JeiCategory> JeiCategory create(
             final Class<T> typeToken,
             final String id,
-            final String name,
+            final MCTextComponent name,
             final JeiDrawable icon,
             final HackyJeiIngredientToMakeZenCodeHappy[] catalysts,
             final Consumer<T> configurator
@@ -60,4 +63,10 @@ public interface JeiCategory {
     void addRecipe(final JeiRecipe recipe);
     
     List<JeiRecipe> getTargetRecipes();
+    
+    default BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+        return (recipe, logger) -> true;
+    }
+    
+    JeiCategoryPluginBridge getBridge();
 }
