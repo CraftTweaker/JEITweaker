@@ -40,8 +40,6 @@ public final class JeiTweakerIngredientType<T, U> {
         this.toJeiTweakerConverter = toJeiTweakerConverter;
         this.matcher = matcher;
         this.toJeiTypeConverter = toJeiTypeConverter;
-        
-        VALUES.add(this);
     }
     
     public static Stream<JeiTweakerIngredientType<?, ?>> values() {
@@ -49,7 +47,7 @@ public final class JeiTweakerIngredientType<T, U> {
         return VALUES.stream();
     }
     
-    private static <T, U> JeiTweakerIngredientType<T, U> of(
+    public static <T, U> JeiTweakerIngredientType<T, U> of(
             final Class<T> jeiTweakerType,
             final Class<U> internalType,
             final Function<T, U> toInternal,
@@ -57,7 +55,10 @@ public final class JeiTweakerIngredientType<T, U> {
             final BiPredicate<T, T> matcher
     ) {
         
-        return new JeiTweakerIngredientType<>(jeiTweakerType, internalType, toInternal, toJeiTweaker, matcher, manager -> manager.getIngredientType(internalType));
+        final JeiTweakerIngredientType<T, U> type =
+                new JeiTweakerIngredientType<>(jeiTweakerType, internalType, toInternal, toJeiTweaker, matcher, manager -> manager.getIngredientType(internalType));
+        VALUES.add(type);
+        return type;
     }
     
     public Class<T> getJeiTweakerType() {
