@@ -39,11 +39,11 @@ public final class JeiTweakerRecipe {
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> results;
     private final Supplier<Set<IIngredientType<?>>> consideredTypes;
     
-    JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager) {
+    JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager, final JeiCoordinateFixer fixer) {
         
         this.recipe = recipe;
         this.manager = manager;
-        this.fixer = new JeiCoordinateFixer(manager);
+        this.fixer = fixer;
         this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getInputs()));
         this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getOutputs()));
         this.consideredTypes = Suppliers.memoize(() -> this.computeJeiTypes(this.ingredients.get(), this.results.get()));

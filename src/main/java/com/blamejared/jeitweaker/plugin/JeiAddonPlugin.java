@@ -145,8 +145,9 @@ public final class JeiAddonPlugin implements IModPlugin {
     private void registerRecipeFor(final IRecipeRegistration registration, final JeiCategory category) {
         
         final IIngredientManager ingredientManager = registration.getIngredientManager();
+        final JeiCoordinateFixer fixer = new JeiCoordinateFixer(ingredientManager);
         registration.addRecipes(
-                category.getTargetRecipes().stream().map(it -> new JeiTweakerRecipe(it, ingredientManager)).collect(Collectors.toList()),
+                category.getTargetRecipes().stream().map(it -> new JeiTweakerRecipe(it, ingredientManager, fixer)).collect(Collectors.toList()),
                 category.id()
         );
     }
