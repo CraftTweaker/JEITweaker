@@ -22,13 +22,14 @@ final class JeiCategoryHelper {
     }
     
     private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), it -> {
-        it.put(VerySimpleJustToCheck.class, VerySimpleJustToCheck::new);
+        
+        add(it, SimpleInputOutputCategory.class, SimpleInputOutputCategory::new);
     });
     
     static <T extends JeiCategory> T of(
             final Class<T> typeToken,
             final String id,
-            final String name,
+            final MCTextComponent name,
             final JeiDrawable icon,
             final HackyJeiIngredientToMakeZenCodeHappy[] catalysts,
             final Consumer<T> configurator
@@ -43,15 +44,20 @@ final class JeiCategoryHelper {
                         fixed
                 )
         );
-        final MCTextComponent translatableName = MCTextComponent.createTranslationTextComponent(name);
         final JeiCategoryCreator<T> creator = creatorOf(typeToken);
         
-        return Util.make(creator.of(checkedId, translatableName, icon, catalysts), configurator);
+        return Util.make(creator.of(checkedId, name, icon, catalysts), configurator);
     }
     
     @SuppressWarnings("unchecked")
     private static <T extends JeiCategory> JeiCategoryCreator<T> creatorOf(final Class<T> type) {
         
         return Objects.requireNonNull((JeiCategoryCreator<T>) CREATORS.get(type), () -> "Invalid category type supplied: " + type.getName());
+    }
+    
+    private static <T extends JeiCategory> void add(final Map<Class<?>, JeiCategoryCreator<?>> map, final Class<T> clazz, final JeiCategoryCreator<T> creator) {
+        
+        // This exists mainly to provide a typesafe way of registering creators
+        map.put(clazz, creator);
     }
 }
