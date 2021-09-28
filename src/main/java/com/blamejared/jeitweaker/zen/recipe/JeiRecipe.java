@@ -6,6 +6,7 @@ import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 // TODO("Expose methods?")
@@ -50,6 +51,17 @@ public final class JeiRecipe {
     public void doGraphics(final RecipeGraphics graphics) {
         
         this.graphics.accept(graphics);
+    }
+    
+    @Override
+    public String toString() {
+        
+        return String.format(
+                "JeiRecipe[category='%s',outputs=%s,inputs=%s]",
+                this.owningCategory,
+                Arrays.deepToString(this.outputs),
+                Arrays.deepToString(this.inputs)
+        );
     }
     
 }
