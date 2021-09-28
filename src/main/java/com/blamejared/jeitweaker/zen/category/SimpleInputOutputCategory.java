@@ -76,7 +76,7 @@ public final class SimpleInputOutputCategory extends SimpleJeiCategory {
             return true;
         };
         
-        return super.getRecipeValidator().and(other);
+        return other.and(super.getRecipeValidator());
     }
     
     @Override
