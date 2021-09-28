@@ -16,11 +16,6 @@ public final class JeiCoordinateFixer {
     private static final IntUnaryOperator IDENTITY = it -> it;
     private static final Map<JeiTweakerIngredientType<?, ?>, IntUnaryOperator> RAW_FIXERS = new HashMap<>();
     
-    static {
-        // TODO("This is a temporary location: find where best to place this")
-        registerRawFixer(JeiTweakerIngredientType.ITEM, it -> it - 1);
-    }
-    
     private final Supplier<Map<IIngredientType<?>, IntUnaryOperator>> fixers;
     
     JeiCoordinateFixer(final IIngredientManager manager) {
