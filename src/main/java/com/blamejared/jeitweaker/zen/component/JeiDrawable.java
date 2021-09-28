@@ -8,40 +8,65 @@ import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.function.Function;
+
 @Document("mods/JEITweaker/Component/JeiDrawable")
-@FunctionalInterface
 @ZenCodeType.Name("mods.jei.component.JeiDrawable")
 @ZenRegister
-public interface JeiDrawable {
-    @ZenCodeType.Method
-    static JeiDrawable blank(final int width, final int height) {
+public final class JeiDrawable {
+    
+    private volatile Function<IGuiHelper, IDrawable> delegate;
+    private volatile IDrawable content;
+    
+    private JeiDrawable(final Function<IGuiHelper, IDrawable> delegate) {
         
-        return new LazyDrawable((helper) -> helper.createBlankDrawable(width, height));
+        this.delegate = delegate;
     }
     
     @ZenCodeType.Method
-    static JeiDrawable of(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+    public static JeiDrawable blank(final int width, final int height) {
         
-        return new LazyDrawable((helper) -> helper.createDrawableIngredient(ingredient.cast().getType().toInternal(ingredient.cast().getWrapped())));
+        return new JeiDrawable((helper) -> helper.createBlankDrawable(width, height));
     }
     
     @ZenCodeType.Method
-    static JeiDrawable of(final ResourceLocation texture, final int u, final int v, final int width, final int height) {
+    public static JeiDrawable of(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
         
-        return new LazyDrawable((helper) -> helper.createDrawable(texture, u, v, width, height));
+        return new JeiDrawable((helper) -> helper.createDrawableIngredient(ingredient.cast().getType().toInternal(ingredient.cast().getWrapped())));
     }
     
     @ZenCodeType.Method
-    static JeiDrawable ofAnimated(final JeiDrawable delegate, final int ticks, final JeiDrawableAnimation animation) {
+    public static JeiDrawable of(final ResourceLocation texture, final int u, final int v, final int width, final int height) {
         
-        return new LazyDrawable((helper) -> helper.createAnimatedDrawable((IDrawableStatic) delegate.getDrawable(helper), ticks, animation.direction(), animation.inverted()));
+        return new JeiDrawable((helper) -> helper.createDrawable(texture, u, v, width, height));
     }
     
     @ZenCodeType.Method
-    static JeiDrawable ofAnimated(final ResourceLocation texture, final int u, final int v, final int width, final int height, final int ticks, final JeiDrawableAnimation animation) {
+    public static JeiDrawable ofAnimated(final JeiDrawable delegate, final int ticks, final JeiDrawableAnimation animation) {
+        
+        return new JeiDrawable((helper) -> helper.createAnimatedDrawable((IDrawableStatic) delegate.getDrawable(helper), ticks, animation.direction(), animation.inverted()));
+    }
+    
+    @ZenCodeType.Method
+    public static JeiDrawable ofAnimated(final ResourceLocation texture, final int u, final int v, final int width, final int height, final int ticks, final JeiDrawableAnimation animation) {
         
         return ofAnimated(of(texture, u, v, width, height), ticks, animation);
     }
     
-    IDrawable getDrawable(final IGuiHelper helper);
+    public IDrawable getDrawable(final IGuiHelper helper) {
+    
+        if (this.content == null) {
+        
+            synchronized (this) {
+            
+                if (this.content == null) {
+                
+                    this.content = this.delegate.apply(helper);
+                    this.delegate = null;
+                }
+            }
+        }
+    
+        return this.content;
+    }
 }
