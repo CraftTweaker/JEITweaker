@@ -17,7 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -33,6 +34,7 @@ public final class JeiTweakerRecipe {
     
     private final JeiRecipe recipe;
     private final IIngredientManager manager;
+    private final JeiCoordinateFixer fixer;
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> ingredients;
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> results;
     private final Supplier<Set<IIngredientType<?>>> consideredTypes;
@@ -41,6 +43,7 @@ public final class JeiTweakerRecipe {
         
         this.recipe = recipe;
         this.manager = manager;
+        this.fixer = new JeiCoordinateFixer(manager);
         this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getInputs()));
         this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getOutputs()));
         this.consideredTypes = Suppliers.memoize(() -> this.computeJeiTypes(this.ingredients.get(), this.results.get()));
@@ -57,7 +60,7 @@ public final class JeiTweakerRecipe {
         this.setIngredients(this.results.get(), ingredients::setOutputLists);
     }
     
-    void setRecipe(final IRecipeLayout layout, final Consumer<IGuiIngredientGroup<?>> layoutMaker, final long slotsData) {
+    void setRecipe(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker, final long slotsData) {
         
         this.initializeRecipeGui(layout, layoutMaker);
         this.placeIngredients(layout, (int) slotsData, (int) (slotsData >>> 32));
@@ -68,12 +71,9 @@ public final class JeiTweakerRecipe {
         data.forEach((type, ingredient) -> setter.set(type, this.uncheck(ingredient)));
     }
     
-    private void initializeRecipeGui(final IRecipeLayout layout, final Consumer<IGuiIngredientGroup<?>> layoutMaker) {
+    private void initializeRecipeGui(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker) {
         
-        this.consideredTypes.get()
-                .stream()
-                .map(layout::getIngredientsGroup)
-                .forEach(layoutMaker);
+        this.consideredTypes.get().forEach(it -> layoutMaker.accept(layout.getIngredientsGroup(it), this.fixer.findFor(it)));
     }
     
     private void placeIngredients(final IRecipeLayout layout, final int inSlots, final int outSlots) {

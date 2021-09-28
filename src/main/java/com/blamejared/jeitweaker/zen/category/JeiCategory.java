@@ -65,6 +65,7 @@ public interface JeiCategory {
     List<JeiRecipe> getTargetRecipes();
     
     default BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+        
         return (recipe, logger) -> true;
     }
     
