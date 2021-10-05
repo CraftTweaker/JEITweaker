@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Document("mods/JEI/Component/JeiDrawable")
 @ZenCodeType.Name("mods.jei.component.JeiDrawable")
@@ -51,6 +52,12 @@ public final class JeiDrawable {
     public static JeiDrawable ofAnimated(final ResourceLocation texture, final int u, final int v, final int width, final int height, final int ticks, final JeiDrawableAnimation animation) {
         
         return ofAnimated(of(texture, u, v, width, height), ticks, animation);
+    }
+    
+    // Do not expose to Zen: this is here only for the benefit of JEITweaker
+    public static JeiDrawable of(final Supplier<IDrawable> drawableSupplier) {
+        
+        return new JeiDrawable(ignore -> drawableSupplier.get());
     }
     
     public IDrawable getDrawable(final IGuiHelper helper) {
