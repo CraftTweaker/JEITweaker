@@ -16,13 +16,14 @@ import java.util.function.Consumer;
 final class JeiCategoryHelper {
     
     @FunctionalInterface
-    interface JeiCategoryCreator<T extends JeiCategory> {
+    private interface JeiCategoryCreator<T extends JeiCategory> {
         
         T of(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient[] catalysts);
     }
     
     private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), it -> {
         
+        add(it, OutputListCategory.class, OutputListCategory::new);
         add(it, SimpleInputOutputCategory.class, SimpleInputOutputCategory::new);
     });
     
