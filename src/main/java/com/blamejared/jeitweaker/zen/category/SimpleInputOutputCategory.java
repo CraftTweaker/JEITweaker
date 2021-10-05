@@ -15,7 +15,7 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.function.BiPredicate;
 import java.util.function.IntUnaryOperator;
 
-@Document("mods/JEITweaker/Category/SimpleInputOutput")
+@Document("mods/JEI/Category/SimpleInputOutput")
 @ZenCodeType.Name("mods.jei.category.SimpleInputOutput")
 @ZenRegister
 public final class SimpleInputOutputCategory extends SimpleJeiCategory {

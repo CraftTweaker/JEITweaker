@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 // TODO("Expose methods?")
-@Document("mods/JEITweaker/Recipe/JeiRecipe")
+@Document("mods/JEI/Recipe/JeiRecipe")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipe")
 @ZenRegister
 public final class JeiRecipe {

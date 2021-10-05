@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.Function;
 
-@Document("mods/JEITweaker/Component/JeiDrawable")
+@Document("mods/JEI/Component/JeiDrawable")
 @ZenCodeType.Name("mods.jei.component.JeiDrawable")
 @ZenRegister
 public final class JeiDrawable {

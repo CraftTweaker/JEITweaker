@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
-@Document("mods/JEITweaker/Category/SimpleJeiCategory")
+@Document("mods/JEI/Category/SimpleJeiCategory")
 @ZenCodeType.Name("mods.jei.category.SimpleJeiCategory")
 @ZenRegister
 public abstract class SimpleJeiCategory implements JeiCategory {

@@ -7,7 +7,7 @@ import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
 
-//@Document("mods/JEITweaker/Component/ItemTagExpansions")
+//@Document("mods/JEI/Component/ItemTagExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.tag.MCTag<crafttweaker.api.item.MCItemDefinition>")
 @ZenRegister
 public final class ItemTagExpansions {

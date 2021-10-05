@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.Consumer;
 
-//@Document("mods/JEITweaker/Recipe/JeiCategoryRecipeExpansion")
+//@Document("mods/JEI/Recipe/JeiCategoryRecipeExpansion")
 @ZenCodeType.Expansion("mods.jei.category.JeiCategory")
 @ZenRegister
 public final class JeiCategoryRecipeExpansion {

@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 import org.openzen.zencode.java.ZenCodeType;
 
-//@Document("mods/JEITweaker/Component/IItemStackExpansions")
+//@Document("mods/JEI/Component/IItemStackExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.item.IItemStack")
 @ZenRegister
 public final class IItemStackExpansions {

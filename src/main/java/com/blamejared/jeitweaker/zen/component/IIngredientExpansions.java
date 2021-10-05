@@ -6,7 +6,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
 
-//@Document("mods/JEITweaker/Component/IIngredientExpansions")
+//@Document("mods/JEI/Component/IIngredientExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.item.IIngredient")
 @ZenRegister
 public final class IIngredientExpansions {

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
-@Document("mods/JEITweaker/Category/JeiCategory")
+@Document("mods/JEI/Category/JeiCategory")
 @ZenCodeType.Name("mods.jei.category.JeiCategory")
 @ZenRegister
 public interface JeiCategory {

@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 import org.openzen.zencode.java.ZenCodeType;
 
-//@Document("mods/JEITweaker/Component/IFluidStackExpansions")
+//@Document("mods/JEI/Component/IFluidStackExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.fluid.IFluidStack")
 @ZenRegister
 public final class IFluidStackExpansions {

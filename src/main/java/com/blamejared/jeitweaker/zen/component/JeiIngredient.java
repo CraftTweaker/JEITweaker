@@ -5,7 +5,7 @@ import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 
 /*
  TODO("Uncomment when generic type inference has gotten better")
-@Document("mods/JEITweaker/Component/JeiIngredient")
+@Document("mods/JEI/Component/JeiIngredient")
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
  */

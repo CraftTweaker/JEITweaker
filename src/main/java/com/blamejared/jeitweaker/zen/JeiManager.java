@@ -24,7 +24,7 @@ import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
 
-@Document("mods/JEITweaker/JEI")
+@Document("mods/JEI/JEI")
 @ZenCodeType.Name("mods.jei.JEI")
 @ZenRegister
 public final class JeiManager {

@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
-@Document("mods/JEITweaker/Recipe/JeiRecipeGraphics")
+@Document("mods/JEI/Recipe/JeiRecipeGraphics")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipeGraphics")
 @ZenRegister
 public interface RecipeGraphics {
