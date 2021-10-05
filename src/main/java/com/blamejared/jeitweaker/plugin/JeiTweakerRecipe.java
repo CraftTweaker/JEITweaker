@@ -4,15 +4,18 @@ import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.google.common.base.Suppliers;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.runtime.IIngredientManager;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +69,21 @@ public final class JeiTweakerRecipe {
         this.placeIngredients(layout, (int) slotsData, (int) (slotsData >>> 32));
     }
     
+    void drawExtras(final MatrixStack poseStack, final double mouseX, final double mouseY) {
+    
+    
+    }
+    
+    List<ITextComponent> getTooltip(final double mouseX, final double mouseY) {
+        
+        return Collections.emptyList();
+    }
+    
+    boolean onClick(final double x, final double y, final int button) {
+        
+        return false;
+    }
+    
     private void setIngredients(final Map<IIngredientType<?>, List<List<?>>> data, final IngredientSetter setter) {
         
         data.forEach((type, ingredient) -> setter.set(type, this.uncheck(ingredient)));
@@ -98,7 +116,7 @@ public final class JeiTweakerRecipe {
     
     private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final RawJeiIngredient[][] array) {
         
-        final List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> jeiLists = this.computeJeiList(array);
+        final List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> jeiLists = this.computeJeiLists(array);
         final Map<IIngredientType<?>, List<List<?>>> returnValue = new LinkedHashMap<>();
     
         IntStream.range(0, jeiLists.size()).forEach(slot -> {
@@ -125,7 +143,7 @@ public final class JeiTweakerRecipe {
     }
     
     // outer list: list of slots; inner list: list of valid ingredients for that slot
-    private List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> computeJeiList(final RawJeiIngredient[][] array) {
+    private List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> computeJeiLists(final RawJeiIngredient[][] array) {
         
         return Arrays.stream(array)
                 .map(outer -> Arrays.stream(outer)
