@@ -2,10 +2,9 @@ package com.blamejared.jeitweaker.zen.recipe;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.actions.ActionAddRecipeToCategory;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.Consumer;
@@ -16,7 +15,7 @@ import java.util.function.Consumer;
 public final class JeiCategoryRecipeExpansion {
     
     @ZenCodeType.Method
-    public static void addRecipe(final JeiCategory category, final HackyJeiIngredientToMakeZenCodeHappy[][] outputs, final HackyJeiIngredientToMakeZenCodeHappy[][] inputs) {
+    public static void addRecipe(final JeiCategory category, final RawJeiIngredient[][] outputs, final RawJeiIngredient[][] inputs) {
         
         addRecipe(category, outputs, inputs, graphics -> {});
     }
@@ -24,8 +23,8 @@ public final class JeiCategoryRecipeExpansion {
     @ZenCodeType.Method
     public static void addRecipe(
             final JeiCategory category,
-            final HackyJeiIngredientToMakeZenCodeHappy[][] outputs,
-            final HackyJeiIngredientToMakeZenCodeHappy[][] inputs,
+            final RawJeiIngredient[][] outputs,
+            final RawJeiIngredient[][] inputs,
             final Consumer<RecipeGraphics> graphics
     ) {
         

@@ -6,7 +6,7 @@ import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.JEITweaker;
 import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -29,11 +29,11 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     private final ResourceLocation id;
     private final MCTextComponent name;
     private final JeiDrawable icon;
-    private final HackyJeiIngredientToMakeZenCodeHappy[] catalysts;
+    private final RawJeiIngredient[] catalysts;
     
     private List<JeiRecipe> recipes;
     
-    public SimpleJeiCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final HackyJeiIngredientToMakeZenCodeHappy... catalysts) {
+    public SimpleJeiCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         this.id = id;
         this.name = name;
         this.icon = icon;
@@ -59,7 +59,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     }
     
     @Override
-    public final HackyJeiIngredientToMakeZenCodeHappy[] catalysts() {
+    public final RawJeiIngredient[] catalysts() {
         
         return this.catalysts;
     }
@@ -93,7 +93,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
         return String.format("JeiCategory[id='%s',type=%s]", this.id, this.getClass().getSimpleName());
     }
     
-    private void verifyNoMixedSlotsIn(final ILogger logger, final HackyJeiIngredientToMakeZenCodeHappy[][] slots, final Supplier<String> in) {
+    private void verifyNoMixedSlotsIn(final ILogger logger, final RawJeiIngredient[][] slots, final Supplier<String> in) {
     
         Arrays.stream(slots).forEach(slot -> {
             

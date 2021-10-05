@@ -6,7 +6,7 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
 import com.blamejared.jeitweaker.plugin.JeiStateManager;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraft.item.ItemStack;
@@ -40,7 +40,7 @@ public final class ActionHideMod implements IUndoableAction {
                 .filter(itemStack -> !itemStack.isEmpty())
                 .map(MCItemStackMutable::new)
                 .map(IItemStackExpansions::asJeiIngredient)
-                .map(HackyJeiIngredientToMakeZenCodeHappy::<IItemStack, ItemStack>cast) // TODO("Remove")
+                .map(RawJeiIngredient::<IItemStack, ItemStack>cast) // TODO("Remove")
                 .peek(JeiStateManager.INSTANCE::hide)
                 .collect(Collectors.toList());
     }

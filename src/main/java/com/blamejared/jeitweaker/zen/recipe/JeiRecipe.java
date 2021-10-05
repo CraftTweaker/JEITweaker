@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker.zen.recipe;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
@@ -16,14 +16,14 @@ import java.util.function.Consumer;
 public final class JeiRecipe {
     
     private final JeiCategory owningCategory;
-    private final HackyJeiIngredientToMakeZenCodeHappy[][] inputs;
-    private final HackyJeiIngredientToMakeZenCodeHappy[][] outputs;
+    private final RawJeiIngredient[][] inputs;
+    private final RawJeiIngredient[][] outputs;
     private final Consumer<RecipeGraphics> graphics;
     
     JeiRecipe(
             final JeiCategory owningCategory,
-            final HackyJeiIngredientToMakeZenCodeHappy[][] inputs,
-            final HackyJeiIngredientToMakeZenCodeHappy[][] outputs,
+            final RawJeiIngredient[][] inputs,
+            final RawJeiIngredient[][] outputs,
             final Consumer<RecipeGraphics> graphics
     ) {
         
@@ -38,12 +38,12 @@ public final class JeiRecipe {
         return this.owningCategory;
     }
     
-    public HackyJeiIngredientToMakeZenCodeHappy[][] getInputs() {
+    public RawJeiIngredient[][] getInputs() {
         
         return this.inputs;
     }
     
-    public HackyJeiIngredientToMakeZenCodeHappy[][] getOutputs() {
+    public RawJeiIngredient[][] getOutputs() {
         
         return this.outputs;
     }

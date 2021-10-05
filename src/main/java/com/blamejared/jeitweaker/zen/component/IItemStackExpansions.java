@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenRegister
 public final class IItemStackExpansions {
     @ZenCodeType.Caster(implicit = true)
-    public static HackyJeiIngredientToMakeZenCodeHappy asJeiIngredient(final IItemStack stack) {
+    public static RawJeiIngredient asJeiIngredient(final IItemStack stack) {
         
         return new JeiIngredient<>(JeiTweakerIngredientType.ITEM, stack);
     }

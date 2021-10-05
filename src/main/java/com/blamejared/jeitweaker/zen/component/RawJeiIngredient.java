@@ -9,7 +9,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
 // TODO("Replace all usages of this with JeiIngredient once generic inference is better")
-public interface HackyJeiIngredientToMakeZenCodeHappy extends CommandStringDisplayable {
+public interface RawJeiIngredient extends CommandStringDisplayable {
     
     @SuppressWarnings("unchecked")
     default <T, U> JeiIngredient<T, U> cast() {

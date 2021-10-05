@@ -30,7 +30,7 @@ public final class JeiDrawable {
     }
     
     @ZenCodeType.Method
-    public static JeiDrawable of(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+    public static JeiDrawable of(final RawJeiIngredient ingredient) {
         
         return new JeiDrawable((helper) -> helper.createDrawableIngredient(ingredient.cast().getType().toInternal(ingredient.cast().getWrapped())));
     }

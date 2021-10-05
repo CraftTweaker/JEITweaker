@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker.zen.category;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.util.NameUtils;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
@@ -18,7 +18,7 @@ final class JeiCategoryHelper {
     @FunctionalInterface
     interface JeiCategoryCreator<T extends JeiCategory> {
         
-        T of(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final HackyJeiIngredientToMakeZenCodeHappy[] catalysts);
+        T of(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient[] catalysts);
     }
     
     private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), it -> {
@@ -31,7 +31,7 @@ final class JeiCategoryHelper {
             final String id,
             final MCTextComponent name,
             final JeiDrawable icon,
-            final HackyJeiIngredientToMakeZenCodeHappy[] catalysts,
+            final RawJeiIngredient[] catalysts,
             final Consumer<T> configurator
     ) {
         

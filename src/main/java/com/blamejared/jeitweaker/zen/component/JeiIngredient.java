@@ -9,7 +9,7 @@ import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
  */
-public final class JeiIngredient<T, U> implements HackyJeiIngredientToMakeZenCodeHappy {
+public final class JeiIngredient<T, U> implements RawJeiIngredient {
     private final JeiTweakerIngredientType<T, U> type;
     private final T wrapped;
     

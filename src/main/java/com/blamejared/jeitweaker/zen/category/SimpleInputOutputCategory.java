@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.logger.ILogger;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.plugin.JeiCategoryPluginBridge;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
@@ -44,7 +44,7 @@ public final class SimpleInputOutputCategory extends SimpleJeiCategory {
     
     private final Bridge bridge;
     
-    public SimpleInputOutputCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final HackyJeiIngredientToMakeZenCodeHappy... catalysts) {
+    public SimpleInputOutputCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.bridge = new Bridge();

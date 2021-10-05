@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.logger.ILogger;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.plugin.JeiCategoryPluginBridge;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +26,7 @@ public interface JeiCategory {
             final String id,
             final MCTextComponent name,
             final JeiDrawable icon,
-            final HackyJeiIngredientToMakeZenCodeHappy[] catalysts
+            final RawJeiIngredient[] catalysts
     ) {
         
         return create(typeToken, id, name, icon, catalysts, ignore -> {});
@@ -38,7 +38,7 @@ public interface JeiCategory {
             final String id,
             final MCTextComponent name,
             final JeiDrawable icon,
-            final HackyJeiIngredientToMakeZenCodeHappy[] catalysts,
+            final RawJeiIngredient[] catalysts,
             final Consumer<T> configurator
     ) {
         
@@ -58,7 +58,7 @@ public interface JeiCategory {
     JeiDrawable background();
     
     @ZenCodeType.Getter("catalysts")
-    HackyJeiIngredientToMakeZenCodeHappy[] catalysts();
+    RawJeiIngredient[] catalysts();
     
     void addRecipe(final JeiRecipe recipe);
     

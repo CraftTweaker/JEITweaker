@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.plugin;
 
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
@@ -96,7 +96,7 @@ public final class JeiTweakerRecipe {
         });
     }
     
-    private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final HackyJeiIngredientToMakeZenCodeHappy[][] array) {
+    private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final RawJeiIngredient[][] array) {
         
         final List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> jeiLists = this.computeJeiList(array);
         final Map<IIngredientType<?>, List<List<?>>> returnValue = new LinkedHashMap<>();
@@ -125,11 +125,11 @@ public final class JeiTweakerRecipe {
     }
     
     // outer list: list of slots; inner list: list of valid ingredients for that slot
-    private List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> computeJeiList(final HackyJeiIngredientToMakeZenCodeHappy[][] array) {
+    private List<List<Pair<JeiTweakerIngredientType<?, ?>, ?>>> computeJeiList(final RawJeiIngredient[][] array) {
         
         return Arrays.stream(array)
                 .map(outer -> Arrays.stream(outer)
-                        .map(HackyJeiIngredientToMakeZenCodeHappy::cast)
+                        .map(RawJeiIngredient::cast)
                         .map(it -> Pair.of(it.getType(), it.getType().toInternal(it.getWrapped())))
                         .collect(Collectors.toList())
                 )

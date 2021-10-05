@@ -3,7 +3,6 @@ package com.blamejared.jeitweaker.zen.component;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.impl.tag.MCTag;
 import com.blamejared.crafttweaker.impl.tag.expansions.ExpandItemTag;
-import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -13,7 +12,7 @@ import org.openzen.zencode.java.ZenCodeType;
 public final class ItemTagExpansions {
     
     @ZenCodeType.Caster(implicit = true)
-    public static HackyJeiIngredientToMakeZenCodeHappy[] asJeiIngredientArray(final MCTag<Item> tag) {
+    public static RawJeiIngredient[] asJeiIngredientArray(final MCTag<Item> tag) {
         
         return IIngredientExpansions.asJeiIngredientArray(ExpandItemTag.asIIngredient(tag));
     }

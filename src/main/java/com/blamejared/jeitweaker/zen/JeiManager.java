@@ -16,7 +16,7 @@ import com.blamejared.jeitweaker.actions.ActionHideMod;
 import com.blamejared.jeitweaker.actions.ActionHideRecipe;
 import com.blamejared.jeitweaker.actions.ActionHideRegex;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.IFluidStackExpansions;
 import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
 import net.minecraft.util.ResourceLocation;
@@ -36,13 +36,13 @@ public final class JeiManager {
     }
     
     @ZenCodeType.Method
-    public static void addDescription(final HackyJeiIngredientToMakeZenCodeHappy ingredient, final MCTextComponent... description) {
+    public static void addDescription(final RawJeiIngredient ingredient, final MCTextComponent... description) {
         
         CraftTweakerAPI.apply(new ActionAddInfo<>(ingredient.cast(), description));
     }
     
     @ZenCodeType.Method
-    public static void addIngredient(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+    public static void addIngredient(final RawJeiIngredient ingredient) {
         
         CraftTweakerAPI.apply(new ActionAddIngredient<>(ingredient.cast()));
     }
@@ -76,7 +76,7 @@ public final class JeiManager {
     
     
     @ZenCodeType.Method
-    public static void hideIngredient(final HackyJeiIngredientToMakeZenCodeHappy ingredient) {
+    public static void hideIngredient(final RawJeiIngredient ingredient) {
         
         CraftTweakerAPI.apply(new ActionHideIngredient<>(ingredient.cast()));
     }

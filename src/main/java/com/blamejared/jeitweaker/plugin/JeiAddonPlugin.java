@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
 import com.blamejared.jeitweaker.JEITweaker;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.blamejared.jeitweaker.zen.component.HackyJeiIngredientToMakeZenCodeHappy;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.google.common.collect.Sets;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -156,7 +156,7 @@ public final class JeiAddonPlugin implements IModPlugin {
         
         final ResourceLocation id = category.id();
         Arrays.stream(category.catalysts())
-                .map(HackyJeiIngredientToMakeZenCodeHappy::cast)
+                .map(RawJeiIngredient::cast)
                 .map(ingredient -> ingredient.getType().toInternal(ingredient.getWrapped()))
                 .forEach(catalyst -> registration.addRecipeCatalyst(catalyst, id));
     }
