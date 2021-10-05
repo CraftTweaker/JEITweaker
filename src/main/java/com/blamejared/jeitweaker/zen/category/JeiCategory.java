@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.logger.ILogger;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import com.blamejared.jeitweaker.plugin.JeiCategoryPluginBridge;
+import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -14,6 +14,7 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @Document("mods/JEI/Category/JeiCategory")
 @ZenCodeType.Name("mods.jei.category.JeiCategory")
@@ -69,5 +70,5 @@ public interface JeiCategory {
         return (recipe, logger) -> true;
     }
     
-    JeiCategoryPluginBridge getBridge();
+    Supplier<JeiCategoryPluginBridge> getBridgeCreator();
 }

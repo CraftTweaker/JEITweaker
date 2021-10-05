@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.plugin;
+package com.blamejared.jeitweaker.bridge;
 
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 
@@ -11,4 +11,6 @@ public interface JeiCategoryPluginBridge {
     int getInputSlotsAmount();
     
     int getOutputSlotsAmount();
+    
+    boolean allowShapelessMarker();
 }

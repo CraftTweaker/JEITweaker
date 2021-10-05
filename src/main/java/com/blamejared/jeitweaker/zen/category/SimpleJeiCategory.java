@@ -34,6 +34,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     private List<JeiRecipe> recipes;
     
     public SimpleJeiCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+        
         this.id = id;
         this.name = name;
         this.icon = icon;

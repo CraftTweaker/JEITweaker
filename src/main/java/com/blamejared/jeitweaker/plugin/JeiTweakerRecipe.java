@@ -1,10 +1,10 @@
 package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.jeitweaker.bridge.ShapelessOnlyRecipeGraphics;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.google.common.base.Suppliers;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.datafixers.util.Pair;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
@@ -63,15 +63,15 @@ public final class JeiTweakerRecipe {
         this.setIngredients(this.results.get(), ingredients::setOutputLists);
     }
     
-    void setRecipe(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker, final long slotsData) {
+    void setRecipe(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker, final long slotsData, final boolean allowShapeless) {
         
         this.initializeRecipeGui(layout, layoutMaker);
         this.placeIngredients(layout, (int) slotsData, (int) (slotsData >>> 32));
-    }
-    
-    void drawExtras(final MatrixStack poseStack, final double mouseX, final double mouseY) {
-    
-    
+        
+        if (allowShapeless) {
+            
+            this.showShapelessMarkerIfRequired(layout);
+        }
     }
     
     List<ITextComponent> getTooltip(final double mouseX, final double mouseY) {
@@ -112,6 +112,11 @@ public final class JeiTweakerRecipe {
             final IGuiIngredientGroup<?> group = layout.getIngredientsGroup(type);
             IntStream.range(0, Math.min(slots.size(), slotAmount)).forEach(slot -> group.set(slot + startIndex, this.uncheckIngredientList(slots.get(slot))));
         });
+    }
+    
+    private void showShapelessMarkerIfRequired(final IRecipeLayout layout) {
+        
+        this.recipe.doGraphics(new ShapelessOnlyRecipeGraphics(layout::setShapeless));
     }
     
     private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final RawJeiIngredient[][] array) {

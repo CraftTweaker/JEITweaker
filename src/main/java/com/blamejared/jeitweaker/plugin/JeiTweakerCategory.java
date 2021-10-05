@@ -1,5 +1,6 @@
 package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -16,11 +17,13 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     
     private final JeiCategory zenCategory;
     private final IJeiHelpers helpers;
+    private final JeiCategoryPluginBridge bridge;
     
     JeiTweakerCategory(final JeiCategory zenCategory, final IJeiHelpers helpers) {
         
         this.zenCategory = zenCategory;
         this.helpers = helpers;
+        this.bridge = zenCategory.getBridgeCreator().get();
     }
     
     @Override
@@ -63,9 +66,8 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public void setRecipe(final IRecipeLayout recipeLayout, final JeiTweakerRecipe recipe, final IIngredients ingredients) {
         
-        final JeiCategoryPluginBridge bridge = this.zenCategory.getBridge();
-        final long slotsData = ((long) bridge.getOutputSlotsAmount()) << 32 | ((long) bridge.getInputSlotsAmount());
-        recipe.setRecipe(recipeLayout, bridge::initializeGui, slotsData);
+        final long slotsData = ((long) this.bridge.getOutputSlotsAmount()) << 32 | ((long) this.bridge.getInputSlotsAmount());
+        recipe.setRecipe(recipeLayout, this.bridge::initializeGui, slotsData, this.bridge.allowShapelessMarker());
     }
     
     @Override
@@ -77,7 +79,7 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public void draw(final JeiTweakerRecipe recipe, final MatrixStack matrixStack, final double mouseX, final double mouseY) {
         
-        recipe.drawExtras(matrixStack, mouseX, mouseY);
+        // TODO("")
     }
     
     @Override

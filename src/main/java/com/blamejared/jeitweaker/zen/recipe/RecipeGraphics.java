@@ -8,4 +8,7 @@ import org.openzen.zencode.java.ZenCodeType;
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipeGraphics")
 @ZenRegister
 public interface RecipeGraphics {
+    
+    @ZenCodeType.Method
+    void showShapelessMarker();
 }
