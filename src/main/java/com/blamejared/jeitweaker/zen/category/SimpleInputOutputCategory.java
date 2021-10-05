@@ -20,15 +20,18 @@ import java.util.function.Supplier;
 @ZenRegister
 public final class SimpleInputOutputCategory extends SimpleJeiCategory {
     
+    private final JeiDrawable background;
+    
     public SimpleInputOutputCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
+        this.background = JeiDrawable.of(GUI_ATLAS, 0, 0, 82, 33);
     }
     
     @Override
     public JeiDrawable background() {
         
-        return JeiDrawable.of(GUI_ATLAS, 0, 0, 82, 33);
+        return this.background;
     }
     
     @Override
