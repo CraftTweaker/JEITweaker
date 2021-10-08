@@ -6,7 +6,6 @@ import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.bridge.OutputListCategoryBridge;
-import com.blamejared.jeitweaker.component.OutputListCustomDrawable;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -29,10 +28,11 @@ public final class OutputListCategory extends SimpleJeiCategory {
         
         super(id, name, icon, catalysts);
         this.rows = 1;
-        this.backgroundSupplier = Suppliers.memoize(() -> JeiDrawable.of(() -> new OutputListCustomDrawable(GUI_ATLAS, this.rows)));
+        this.backgroundSupplier = Suppliers.memoize(() -> JeiDrawable.ofNinePatch(GUI_ATLAS, 92, 0, 164, 20, 162, 18 * this.rows));
     }
     
     @ZenCodeType.Method
+    @ZenCodeType.Setter("rows")
     public void setRows(final int rows) {
         
         this.rows = Math.max(1, rows);
