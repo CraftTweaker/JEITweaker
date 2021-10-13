@@ -4,6 +4,7 @@ import com.blamejared.jeitweaker.bridge.ShapelessOnlyRecipeGraphics;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
+import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -11,11 +12,9 @@ import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.runtime.IIngredientManager;
-import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,14 +73,9 @@ public final class JeiTweakerRecipe {
         }
     }
     
-    List<ITextComponent> getTooltip(final double mouseX, final double mouseY) {
+    void populateGraphics(final RecipeGraphics graphics) {
         
-        return Collections.emptyList();
-    }
-    
-    boolean onClick(final double x, final double y, final int button) {
-        
-        return false;
+        this.recipe.doGraphics(graphics);
     }
     
     private void setIngredients(final Map<IIngredientType<?>, List<List<?>>> data, final IngredientSetter setter) {

@@ -1,7 +1,10 @@
 package com.blamejared.jeitweaker.bridge;
 
+import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 
+import java.util.function.Consumer;
 import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 
@@ -42,6 +45,11 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     public boolean allowShapelessMarker() {
         
         return false;
+    }
+    
+    @Override
+    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final Consumer<RecipeGraphics> graphicsConsumer) {
+    
     }
     
 }

@@ -11,6 +11,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecipe> {
@@ -79,19 +80,19 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public void draw(final JeiTweakerRecipe recipe, final MatrixStack matrixStack, final double mouseX, final double mouseY) {
         
-        // TODO("")
+        this.bridge.drawAdditionalComponent(matrixStack, mouseX, mouseY, recipe::populateGraphics);
     }
     
     @Override
     public List<ITextComponent> getTooltipStrings(final JeiTweakerRecipe recipe, final double mouseX, final double mouseY) {
         
-        return recipe.getTooltip(mouseX, mouseY);
+        return Collections.emptyList();
     }
     
     @Override
     public boolean handleClick(final JeiTweakerRecipe recipe, final double mouseX, final double mouseY, final int mouseButton) {
         
-        return recipe.onClick(mouseX, mouseY, mouseButton);
+        return false;
     }
     
     @Override
