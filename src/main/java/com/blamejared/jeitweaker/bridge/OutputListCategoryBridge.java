@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.bridge;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.helpers.IGuiHelper;
 
 import java.util.function.Consumer;
 import java.util.function.IntSupplier;
@@ -48,8 +49,6 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     }
     
     @Override
-    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final Consumer<RecipeGraphics> graphicsConsumer) {
-    
-    }
+    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
     
 }

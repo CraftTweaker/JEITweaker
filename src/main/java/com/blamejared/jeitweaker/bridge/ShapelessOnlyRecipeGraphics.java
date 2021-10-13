@@ -18,5 +18,5 @@ public final class ShapelessOnlyRecipeGraphics implements RecipeGraphics {
         this.shapelessMaker.run();
     }
     
-    @Override public void setExtraComponent(final String name, final MCTextComponent component) {}
+    @Override public void setExtraComponent(final String key, final MCTextComponent component) {}
 }

@@ -14,5 +14,5 @@ public interface RecipeGraphics {
     void showShapelessMarker();
     
     @ZenCodeType.Method
-    void setExtraComponent(final String name, final MCTextComponent component);
+    void setExtraComponent(final String key, final MCTextComponent component);
 }

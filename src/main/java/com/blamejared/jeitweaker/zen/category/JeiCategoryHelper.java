@@ -23,6 +23,7 @@ final class JeiCategoryHelper {
     
     private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), it -> {
         
+        add(it, InputConsumingCategory.class, InputConsumingCategory::new);
         add(it, OutputListCategory.class, OutputListCategory::new);
         add(it, SimpleInputOutputCategory.class, SimpleInputOutputCategory::new);
     });

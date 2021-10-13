@@ -80,7 +80,7 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public void draw(final JeiTweakerRecipe recipe, final MatrixStack matrixStack, final double mouseX, final double mouseY) {
         
-        this.bridge.drawAdditionalComponent(matrixStack, mouseX, mouseY, recipe::populateGraphics);
+        this.bridge.drawAdditionalComponent(matrixStack, mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
     }
     
     @Override
