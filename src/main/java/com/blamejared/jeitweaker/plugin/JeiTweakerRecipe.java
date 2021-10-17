@@ -1,5 +1,7 @@
 package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.bridge.CustomTooltipRecipeGraphics;
 import com.blamejared.jeitweaker.bridge.ShapelessOnlyRecipeGraphics;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
@@ -15,6 +17,7 @@ import mezz.jei.api.runtime.IIngredientManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,7 @@ public final class JeiTweakerRecipe {
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> ingredients;
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> results;
     private final Supplier<Set<IIngredientType<?>>> consideredTypes;
+    private final Supplier<List<CustomTooltipRecipeGraphics.TipData>> toolTips;
     
     JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager, final JeiCoordinateFixer fixer) {
         
@@ -49,6 +53,7 @@ public final class JeiTweakerRecipe {
         this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getInputs()));
         this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getOutputs()));
         this.consideredTypes = Suppliers.memoize(() -> this.computeJeiTypes(this.ingredients.get(), this.results.get()));
+        this.toolTips = Suppliers.memoize(() -> this.computeTooltips(this.recipe));
     }
     
     JeiCategory getOwningCategory() {
@@ -76,6 +81,15 @@ public final class JeiTweakerRecipe {
     void populateGraphics(final RecipeGraphics graphics) {
         
         this.recipe.doGraphics(graphics);
+    }
+    
+    List<MCTextComponent> getTooltips(final double x, final double y) {
+        
+        return this.toolTips.get().stream()
+                .filter(it -> this.isInside(it, x, y))
+                .map(CustomTooltipRecipeGraphics.TipData::tooltip)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
     
     private void setIngredients(final Map<IIngredientType<?>, List<List<?>>> data, final IngredientSetter setter) {
@@ -111,6 +125,11 @@ public final class JeiTweakerRecipe {
     private void showShapelessMarkerIfRequired(final IRecipeLayout layout) {
         
         this.recipe.doGraphics(new ShapelessOnlyRecipeGraphics(layout::setShapeless));
+    }
+    
+    private boolean isInside(final CustomTooltipRecipeGraphics.TipData tipData, final double x, final double y) {
+        
+        return tipData.x() <= x && x < tipData.width() && tipData.y() <= y && y < tipData.height();
     }
     
     private Map<IIngredientType<?>, List<List<?>>> computeJeiMaps(final IIngredientManager manager, final RawJeiIngredient[][] array) {
@@ -157,6 +176,13 @@ public final class JeiTweakerRecipe {
     private Set<IIngredientType<?>> computeJeiTypes(final Map<IIngredientType<?>, ?> in, final Map<IIngredientType<?>, ?> out) {
     
         return Stream.concat(in.keySet().stream(), out.keySet().stream()).collect(Collectors.toSet());
+    }
+    
+    private List<CustomTooltipRecipeGraphics.TipData> computeTooltips(final JeiRecipe recipe) {
+        
+        final CustomTooltipRecipeGraphics graphics = new CustomTooltipRecipeGraphics();
+        recipe.doGraphics(graphics);
+        return graphics.tipData();
     }
     
     @SuppressWarnings("unchecked")

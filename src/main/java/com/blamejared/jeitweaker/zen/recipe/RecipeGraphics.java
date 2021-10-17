@@ -15,4 +15,10 @@ public interface RecipeGraphics {
     
     @ZenCodeType.Method
     void setExtraComponent(final String key, final MCTextComponent component);
+    
+    @ZenCodeType.Method
+    void addTooltip(final String key, final MCTextComponent... lines);
+    
+    @ZenCodeType.Method
+    void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final MCTextComponent... lines);
 }

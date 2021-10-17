@@ -12,6 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.ITextComponent;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntUnaryOperator;
 
@@ -35,6 +37,12 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
         public void setExtraComponent(final String key, final MCTextComponent component) {
             if (EXTRA_COMPONENT.equals(key)) this.component = component;
         }
+    
+        @Override
+        public void addTooltip(final String key, final MCTextComponent... lines) {}
+    
+        @Override
+        public void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final MCTextComponent... lines) {}
     
     }
     
@@ -72,10 +80,22 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
     }
     
     @Override
+    public boolean allowCustomTooltips() {
+        
+        return false;
+    }
+    
+    @Override
     public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {
 
         this.drawAnimation(poseStack, guiHelper);
         this.drawResultText(poseStack, graphicsConsumer);
+    }
+    
+    @Override
+    public List<MCTextComponent> getTooltips(double x, double y, IGuiHelper helper, Consumer<RecipeGraphics> graphicsConsumer) {
+        
+        return Collections.emptyList();
     }
     
     private void drawAnimation(final MatrixStack poseStack, final IGuiHelper helper) {

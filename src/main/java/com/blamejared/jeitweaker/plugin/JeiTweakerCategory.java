@@ -1,5 +1,6 @@
 package com.blamejared.jeitweaker.plugin;
 
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,6 +14,8 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecipe> {
     
@@ -86,7 +89,12 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     @Override
     public List<ITextComponent> getTooltipStrings(final JeiTweakerRecipe recipe, final double mouseX, final double mouseY) {
         
-        return Collections.emptyList();
+        final List<MCTextComponent> categoryTips = this.bridge.getTooltips(mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
+        final List<MCTextComponent> recipeTips = this.bridge.allowCustomTooltips()? recipe.getTooltips(mouseX, mouseY) : Collections.emptyList();
+        
+        return Stream.concat(categoryTips.stream(), recipeTips.stream())
+                .map(MCTextComponent::getInternal)
+                .collect(Collectors.toList());
     }
     
     @Override

@@ -49,6 +49,12 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     }
     
     @Override
+    public boolean allowCustomTooltips() {
+        
+        return false;
+    }
+    
+    @Override
     public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
     
 }
