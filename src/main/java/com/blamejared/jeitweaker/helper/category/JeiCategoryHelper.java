@@ -1,34 +1,28 @@
-package com.blamejared.jeitweaker.zen.category;
+package com.blamejared.jeitweaker.helper.category;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.CraftTweakerRegistry;
 import com.blamejared.crafttweaker.impl.util.NameUtils;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
-import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
+import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
+import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-final class JeiCategoryHelper {
+public final class JeiCategoryHelper {
     
-    @FunctionalInterface
-    private interface JeiCategoryCreator<T extends JeiCategory> {
-        
-        T of(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient[] catalysts);
-    }
+    private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), JeiCategoryHelper::lookup);
     
-    private static final Map<Class<?>, JeiCategoryCreator<?>> CREATORS = Util.make(new HashMap<>(), it -> {
-        
-        add(it, InputConsumingCategory.class, InputConsumingCategory::new);
-        add(it, OutputListCategory.class, OutputListCategory::new);
-        add(it, SimpleInputOutputCategory.class, SimpleInputOutputCategory::new);
-    });
+    public static void initialize() {}
     
-    static <T extends JeiCategory> T of(
+    public static <T extends JeiCategory> T of(
             final Class<T> typeToken,
             final String id,
             final MCTextComponent name,
@@ -46,20 +40,22 @@ final class JeiCategoryHelper {
                         fixed
                 )
         );
-        final JeiCategoryCreator<T> creator = creatorOf(typeToken);
         
-        return Util.make(creator.of(checkedId, name, icon, catalysts), configurator);
+        return Util.make(of(typeToken).of(checkedId, name, icon, catalysts), configurator);
     }
     
     @SuppressWarnings("unchecked")
-    private static <T extends JeiCategory> JeiCategoryCreator<T> creatorOf(final Class<T> type) {
+    private static <T extends JeiCategory> JeiCategoryCreator<T> of(final Class<T> type) {
         
         return Objects.requireNonNull((JeiCategoryCreator<T>) CREATORS.get(type), () -> "Invalid category type supplied: " + type.getName());
     }
     
-    private static <T extends JeiCategory> void add(final Map<Class<?>, JeiCategoryCreator<?>> map, final Class<T> clazz, final JeiCategoryCreator<T> creator) {
-        
-        // This exists mainly to provide a typesafe way of registering creators
-        map.put(clazz, creator);
+    private static void lookup(final Map<Class<?>, JeiCategoryCreator<?>> map) {
+    
+        CraftTweakerRegistry.getZenClassRegistry()
+                .getImplementationsOf(JeiCategory.class)
+                .stream()
+                .filter(type -> !Modifier.isAbstract(type.getModifiers()))
+                .forEach(type -> JeiCategoryCreator.of(type).ifPresent(creator -> map.put(type, creator)));
     }
 }
