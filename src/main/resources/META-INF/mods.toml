@@ -24,7 +24,7 @@ Adds JEI integration for CraftTweaker
 	side = "BOTH"
   [[dependencies.jeitweaker]]
 	modId = "jei"
-	mandatory = true
+	mandatory = false
 	versionRange = "[7.7.1.110,)"
 	ordering = "NONE"
 	side = "BOTH"
