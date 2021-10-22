@@ -38,6 +38,13 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
     
     }
     
+    private static final int OUTPUT_ANIMATION_LOCATION_X = 97;
+    private static final int OUTPUT_ANIMATION_LOCATION_Y = 4;
+    private static final int TEXT_LOCATION_Y = 36;
+    private static final int TEXT_COLOR = 0xFFE5E5E5;
+    private static final int BACKGROUND_WIDTH = 162;
+    private static final int TEXT_PADDING = 4;
+    
     private final Pair<JeiDrawable, JeiDrawable> outputExtras;
     private final MCTextComponent baseExtra;
     
@@ -100,11 +107,11 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
     
     private void drawAnimation(final MatrixStack poseStack, final IDrawable background, final IDrawable animation) {
         
-        background.draw(poseStack, 97, 4);
+        background.draw(poseStack, OUTPUT_ANIMATION_LOCATION_X, OUTPUT_ANIMATION_LOCATION_Y);
         
         if (animation != null) {
             
-            animation.draw(poseStack, 97, 4);
+            animation.draw(poseStack, OUTPUT_ANIMATION_LOCATION_X, OUTPUT_ANIMATION_LOCATION_Y);
         }
     }
     
@@ -135,8 +142,8 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
         
         final FontRenderer font = Minecraft.getInstance().fontRenderer;
         final int width = font.getStringPropertyWidth(component); // MCP names are awful, change my mind
-        final int x = (162 - 8 - width) / 2;
-        font.func_243246_a(poseStack, component, x, 36, 0xFFE5E5E5);
+        final int x = (BACKGROUND_WIDTH - (TEXT_PADDING * 2) - width) / 2;
+        font.func_243246_a(poseStack, component, x, TEXT_LOCATION_Y, TEXT_COLOR);
     }
     
 }

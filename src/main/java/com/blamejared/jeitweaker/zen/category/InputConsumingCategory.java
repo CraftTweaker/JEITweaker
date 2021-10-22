@@ -27,25 +27,25 @@ public final class InputConsumingCategory extends SimpleJeiCategory {
     private static final JeiDrawable DEFAULT_ANIM = JeiDrawable.ofAnimated(GUI_ATLAS, 208, 232, 24, 24, 35, JeiDrawableAnimation.SHOW_BOTTOM_TO_TOP);
     
     private Pair<JeiDrawable, JeiDrawable> output;
-    private MCTextComponent baseExtra;
+    private MCTextComponent baseResultText;
     
     public InputConsumingCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.output = Pair.of(DEFAULT_BG, DEFAULT_ANIM);
-        this.baseExtra = null;
+        this.baseResultText = null;
     }
     
     @ZenCodeType.Method("setOutputDrawables")
-    public void setOutput(final JeiDrawable background, @ZenCodeType.Nullable final JeiDrawable animation) {
+    public void setOutputDrawables(final JeiDrawable background, @ZenCodeType.Nullable final JeiDrawable animation) {
         
         this.output = Pair.of(background, animation);
     }
     
     @ZenCodeType.Setter("baseResultText")
-    public void setBaseExtra(@ZenCodeType.Nullable final MCTextComponent baseExtra) {
+    public void setBaseResultText(@ZenCodeType.Nullable final MCTextComponent baseExtra) {
         
-        this.baseExtra = baseExtra;
+        this.baseResultText = baseExtra;
     }
     
     @Override
@@ -79,7 +79,7 @@ public final class InputConsumingCategory extends SimpleJeiCategory {
     @Override
     public Supplier<JeiCategoryPluginBridge> getBridgeCreator() {
         
-        return () -> new InputConsumingCategoryBridge(this.output, this.baseExtra);
+        return () -> new InputConsumingCategoryBridge(this.output, this.baseResultText);
     }
     
 }
