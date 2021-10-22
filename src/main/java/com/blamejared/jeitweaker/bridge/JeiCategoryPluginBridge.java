@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.bridge;
 
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
@@ -8,11 +9,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.IntUnaryOperator;
 
 public interface JeiCategoryPluginBridge {
     
-    <G> void initializeGui(final IGuiIngredientGroup<G> group, final IntUnaryOperator coordinateFixer);
+    <G> void initializeGui(final IGuiIngredientGroup<G> group, final JeiCoordinateFixer coordinateFixer);
     
     int getInputSlotsAmount();
     

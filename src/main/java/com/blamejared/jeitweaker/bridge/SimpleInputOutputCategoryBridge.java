@@ -1,20 +1,23 @@
 package com.blamejared.jeitweaker.bridge;
 
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.IntUnaryOperator;
 
 public final class SimpleInputOutputCategoryBridge implements JeiCategoryPluginBridge {
     
     @Override
-    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final IntUnaryOperator coordinateFixer) {
+    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final JeiCoordinateFixer coordinateFixer) {
         
-        group.init(0, true, coordinateFixer.applyAsInt(1), coordinateFixer.applyAsInt(8));
-        group.init(1, false, coordinateFixer.applyAsInt(61), coordinateFixer.applyAsInt(8));
+        group.init(0, true, coordinateFixer.fixX(1), coordinateFixer.fixY(8));
+        group.init(1, false, coordinateFixer.fixX(61), coordinateFixer.fixY(8));
     }
     
     @Override
@@ -43,5 +46,11 @@ public final class SimpleInputOutputCategoryBridge implements JeiCategoryPluginB
     
     @Override
     public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
+    
+    @Override
+    public List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
+        
+        return Collections.emptyList();
+    }
     
 }

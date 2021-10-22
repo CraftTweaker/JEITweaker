@@ -3,6 +3,8 @@ package com.blamejared.jeitweaker.plugin;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.bridge.CustomTooltipRecipeGraphics;
 import com.blamejared.jeitweaker.bridge.ShapelessOnlyRecipeGraphics;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixerManager;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -23,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
-import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -39,17 +40,17 @@ public final class JeiTweakerRecipe {
     
     private final JeiRecipe recipe;
     private final IIngredientManager manager;
-    private final JeiCoordinateFixer fixer;
+    private final JeiCoordinateFixerManager fixerManager;
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> ingredients;
     private final Supplier<Map<IIngredientType<?>, List<List<?>>>> results;
     private final Supplier<Set<IIngredientType<?>>> consideredTypes;
     private final Supplier<List<CustomTooltipRecipeGraphics.TipData>> toolTips;
     
-    JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager, final JeiCoordinateFixer fixer) {
+    JeiTweakerRecipe(final JeiRecipe recipe, final IIngredientManager manager, final JeiCoordinateFixerManager fixerManager) {
         
         this.recipe = recipe;
         this.manager = manager;
-        this.fixer = fixer;
+        this.fixerManager = fixerManager;
         this.ingredients = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getInputs()));
         this.results = Suppliers.memoize(() -> this.computeJeiMaps(this.manager, this.recipe.getOutputs()));
         this.consideredTypes = Suppliers.memoize(() -> this.computeJeiTypes(this.ingredients.get(), this.results.get()));
@@ -67,7 +68,7 @@ public final class JeiTweakerRecipe {
         this.setIngredients(this.results.get(), ingredients::setOutputLists);
     }
     
-    void setRecipe(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker, final long slotsData, final boolean allowShapeless) {
+    void setRecipe(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, JeiCoordinateFixer> layoutMaker, final long slotsData, final boolean allowShapeless) {
         
         this.initializeRecipeGui(layout, layoutMaker);
         this.placeIngredients(layout, (int) slotsData, (int) (slotsData >>> 32));
@@ -97,9 +98,9 @@ public final class JeiTweakerRecipe {
         data.forEach((type, ingredient) -> setter.set(type, this.uncheck(ingredient)));
     }
     
-    private void initializeRecipeGui(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, IntUnaryOperator> layoutMaker) {
+    private void initializeRecipeGui(final IRecipeLayout layout, final BiConsumer<IGuiIngredientGroup<?>, JeiCoordinateFixer> layoutMaker) {
         
-        this.consideredTypes.get().forEach(it -> layoutMaker.accept(layout.getIngredientsGroup(it), this.fixer.findFor(it)));
+        this.consideredTypes.get().forEach(it -> layoutMaker.accept(layout.getIngredientsGroup(it), this.fixerManager.findFor(it)));
     }
     
     private void placeIngredients(final IRecipeLayout layout, final int inSlots, final int outSlots) {

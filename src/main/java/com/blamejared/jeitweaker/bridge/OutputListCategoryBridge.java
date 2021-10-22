@@ -1,13 +1,16 @@
 package com.blamejared.jeitweaker.bridge;
 
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.IntSupplier;
-import java.util.function.IntUnaryOperator;
 
 public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     
@@ -19,13 +22,13 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     }
     
     @Override
-    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final IntUnaryOperator coordinateFixer) {
+    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final JeiCoordinateFixer coordinateFixer) {
     
         for (int i = 0, r = this.rows.getAsInt(); i < r; ++i) {
             
             for (int j = 0; j < 9; ++j) {
                 
-                group.init(i * 9 + j, false, coordinateFixer.applyAsInt(j * 18 + 1), coordinateFixer.applyAsInt(i * 18 + 1));
+                group.init(i * 9 + j, false, coordinateFixer.fixX(j * 18 + 1), coordinateFixer.fixY(i * 18 + 1));
             }
         }
     }
@@ -56,5 +59,11 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     
     @Override
     public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
+    
+    @Override
+    public List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
+        
+        return Collections.emptyList();
+    }
     
 }

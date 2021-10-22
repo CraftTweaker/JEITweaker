@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.bridge;
 
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -15,7 +16,6 @@ import net.minecraft.util.text.ITextComponent;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.IntUnaryOperator;
 
 public final class InputConsumingCategoryBridge implements JeiCategoryPluginBridge {
     
@@ -56,9 +56,9 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
     }
     
     @Override
-    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final IntUnaryOperator coordinateFixer) {
+    public <G> void initializeGui(final IGuiIngredientGroup<G> group, final JeiCoordinateFixer coordinateFixer) {
         
-        group.init(0, true, coordinateFixer.applyAsInt(41), coordinateFixer.applyAsInt(8));
+        group.init(0, true, coordinateFixer.fixX(41), coordinateFixer.fixY(8));
     }
     
     @Override
@@ -126,21 +126,17 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
     private void drawResultText(final MatrixStack poseStack, final MCTextComponent base, final MCTextComponent result) {
     
         if (base == null && result == null) return;
-    
-        final MCTextComponent resultText;
-    
+        
         if (base == null) {
         
-            resultText = result;
+            this.drawResultText(poseStack, result.getInternal());
         } else if (result == null) {
         
-            resultText = base;
+            this.drawResultText(poseStack, base.getInternal());
         } else {
         
-            resultText = MCTextComponent.createStringTextComponent("").opShLeft(base).opLShift(" ").opShLeft(result);
+            this.drawResultText(poseStack, MCTextComponent.createStringTextComponent("").opShLeft(base).opLShift(" ").opShLeft(result).getInternal());
         }
-        
-        this.drawResultText(poseStack, resultText.getInternal());
     }
     
     private void drawResultText(final MatrixStack poseStack, final ITextComponent component) {

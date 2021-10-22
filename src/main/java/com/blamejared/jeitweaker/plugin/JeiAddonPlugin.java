@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.plugin;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
 import com.blamejared.jeitweaker.JEITweaker;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixerManager;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.google.common.collect.Sets;
@@ -145,9 +146,9 @@ public final class JeiAddonPlugin implements IModPlugin {
     private void registerRecipeFor(final IRecipeRegistration registration, final JeiCategory category) {
         
         final IIngredientManager ingredientManager = registration.getIngredientManager();
-        final JeiCoordinateFixer fixer = new JeiCoordinateFixer(ingredientManager);
+        final JeiCoordinateFixerManager fixerManager = new JeiCoordinateFixerManager(ingredientManager);
         registration.addRecipes(
-                category.getTargetRecipes().stream().map(it -> new JeiTweakerRecipe(it, ingredientManager, fixer)).collect(Collectors.toList()),
+                category.getTargetRecipes().stream().map(it -> new JeiTweakerRecipe(it, ingredientManager, fixerManager)).collect(Collectors.toList()),
                 category.id()
         );
     }
