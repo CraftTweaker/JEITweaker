@@ -29,20 +29,12 @@ public final class InputConsumingCategoryBridge implements JeiCategoryPluginBrid
             
             this.component = null;
         }
-        
-        @Override
-        public void showShapelessMarker() {}
     
         @Override
         public void setExtraComponent(final String key, final MCTextComponent component) {
+            
             if (EXTRA_COMPONENT.equals(key)) this.component = component;
         }
-    
-        @Override
-        public void addTooltip(final String key, final MCTextComponent... lines) {}
-    
-        @Override
-        public void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final MCTextComponent... lines) {}
     
     }
     
