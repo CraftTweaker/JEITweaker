@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker;
 
 import com.blamejared.jeitweaker.helper.category.JeiCategoryHelper;
+import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
 import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixerManager;
 import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,7 +22,7 @@ public class JEITweaker {
         
         MinecraftForge.EVENT_BUS.register(new Events());
         JeiCategoryHelper.initialize();
-        JeiCoordinateFixerManager.registerRawFixer(JeiTweakerIngredientType.ITEM, it -> it - 1);
+        JeiCoordinateFixerManager.registerRawFixer(JeiTweakerIngredientType.ITEM, JeiCoordinateFixer.of(it -> it - 1));
     }
     
 }

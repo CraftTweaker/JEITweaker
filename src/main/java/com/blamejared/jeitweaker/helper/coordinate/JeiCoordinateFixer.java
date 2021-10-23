@@ -2,24 +2,17 @@ package com.blamejared.jeitweaker.helper.coordinate;
 
 import java.util.function.IntUnaryOperator;
 
-@FunctionalInterface
-public interface JeiCoordinateFixer extends IntUnaryOperator {
+public interface JeiCoordinateFixer {
     
     static JeiCoordinateFixer of(final IntUnaryOperator operator) {
         
-        return operator::applyAsInt;
+        return of(operator, operator);
     }
     
     static JeiCoordinateFixer of(final IntUnaryOperator x, final IntUnaryOperator y) {
         
         return new JeiCoordinateFixer() {
             
-            @Override
-            public int fix(final int original) {
-        
-                throw new UnsupportedOperationException();
-            }
-    
             @Override
             public int fixX(final int original) {
         
@@ -34,22 +27,8 @@ public interface JeiCoordinateFixer extends IntUnaryOperator {
         };
     }
     
-    int fix(final int original);
+    int fixX(final int original);
     
-    default int fixX(final int original) {
-        
-        return this.fix(original);
-    }
-    
-    default int fixY(final int original) {
-        
-        return this.fix(original);
-    }
-
-    @Override
-    default int applyAsInt(final int operand) {
-        
-        return this.fix(operand);
-    }
+    int fixY(final int original);
     
 }
