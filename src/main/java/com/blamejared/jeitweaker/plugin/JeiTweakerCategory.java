@@ -92,9 +92,22 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
         final List<MCTextComponent> categoryTips = this.bridge.getTooltips(mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
         final List<MCTextComponent> recipeTips = this.bridge.allowCustomTooltips()? recipe.getTooltips(mouseX, mouseY) : Collections.emptyList();
         
-        return Stream.concat(categoryTips.stream(), recipeTips.stream())
-                .map(MCTextComponent::getInternal)
-                .collect(Collectors.toList());
+        if (categoryTips.isEmpty() && recipeTips.isEmpty()) return Collections.emptyList();
+        
+        final Stream<MCTextComponent> stream;
+        
+        if (categoryTips.isEmpty()) {
+            
+            stream = recipeTips.stream();
+        } else if (recipeTips.isEmpty()) {
+            
+            stream = categoryTips.stream();
+        } else {
+            
+            stream = Stream.concat(categoryTips.stream(), recipeTips.stream());
+        }
+        
+        return stream.map(MCTextComponent::getInternal).collect(Collectors.toList());
     }
     
     @Override
