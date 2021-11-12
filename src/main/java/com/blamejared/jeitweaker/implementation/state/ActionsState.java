@@ -1,6 +1,7 @@
-package com.blamejared.jeitweaker.plugin;
+package com.blamejared.jeitweaker.implementation.state;
 
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.google.common.collect.LinkedHashMultimap;
@@ -21,26 +22,29 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
-public enum JeiStateManager {
-    INSTANCE;
+public final class ActionsState {
     
-    private final Set<JeiCategoryData> currentJeiCategories = new LinkedHashSet<>();
+    private final Multimap<IngredientType<?, ?>, Object> hiddenIngredients;
+    private final Set<ResourceLocation> hiddenRecipeCategories;
+    private final Set<Pair<ResourceLocation, ResourceLocation>> hiddenRecipes;
     
-    private final Multimap<JeiTweakerIngredientType<?, ?>, Object> hiddenIngredients = LinkedHashMultimap.create();
-    private final Set<ResourceLocation> hiddenRecipeCategories = new LinkedHashSet<>();
-    private final Set<Pair<ResourceLocation, ResourceLocation>> hiddenRecipes = new LinkedHashSet<>();
+    private final Map<IngredientType<?, ?>, Map<Object, MCTextComponent[]>> descriptions;
     
-    private final Map<JeiTweakerIngredientType<?, ?>, Map<Object, MCTextComponent[]>> descriptions = new HashMap<>();
+    private final Multimap<IngredientType<?, ?>, Object> customIngredients;
+    private final List<JeiCategory> customCategories;
     
-    private final Multimap<JeiTweakerIngredientType<?, ?>, Object> customIngredients = LinkedHashMultimap.create();
-    private final List<JeiCategory> customCategories = new ArrayList<>();
-    
-    public void replaceJeiCategoriesWith(final Set<ResourceLocation> allCategories, final Set<ResourceLocation> nonHiddenCategories) {
-        this.currentJeiCategories.clear();
-        allCategories.stream()
-                .map(it -> new JeiCategoryData(it, !nonHiddenCategories.contains(it)))
-                .forEach(this.currentJeiCategories::add);
+    ActionsState() {
+        
+        this.hiddenIngredients = LinkedHashMultimap.create();
+        this.hiddenRecipeCategories = new LinkedHashSet<>();
+        this.hiddenRecipes = new LinkedHashSet<>();
+        
+        this.descriptions = new HashMap<>();
+        
+        this.customIngredients = LinkedHashMultimap.create();
+        this.customCategories = new ArrayList<>();
     }
+    
     
     public <T, U> void hide(final JeiIngredient<T, U> ingredient) {
         
@@ -105,12 +109,7 @@ public enum JeiStateManager {
         this.customCategories.remove(category);
     }
     
-    public Set<JeiCategoryData> getCurrentJeiCategories() {
-        
-        return Collections.unmodifiableSet(this.currentJeiCategories);
-    }
-    
-    public <T, U> Collection<T> getHiddenIngredientsForType(final JeiTweakerIngredientType<T, U> type) {
+    public <T, U> Collection<T> getHiddenIngredientsForType(final IngredientType<T, U> type) {
         
         return Collections.unmodifiableCollection(this.uncheckCollection(this.hiddenIngredients.get(type)));
     }
@@ -131,14 +130,14 @@ public enum JeiStateManager {
     }
     
     @SuppressWarnings("unchecked")
-    public <T, U> void onDescriptionsFor(final JeiTweakerIngredientType<T, U> type, final BiConsumer<T, ITextComponent[]> consumer) {
+    public <T, U> void onDescriptionsFor(final IngredientType<T, U> type, final BiConsumer<T, ITextComponent[]> consumer) {
         
         this.descriptions.getOrDefault(type, Collections.emptyMap())
                 .forEach((ingredient, description) ->
                         consumer.accept((T) ingredient, Arrays.stream(description).map(MCTextComponent::getInternal).toArray(ITextComponent[]::new)));
     }
     
-    public <T, U> Collection<T> getCustomIngredientsForType(final JeiTweakerIngredientType<T, U> type) {
+    public <T, U> Collection<T> getCustomIngredientsForType(final IngredientType<T, U> type) {
         
         return Collections.unmodifiableCollection(this.uncheckCollection(this.customIngredients.get(type)));
     }

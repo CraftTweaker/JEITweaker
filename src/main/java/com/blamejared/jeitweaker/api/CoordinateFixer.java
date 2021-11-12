@@ -1,17 +1,17 @@
-package com.blamejared.jeitweaker.helper.coordinate;
+package com.blamejared.jeitweaker.api;
 
 import java.util.function.IntUnaryOperator;
 
-public interface JeiCoordinateFixer {
+public interface CoordinateFixer {
     
-    static JeiCoordinateFixer of(final IntUnaryOperator operator) {
+    static CoordinateFixer of(final IntUnaryOperator operator) {
         
         return of(operator, operator);
     }
     
-    static JeiCoordinateFixer of(final IntUnaryOperator x, final IntUnaryOperator y) {
+    static CoordinateFixer of(final IntUnaryOperator x, final IntUnaryOperator y) {
         
-        return new JeiCoordinateFixer() {
+        return new CoordinateFixer() {
             
             @Override
             public int fixX(final int original) {

@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.impl.commands.CTCommandCollectionEvent;
 import com.blamejared.crafttweaker.impl.commands.CommandCaller;
-import com.blamejared.jeitweaker.plugin.JeiStateManager;
+import com.blamejared.jeitweaker.implementation.state.StateManager;
 
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -18,7 +18,9 @@ public class Events {
         event.registerDump("jeiCategories", "Lists the different JEI categories", (CommandCaller) commandContext -> {
             
             CraftTweakerAPI.logDump("List of all known JEI categories: ");
-            JeiStateManager.INSTANCE.getCurrentJeiCategories().stream()
+            StateManager.INSTANCE.jeiGlobalState()
+                    .getCurrentJeiCategories()
+                    .stream()
                     .map(it -> "- " + it)
                     .sorted()
                     .forEach(CraftTweakerAPI::logDump);

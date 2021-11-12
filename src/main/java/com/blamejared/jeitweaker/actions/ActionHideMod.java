@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.actions.IUndoableAction;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.item.MCItemStackMutable;
-import com.blamejared.jeitweaker.plugin.JeiStateManager;
+import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.IItemStackExpansions;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
@@ -41,14 +41,14 @@ public final class ActionHideMod implements IUndoableAction {
                 .map(MCItemStackMutable::new)
                 .map(IItemStackExpansions::asJeiIngredient)
                 .map(RawJeiIngredient::<IItemStack, ItemStack>cast) // TODO("Remove")
-                .peek(JeiStateManager.INSTANCE::hide)
+                .peek(StateManager.INSTANCE.actionsState()::hide)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void undo() {
 
-        this.collectedStacks.forEach(JeiStateManager.INSTANCE::show);
+        this.collectedStacks.forEach(StateManager.INSTANCE.actionsState()::show);
     }
 
     @Override

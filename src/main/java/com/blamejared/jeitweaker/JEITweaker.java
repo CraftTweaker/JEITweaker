@@ -1,9 +1,6 @@
 package com.blamejared.jeitweaker;
 
-import com.blamejared.jeitweaker.helper.category.JeiCategoryHelper;
-import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixer;
-import com.blamejared.jeitweaker.helper.coordinate.JeiCoordinateFixerManager;
-import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.implementation.JeiTweakerInitializer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -21,8 +18,7 @@ public class JEITweaker {
     private void setupClient(final FMLClientSetupEvent event) {
         
         MinecraftForge.EVENT_BUS.register(new Events());
-        JeiCategoryHelper.initialize();
-        JeiCoordinateFixerManager.registerRawFixer(JeiTweakerIngredientType.ITEM, JeiCoordinateFixer.of(it -> it - 1));
+        JeiTweakerInitializer.initialize();
     }
     
 }

@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.component.ninepatch;
+package com.blamejared.jeitweaker.library.ninepatch;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.google.common.base.Suppliers;

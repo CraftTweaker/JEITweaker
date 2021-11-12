@@ -2,7 +2,7 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.jeitweaker.plugin.JeiStateManager;
+import com.blamejared.jeitweaker.implementation.state.StateManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.LogicalSide;
 
@@ -19,14 +19,14 @@ public final class ActionHideRecipe implements IUndoableAction {
 
     @Override
     public void apply() {
-
-        JeiStateManager.INSTANCE.hideRecipe(this.category, this.recipeName);
+    
+        StateManager.INSTANCE.actionsState().hideRecipe(this.category, this.recipeName);
     }
 
     @Override
     public void undo() {
-
-        JeiStateManager.INSTANCE.showRecipe(this.category, this.recipeName);
+    
+        StateManager.INSTANCE.actionsState().showRecipe(this.category, this.recipeName);
     }
 
     @Override

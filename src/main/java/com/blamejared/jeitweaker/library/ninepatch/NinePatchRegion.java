@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.component.ninepatch;
+package com.blamejared.jeitweaker.library.ninepatch;
 
 final class NinePatchRegion {
     

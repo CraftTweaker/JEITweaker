@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
-import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.api.IngredientType;
 
 /*
  TODO("Uncomment when generic type inference has gotten better")
@@ -10,16 +10,16 @@ import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
 @ZenRegister
  */
 public final class JeiIngredient<T, U> implements RawJeiIngredient {
-    private final JeiTweakerIngredientType<T, U> type;
+    private final IngredientType<T, U> type;
     private final T wrapped;
     
-    JeiIngredient(final JeiTweakerIngredientType<T, U> type, final T wrapped) {
+    JeiIngredient(final IngredientType<T, U> type, final T wrapped) {
         
         this.type = type;
         this.wrapped = wrapped;
     }
     
-    public JeiTweakerIngredientType<T, U> getType() {
+    public IngredientType<T, U> getType() {
         
         return this.type;
     }

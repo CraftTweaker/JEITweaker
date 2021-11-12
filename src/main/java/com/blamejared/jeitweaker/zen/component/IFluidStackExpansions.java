@@ -2,7 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
-import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.api.BuiltinIngredientTypes;
 import org.openzen.zencode.java.ZenCodeType;
 
 //@Document("mods/JEI/Component/IFluidStackExpansions")
@@ -11,13 +11,13 @@ import org.openzen.zencode.java.ZenCodeType;
 public final class IFluidStackExpansions {
     @ZenCodeType.Caster(implicit = true)
     public static RawJeiIngredient asJeiIngredient(final IFluidStack stack) {
-        
-        return new JeiIngredient<>(JeiTweakerIngredientType.FLUID, stack);
+
+        return new JeiIngredient<>(BuiltinIngredientTypes.FLUID.get(), stack);
     }
-    
+
     @ZenCodeType.Caster(implicit = true)
     public static JeiDrawable asJeiDrawable(final IFluidStack stack) {
-        
+
         return JeiIngredientExpansions.asJeiDrawable(asJeiIngredient(stack));
     }
 }

@@ -2,7 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import com.blamejared.jeitweaker.component.ninepatch.NinePatchDrawable;
+import com.blamejared.jeitweaker.library.ninepatch.NinePatchDrawable;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -34,7 +34,7 @@ public final class JeiDrawable {
     @ZenCodeType.Method
     public static JeiDrawable of(final RawJeiIngredient ingredient) {
         
-        return new JeiDrawable(helper -> helper.createDrawableIngredient(ingredient.cast().getType().toInternal(ingredient.cast().getWrapped())));
+        return new JeiDrawable(helper -> helper.createDrawableIngredient(ingredient.cast().getType().toJeiType(ingredient.cast().getWrapped())));
     }
     
     @ZenCodeType.Method

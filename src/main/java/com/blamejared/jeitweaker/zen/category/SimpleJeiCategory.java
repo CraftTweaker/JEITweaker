@@ -5,7 +5,7 @@ import com.blamejared.crafttweaker.api.logger.ILogger;
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.JEITweaker;
-import com.blamejared.jeitweaker.plugin.JeiTweakerIngredientType;
+import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -100,7 +100,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
             
             if (slot.length > 1) { // At least two ingredients for this slot
                 
-                final JeiTweakerIngredientType<?, ?> first = slot[0].cast().getType();
+                final IngredientType<?, ?> first = slot[0].cast().getType();
                 final long mismatchingTypes = Arrays.stream(slot, 1, slot.length)
                         .filter(it -> it.cast().getType() != first)
                         .count();

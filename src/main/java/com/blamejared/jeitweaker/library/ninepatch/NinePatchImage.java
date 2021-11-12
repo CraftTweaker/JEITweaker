@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.component.ninepatch;
+package com.blamejared.jeitweaker.library.ninepatch;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.NativeImage;

@@ -1,4 +1,4 @@
-package com.blamejared.jeitweaker.plugin;
+package com.blamejared.jeitweaker.jei;
 
 import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
