@@ -106,11 +106,13 @@ dependencies {
     compileOnly 'mezz.jei:jei-1.16.5:7.7.1.121:api'
     runtimeOnly fg.deobf('mezz.jei:jei-1.16.5:7.7.1.121')
 
+    /*
     annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.431'
     annotationProcessor 'com.google.code.gson:gson:2.8.6'
     annotationProcessor 'org.reflections:reflections:0.9.10'
     annotationProcessor mcDep
     annotationProcessor ctDep
+    */
 }
 
 jar {
