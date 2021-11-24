@@ -6,7 +6,7 @@ buildscript {
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'com.blamejared', name: 'ModTemplate', version: '1.+', changing: true
+        classpath group: 'com.blamejared', name: 'ModTemplate', version: '2.+', changing: true
     }
 }
 plugins {
@@ -17,7 +17,7 @@ apply plugin: 'com.blamejared.modtemplate'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.1'
+version = com.blamejared.modtemplate.Utils.updatingVersion('1.1.0')
 group = 'com.blamejared.jeitweaker'
 archivesBaseName = 'JEITweaker-1.16.5'
 
