@@ -5,6 +5,11 @@ import com.blamejared.crafttweaker_annotations.annotations.Document;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import org.openzen.zencode.java.ZenCodeType;
 
+/**
+ * Represents the type of animation that an animated {@link JeiDrawable} should apply.
+ *
+ * @since 1.1.0
+ */
 @Document("mods/JEI/Component/JeiDrawableAnimation")
 @ZenCodeType.Name("mods.jei.component.JeiDrawableAnimation")
 @ZenRegister

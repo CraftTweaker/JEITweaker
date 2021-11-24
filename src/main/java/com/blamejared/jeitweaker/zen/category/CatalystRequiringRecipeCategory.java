@@ -16,6 +16,19 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
+/**
+ * Identifies a recipe that supports up to 3 inputs and 3 outputs and specifies a recipe-specific catalyst.
+ *
+ * <p>The recipe-specific catalyst can be either a {@link JeiDrawable} or an actual JEI ingredient. In the latter case,
+ * the catalyst is specified as one additional recipe input.</p>
+ *
+ * <p>By default, this category is initialized with 1 input, 1 output, and no catalyst drawable.</p>
+ *
+ * <p>A recipe can also specify a custom tooltip that appears when hovering over the arrow by adding a tooltip with the
+ * ID {@code "process_detail"}.</p>
+ *
+ * @since 1.1.0
+ */
 @Document("mods/JEI/Category/CatalystRequiringRecipe")
 @ZenCodeType.Name("mods.jei.category.CatalystRequiringRecipe")
 @ZenRegister
@@ -39,12 +52,28 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
         this.catalystDrawable = null;
     }
     
+    /**
+     * Sets the {@link JeiDrawable} that will be used as a catalyst.
+     *
+     * <p>If the given drawable is {@code null}, then the last of the input parameters will be treated as catalyst.</p>
+     *
+     * @param catalystDrawable The drawable for the catalyst, or {@code null}.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("catalystDrawable")
     public void setCatalystDrawable(@ZenCodeType.Nullable final JeiDrawable catalystDrawable) {
         
         this.catalystDrawable = catalystDrawable;
     }
     
+    /**
+     * Sets the amount of inputs that this recipe category allows.
+     *
+     * @param inputs The amount of inputs: it must be between 1 and 3 inclusive.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("inputs")
     public void setInputs(final int inputs) {
         
@@ -63,6 +92,13 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
         this.inputs = inputs;
     }
     
+    /**
+     * Sets the amount of outputs that this recipe category allows.
+     *
+     * @param outputs The amount of outputs: it must be between 1 and 3 inclusive.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("outputs")
     public void setOutputs(final int outputs) {
     

@@ -19,6 +19,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+/**
+ * Identifies a fully free-form JEI category, which allows custom background, drawable, and slot placement.
+ *
+ * @since 1.1.0
+ */
 @Document("mods/JEI/Category/Custom")
 @ZenCodeType.Name("mods.jei.category.Custom")
 @ZenRegister
@@ -177,18 +182,42 @@ public final class CustomRecipeCategory extends SimpleJeiCategory {
         this.canBeShapeless = false;
     }
     
+    /**
+     * Sets the {@link JeiDrawable} which acts as the background of this category.
+     *
+     * @param background The background for this category.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("background")
     public void setBackground(final JeiDrawable background) {
         
         this.background = background;
     }
     
+    /**
+     * Sets whether recipes in this category can be marked as shapeless.
+     *
+     * @param canHaveShapelessMarker Whether recipes in this category can be marked as shapeless.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("canHaveShapelessMarker")
     public void setCanHaveShapelessMarker(final boolean canHaveShapelessMarker) {
         
         this.canBeShapeless = canHaveShapelessMarker;
     }
     
+    /**
+     * Places a new slot to this recipe with the given index at the specified coordinates.
+     *
+     * @param index The slot index. Must be unique.
+     * @param x The x coordinate where the slot should be placed.
+     * @param y The y coordinate where the slot should be placed.
+     * @param isInput Whether the slot is an input ({@code true}) or an output ({@code false}) slot.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Method("addSlot")
     public void addSlot(final int index, final int x, final int y, final boolean isInput) {
         
@@ -200,18 +229,52 @@ public final class CustomRecipeCategory extends SimpleJeiCategory {
         this.slots.put(index, SlotData.of(index, x, y, isInput));
     }
     
+    /**
+     * Places a new {@link JeiDrawable} at the given coordinates.
+     *
+     * @param x The x coordinate where the drawable should be placed.
+     * @param y The y coordinate where the drawable should be placed.
+     * @param drawable The drawable to add.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Method("addDrawable")
     public void addDrawable(final int x, final int y, final JeiDrawable drawable) {
         
         this.drawables.add(DrawableData.of(drawable, x, y));
     }
     
+    /**
+     * Adds a new tooltip that appears when the mouse is in a rectangle active area of width {@code w} and height
+     * {@code h} at the specified coordinates with the given text.
+     *
+     * <p>The tooltip is <em>global</em>, meaning it appears in all recipes with the same text.</p>
+     *
+     * @param x The x coordinate of the top-left corner of the active area.
+     * @param y The y coordinate of the top-left corner of the active area.
+     * @param w The width of the rectangle that determines the active area.
+     * @param h The height of the rectangle that determines the active area.
+     * @param text A list of {@link MCTextComponent}s indicating the text that should be present in the tooltip.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Method("addTooltip")
     public void addTooltip(final int x, final int y, final int w, final int h, final MCTextComponent... text) {
         
         this.tooltips.add(TextData.of(x, y, w, h, Collections.unmodifiableList(Arrays.asList(text))));
     }
     
+    /**
+     * Adds a new text area that appears at the given coordinates.
+     *
+     * <p>The added text area is <em>global</em>, meaning it appears in all recipes the same way.</p>
+     *
+     * @param x The x coordinate where the text should appear.
+     * @param y The y coordinate where the text should appear.
+     * @param text The text that should appear.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Method("addText")
     public void addText(final int x, final int y, final MCTextComponent text) {
         

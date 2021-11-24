@@ -19,6 +19,18 @@ import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
+/**
+ * Represents the basic and simplest implementation of a custom {@link JeiCategory}.
+ *
+ * <p><strong>For the script writers:</strong> you should never ever reference this class: use either a specific type or
+ * {@link JeiCategory}.</p>
+ *
+ * <p><strong>For the mod developers:</strong> it is highly suggested to use this class as a base to implement a custom
+ * category, as it gets rid of most of the boilerplate and also provides a constructor that already follows the
+ * requirements outlined in {@link JeiCategory}.</p>
+ *
+ * @since 1.1.0
+ */
 @Document("mods/JEI/Category/SimpleJeiCategory")
 @ZenCodeType.Name("mods.jei.category.SimpleJeiCategory")
 @ZenRegister

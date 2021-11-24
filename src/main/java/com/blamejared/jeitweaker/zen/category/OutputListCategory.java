@@ -16,6 +16,13 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
 
+/**
+ * Represents a recipe that has no inputs, but produces a certain set of outputs.
+ *
+ * <p>The amount of rows of output can be manually set. Each row has space for up to 9 outputs.</p>
+ *
+ * @since 1.1.0
+ */
 @Document("mods/JEI/Category/OutputList")
 @ZenCodeType.Name("mods.jei.category.OutputList")
 @ZenRegister
@@ -31,7 +38,13 @@ public final class OutputListCategory extends SimpleJeiCategory {
         this.backgroundSupplier = Suppliers.memoize(() -> JeiDrawable.ofNinePatch(GUI_ATLAS, 92, 0, 164, 20, 162, 18 * this.rows));
     }
     
-    @ZenCodeType.Method
+    /**
+     * Sets the amount of rows that should be present for each recipe.
+     *
+     * @param rows The amount of rows that should be available.
+     *
+     * @since 1.1.0
+     */
     @ZenCodeType.Setter("rows")
     public void setRows(final int rows) {
         

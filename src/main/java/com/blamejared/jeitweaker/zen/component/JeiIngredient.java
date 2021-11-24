@@ -3,6 +3,21 @@ package com.blamejared.jeitweaker.zen.component;
 import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
 import com.blamejared.jeitweaker.api.IngredientType;
 
+/**
+ * Represents a JEI ingredient, which is a pair of a registered {@link IngredientType} and the actual ingredient.
+ *
+ * <p>The existence of this class allows JeiTweaker to work generically with ingredients, without having to special
+ * case every single ingredient type in JEI.</p>
+ *
+ * <p>Mod developers should always use this class when interfacing with JeiTweaker ingredients.</p>
+ *
+ * @apiNote Due to type inference issues with ZenCode, any method that wants to expose this class to scriptwriters must
+ * instead use {@link RawJeiIngredient} and then use {@link RawJeiIngredient#cast()} to obtain the actual JEI ingredient
+ * instance.
+ *
+ * @param <T> The exposed type of the wrapped ingredient.
+ * @param <U> The internal type of the wrapped ingredient.
+ */
 /*
  TODO("Uncomment when generic type inference has gotten better")
 @Document("mods/JEI/Component/JeiIngredient")
