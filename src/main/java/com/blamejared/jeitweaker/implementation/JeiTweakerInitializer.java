@@ -66,6 +66,7 @@ public final class JeiTweakerInitializer {
         providers.forEach(provider -> {
             provider.registerIngredientTypes(manager);
             provider.registerCoordinateFixers(manager);
+            provider.registerIngredientEnumerators(manager);
         });
     }
 }

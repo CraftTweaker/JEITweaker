@@ -33,4 +33,12 @@ public interface JeiTweakerPluginProvider {
      */
     default void registerCoordinateFixers(final CoordinateFixerRegistration registration) {}
     
+    /**
+     * Handles the registration of {@link IngredientEnumerator}s to JeiTweaker.
+     *
+     * @param registration The handler that manages ingredient enumerator registration.
+     *
+     * @since 1.1.0
+     */
+    default void registerIngredientEnumerators(final IngredientEnumeratorRegistration registration) {}
 }

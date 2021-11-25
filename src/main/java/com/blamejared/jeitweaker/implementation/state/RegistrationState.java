@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.implementation.state;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
+import com.blamejared.jeitweaker.api.IngredientEnumerator;
 import com.blamejared.jeitweaker.api.IngredientType;
 import net.minecraft.util.ResourceLocation;
 
@@ -13,11 +13,13 @@ public final class RegistrationState {
     
     private final Map<ResourceLocation, IngredientType<?, ?>> ingredientTypes;
     private final Map<IngredientType<?, ?>, CoordinateFixer> coordinateFixers;
+    private final Map<IngredientType<?, ?>, IngredientEnumerator<?, ?>> ingredientEnumerators;
     
     RegistrationState() {
         
         this.ingredientTypes = new HashMap<>();
         this.coordinateFixers = new HashMap<>();
+        this.ingredientEnumerators = new HashMap<>();
     }
     
     public <T, U> void registerIngredientType(final ResourceLocation id, final IngredientType<T, U> ingredientType) {
@@ -38,6 +40,15 @@ public final class RegistrationState {
         this.coordinateFixers.put(ingredientType, fixer);
     }
     
+    public <T, U> void registerIngredientEnumerator(final IngredientType<T, U> ingredientType, final IngredientEnumerator<T, U> enumerator) {
+        
+        if (this.ingredientEnumerators.containsKey(ingredientType)) {
+            throw new IllegalArgumentException("Ingredient type " + ingredientType + " already has an enumerator");
+        }
+        
+        this.ingredientEnumerators.put(ingredientType, enumerator);
+    }
+    
     public Stream<IngredientType<?, ?>> ingredientTypes() {
         
         return this.ingredientTypes.values().stream();
@@ -46,5 +57,10 @@ public final class RegistrationState {
     public Stream<Map.Entry<IngredientType<?, ?>, CoordinateFixer>> rawFixers() {
         
         return this.coordinateFixers.entrySet().stream();
+    }
+    
+    public Stream<Map.Entry<IngredientType<?, ?>, IngredientEnumerator<?, ?>>> ingredientEnumerators() {
+        
+        return this.ingredientEnumerators.entrySet().stream();
     }
 }

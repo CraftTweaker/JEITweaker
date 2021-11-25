@@ -33,6 +33,7 @@ public final class BuiltinIngredientTypes {
             ItemStack.class,
             IItemStack::getInternal,
             MCItemStack::new,
+            IItemStack::getRegistryName,
             IItemStack::matches
     );
     
@@ -47,6 +48,7 @@ public final class BuiltinIngredientTypes {
             FluidStack.class,
             IFluidStack::getInternal,
             MCFluidStack::new,
+            IFluidStack::getRegistryName,
             Objects::equals
     );
 }

@@ -26,7 +26,7 @@ public final class IItemStackExpansions {
     @ZenCodeType.Caster(implicit = true)
     public static RawJeiIngredient asJeiIngredient(final IItemStack stack) {
 
-        return new JeiIngredient<>(BuiltinIngredientTypes.ITEM.get(), stack);
+        return JeiIngredient.of(BuiltinIngredientTypes.ITEM.get(), stack);
     }
 
     /**

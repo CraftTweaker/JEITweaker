@@ -5,11 +5,8 @@ import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public final class JeiTweakerIngredientType<T, U> implements IngredientType<T, U> {
     private final ResourceLocation id;
@@ -17,17 +14,20 @@ public final class JeiTweakerIngredientType<T, U> implements IngredientType<T, U
     private final Class<U> internalClassType;
     private final Function<T, U> toInternalConverter;
     private final Function<U, T> toJeiTweakerConverter;
+    private final Function<T, ResourceLocation> toIdentifierConverter;
     private final BiPredicate<T, T> matcher;
     private final Function<IIngredientManager, IIngredientType<U>> toJeiTypeConverter;
     
     JeiTweakerIngredientType(final ResourceLocation id, final Class<T> jeiTweakerClassType, final Class<U> internalClassType,
                              final Function<T, U> toInternalConverter, final Function<U, T> toJeiTweakerConverter,
-                             final BiPredicate<T, T> matcher, final Function<IIngredientManager, IIngredientType<U>> toJeiTypeConverter) {
+                             final Function<T, ResourceLocation> toIdentifierConverter, final BiPredicate<T, T> matcher,
+                             final Function<IIngredientManager, IIngredientType<U>> toJeiTypeConverter) {
         this.id = id;
         this.jeiTweakerClassType = jeiTweakerClassType;
         this.internalClassType = internalClassType;
         this.toInternalConverter = toInternalConverter;
         this.toJeiTweakerConverter = toJeiTweakerConverter;
+        this.toIdentifierConverter = toIdentifierConverter;
         this.matcher = matcher;
         this.toJeiTypeConverter = toJeiTypeConverter;
     }
@@ -60,6 +60,11 @@ public final class JeiTweakerIngredientType<T, U> implements IngredientType<T, U
     @Override
     public IIngredientType<U> toJeiIngredientType(final IIngredientManager manager) {
         return this.toJeiTypeConverter.apply(manager);
+    }
+    
+    @Override
+    public ResourceLocation toIngredientIdentifier(final T t) {
+        return this.toIdentifierConverter.apply(t);
     }
     
     @Override

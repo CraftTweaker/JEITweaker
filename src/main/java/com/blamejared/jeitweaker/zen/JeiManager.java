@@ -175,12 +175,12 @@ public final class JeiManager {
     }
     
     /**
-     * Hides all {@link IItemStack}s of a given mod, making sure that they do not show up in JEI.
+     * Hides all {@link RawJeiIngredient}s of a given mod, making sure that they do not show up in JEI.
      *
-     * <p>Optionally, some stacks can be excluded from the hiding by making use of the
+     * <p>Optionally, some ingredients can be excluded based on their registry name from the hiding by making use of the
      * {@link com.blamejared.crafttweaker.api.managers.IRecipeManager.RecipeFilter}.</p>
      *
-     * @param modId The mod ID of the items that should be hidden.
+     * @param modId The mod ID of the ingredients that should be hidden.
      * @param exclude An optional exclusion filter.
      *
      * @since 1.0.0
@@ -206,9 +206,9 @@ public final class JeiManager {
     }
     
     /**
-     * Hides all {@link IItemStack}s whose name matches the given regular expression.
+     * Hides all {@link RawJeiIngredient}s whose name matches the given regular expression.
      *
-     * @param regex The regular expression that identifies item names that should be hidde from JEI.
+     * @param regex The regular expression that identifies ingredient names that should be hidden from JEI.
      *
      * @since 1.0.0
      */

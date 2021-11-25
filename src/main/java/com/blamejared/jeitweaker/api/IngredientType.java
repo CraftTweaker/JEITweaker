@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
  * Represents an ingredient type inside JeiTweaker.
  *
  * <p>An ingredient type is responsible for abstracting out an ingredient inside the code of JeiTweaker, allowing it
- * work with ingredients generically, without assuming any particular implementation.</p>
+ * to work with ingredients generically, without assuming any particular implementation.</p>
  *
  * <p>An ingredient type is thus responsible for determining the type of the ingredient exposed to JeiTweaker and its
  * plugins and the internal type used when communicating with both game code and JEI. An ingredient type must also be
@@ -85,6 +85,16 @@ public interface IngredientType<T, U> {
      * @since 1.1.0
      */
     IIngredientType<U> toJeiIngredientType(final IIngredientManager manager);
+    
+    /**
+     * Converts the given instance of an exposed type to an identifier that can be used to refer to the ingredient.
+     *
+     * @param t The exposed type to convert.
+     * @return A {@link ResourceLocation} identifying the given ingredient.
+     *
+     * @since 1.1.0
+     */
+    ResourceLocation toIngredientIdentifier(final T t);
     
     /**
      * Verifies whether two instances of the exposed times match.

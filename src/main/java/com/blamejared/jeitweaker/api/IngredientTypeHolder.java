@@ -14,8 +14,8 @@ import java.util.function.Supplier;
  * been registered to JeiTweaker. More-over, it also ties the registration with the type itself, allowing for storage of
  * the ingredient type in constant fields and avoiding {@code null} checks.</p>
  *
- * <p>After being {@linkplain #of(ResourceLocation, Class, Class, Function, Function, BiPredicate) created}, an
- * ingredient type has to be registered via the {@link #registerTo(IngredientTypeRegistration)} method. After the
+ * <p>After being {@linkplain #of(ResourceLocation, Class, Class, Function, Function, Function, BiPredicate) created},
+ * an ingredient type has to be registered via the {@link #registerTo(IngredientTypeRegistration)} method. After the
  * registration, the contained {@link IngredientType} can be queried via {@link #get()}.</p>
  *
  * <p>Refer to {@link BuiltinIngredientTypes} for an example on their usage.</p>
@@ -49,6 +49,8 @@ public final class IngredientTypeHolder<T, U> implements Supplier<IngredientType
      *                           corresponding instance of the internal type.
      * @param toJeiTweakerTypeConverter A {@link Function} that accepts an instance of the internal type and converts it
      *                                  to the corresponding instance of the exposed type.
+     * @param toIdentifierConverter A {@link Function} that accepts an instance of the exposed type and converts it into
+     *                              an ID in {@link ResourceLocation} form specific to the given ingredient.
      * @param matcher A {@link BiPredicate} which is used to verify whether two instances of the exposed type match, for
      *                any definition of matching that the ingredient type wants to indicate.
      * @param <T> The type of the exposed type of the ingredient type.
@@ -64,11 +66,12 @@ public final class IngredientTypeHolder<T, U> implements Supplier<IngredientType
             final Class<U> jeiType,
             final Function<T, U> toJeiTypeConverter,
             final Function<U, T> toJeiTweakerTypeConverter,
+            final Function<T, ResourceLocation> toIdentifierConverter,
             final BiPredicate<T, T> matcher
     ) {
         
         return new IngredientTypeHolder<>(
-                reg -> reg.registerIngredientType(id, jeiTweakerType, jeiType, toJeiTypeConverter, toJeiTweakerTypeConverter, matcher)
+                reg -> reg.registerIngredientType(id, jeiTweakerType, jeiType, toJeiTypeConverter, toJeiTweakerTypeConverter, toIdentifierConverter, matcher)
         );
     }
     

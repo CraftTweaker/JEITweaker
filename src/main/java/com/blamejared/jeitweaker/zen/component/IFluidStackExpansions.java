@@ -26,7 +26,7 @@ public final class IFluidStackExpansions {
     @ZenCodeType.Caster(implicit = true)
     public static RawJeiIngredient asJeiIngredient(final IFluidStack stack) {
 
-        return new JeiIngredient<>(BuiltinIngredientTypes.FLUID.get(), stack);
+        return JeiIngredient.of(BuiltinIngredientTypes.FLUID.get(), stack);
     }
 
     /**

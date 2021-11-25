@@ -27,6 +27,8 @@ public interface IngredientTypeRegistration {
      *                           corresponding instance of the internal type.
      * @param toJeiTweakerTypeConverter A {@link Function} that accepts an instance of the internal type and converts it
      *                                  to the corresponding instance of the exposed type.
+     * @param toIdentifierConverter A {@link Function} that accepts an instance of the exposed type and converts it into
+     *                              an ID in {@link ResourceLocation} form specific to the given ingredient.
      * @param matcher A {@link BiPredicate} which is used to verify whether two instances of the exposed type match, for
      *                any definition of matching that the ingredient type wants to indicate.
      * @param <T> The type of the exposed type of the ingredient type.
@@ -43,6 +45,7 @@ public interface IngredientTypeRegistration {
             final Class<U> jeiType,
             final Function<T, U> toJeiTypeConverter,
             final Function<U, T> toJeiTweakerTypeConverter,
+            final Function<T, ResourceLocation> toIdentifierConverter,
             final BiPredicate<T, T> matcher
     );
     

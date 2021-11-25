@@ -28,10 +28,13 @@ public final class JeiIngredient<T, U> implements RawJeiIngredient {
     private final IngredientType<T, U> type;
     private final T wrapped;
     
-    JeiIngredient(final IngredientType<T, U> type, final T wrapped) {
-        
+    private JeiIngredient(final IngredientType<T, U> type, final T wrapped) {
         this.type = type;
         this.wrapped = wrapped;
+    }
+    
+    public static <T, U> JeiIngredient<T, U> of(final IngredientType<T, U> type, final T wrapped) {
+        return new JeiIngredient<>(type, wrapped);
     }
     
     public IngredientType<T, U> getType() {
