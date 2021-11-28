@@ -1,5 +1,7 @@
 * text eol=lf
-*.bat text eol=crlf
-*.patch text eol=lf
-*.java text eol=lf
-*.gradle text eol=crlf
+*.bat           text eol=crlf
+*.bash          text eol=lf
+*.java          text diff=java
+*.sh            text eol=lf
+*.png           binary
+*.psd           binary

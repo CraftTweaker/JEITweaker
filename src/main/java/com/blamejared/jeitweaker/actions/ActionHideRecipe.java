@@ -2,52 +2,49 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.jeitweaker.JEIManager;
+import com.blamejared.jeitweaker.implementation.state.StateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.LogicalSide;
-import org.apache.commons.lang3.tuple.Pair;
 
-public class ActionHideRecipe implements IUndoableAction {
-    
-    
-    private final String category;
-    private final String recipeName;
-    
-    public ActionHideRecipe(String category, String recipeName) {
-        
+public final class ActionHideRecipe implements IUndoableAction {
+
+    private final ResourceLocation category;
+    private final ResourceLocation recipeName;
+
+    public ActionHideRecipe(final ResourceLocation category, final ResourceLocation recipeName) {
+
         this.category = category;
-        
         this.recipeName = recipeName;
     }
-    
+
     @Override
     public void apply() {
-        
-        JEIManager.HIDDEN_RECIPES.add(Pair.of(category, recipeName));
-    }
     
+        StateManager.INSTANCE.actionsState().hideRecipe(this.category, this.recipeName);
+    }
+
     @Override
     public void undo() {
-        
-        JEIManager.HIDDEN_RECIPES.removeIf(next -> next.getLeft().equals(category) && next.getRight()
-                .equals(recipeName));
-    }
     
+        StateManager.INSTANCE.actionsState().showRecipe(this.category, this.recipeName);
+    }
+
     @Override
     public String describeUndo() {
-        
-        return "Undoing JEI hiding recipe: " + recipeName + " in category: " + category;
+
+        return "Undoing JEI hiding recipe: " + this.recipeName + " in category: " + this.category;
     }
-    
+
     @Override
     public String describe() {
-        
-        return "JEI Hiding recipe: " + recipeName + " in category: " + category;
+
+        return "JEI Hiding recipe: " + this.recipeName + " in category: " + this.category;
     }
-    
+
     @Override
     public boolean shouldApplyOn(LogicalSide side) {
-        
+
         return !CraftTweakerAPI.isServer();
     }
-    
+
 }

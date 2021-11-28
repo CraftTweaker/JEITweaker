@@ -2,52 +2,50 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
+import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.jeitweaker.implementation.state.StateManager;
+import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraftforge.fml.LogicalSide;
 
-import java.util.Map;
+public final class ActionAddInfo<T, U> implements IUndoableAction {
 
-public class ActionAddInfo<T extends CommandStringDisplayable> implements IUndoableAction {
-    
-    private final Map<T, String[]> descriptions;
-    private final T stack;
-    private final String[] description;
-    
-    public ActionAddInfo(Map<T, String[]> descriptions, T stack, String[] description) {
-        
-        this.descriptions = descriptions;
-        this.stack = stack;
+    private final JeiIngredient<T, U> ingredient;
+    private final MCTextComponent[] description;
+
+    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final MCTextComponent... description) {
+
+        this.ingredient = ingredient;
         this.description = description;
     }
-    
+
     @Override
     public void apply() {
-        
-        descriptions.put(stack, description);
+
+        StateManager.INSTANCE.actionsState().addDescription(this.ingredient, this.description);
     }
-    
+
     @Override
     public void undo() {
-        
-        descriptions.remove(stack);
-    }
     
+        StateManager.INSTANCE.actionsState().removeDescription(this.ingredient);
+    }
+
     @Override
     public String describeUndo() {
-        
-        return "Undoing adding JEI Info for: " + stack.getCommandString();
+
+        return "Undoing adding JEI Info for: " + this.ingredient.getCommandString();
     }
-    
+
     @Override
     public String describe() {
-        
-        return "Adding JEI Info for: " + stack.getCommandString();
+
+        return "Adding JEI Info for: " + this.ingredient.getCommandString();
     }
-    
+
     @Override
     public boolean shouldApplyOn(LogicalSide side) {
-        
+
         return !CraftTweakerAPI.isServer();
     }
-    
+
 }
