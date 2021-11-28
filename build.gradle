@@ -129,6 +129,25 @@ jar {
     }
 }
 
+javadoc {
+    include(
+        'com/blamejared/jeitweaker/api/**',
+        'com/blamejared/jeitweaker/bridge/JeiCategoryPluginBridge.java',
+        'com/blamejared/jeitweaker/bridge/package-info.java',
+        'com/blamejared/jeitweaker/zen/package-info.java',
+        'com/blamejared/jeitweaker/zen/category/JeiCategory.java',
+        'com/blamejared/jeitweaker/zen/category/SimpleJeiCategory.java',
+        'com/blamejared/jeitweaker/zen/category/package-info.java',
+        'com/blamejared/jeitweaker/zen/component/**',
+        'com/blamejared/jeitweaker/zen/recipe/RecipeGraphics.java',
+        'com/blamejared/jeitweaker/zen/recipe/package-info.java'
+    )
+    options.tags = [
+            'apiNote:a:Api Note:',
+            'implSpec:a:Implementation Specifications:',
+            'implNote:a:Implementation Note:'
+    ]
+}
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     description = 'Creates a JAR containing the source code.'

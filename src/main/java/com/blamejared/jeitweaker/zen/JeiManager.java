@@ -149,7 +149,7 @@ public final class JeiManager {
     /**
      * Hides the category identified by the given category ID from displaying within JEI.
      *
-     * <p>A full list of categories is available through the {@link /ct dump jeiCategories} command.</p>
+     * <p>A full list of categories is available through the {@code /ct dump jeiCategories} command.</p>
      *
      * @param category The ID of the category to hide.
      *
