@@ -5,3 +5,4 @@
 *.sh            text eol=lf
 *.png           binary
 *.psd           binary
+*.jar           binary
