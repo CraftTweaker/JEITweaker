@@ -31,6 +31,7 @@ public final class ActionHideMod implements IUndoableAction {
                 .map(entry -> Pair.of(entry.getKey(), entry.getValue().jeiEnumeration().spliterator()))
                 .flatMap(entry -> StreamSupport.stream(entry.getSecond(), false).map(it -> Pair.of(entry.getFirst(), it)))
                 .map(entry -> Pair.of(entry.getFirst(), entry.getFirst().toJeiTweakerType(this.uncheck(entry.getSecond()))))
+                .filter(entry -> this.modId.equals(entry.getFirst().toIngredientIdentifier(this.uncheck(entry.getSecond())).getNamespace()))
                 .filter(entry -> !this.exclude.test(entry.getFirst().toIngredientIdentifier(this.uncheck(entry.getSecond())).toString()))
                 .map(entry -> JeiIngredient.of(entry.getFirst(), this.uncheck(entry.getSecond())))
                 .peek(StateManager.INSTANCE.actionsState()::hide)
