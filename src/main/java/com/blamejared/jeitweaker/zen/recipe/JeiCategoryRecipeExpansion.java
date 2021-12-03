@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.zen.recipe;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.actions.ActionAddRecipeToCategory;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  *
  * @since 1.1.0
  */
-//@Document("mods/JEI/Recipe/JeiCategoryRecipeExpansion")
+@Document("mods/JEI/API/Recipe/JeiCategoryRecipeExpansion")
 @ZenCodeType.Expansion("mods.jei.category.JeiCategory")
 @ZenRegister
 public final class JeiCategoryRecipeExpansion {

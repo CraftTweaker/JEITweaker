@@ -37,7 +37,7 @@ import java.util.function.Consumer;
  * @since 1.1.0
  */
 // TODO("Expose methods?")
-@Document("mods/JEI/Recipe/JeiRecipe")
+@Document("mods/JEI/API/Recipe/JeiRecipe")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipe")
 @ZenRegister
 public final class JeiRecipe {

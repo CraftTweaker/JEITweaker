@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/Category/Custom")
+@Document("mods/JEI/API/Category/Custom")
 @ZenCodeType.Name("mods.jei.category.Custom")
 @ZenRegister
 public final class CustomRecipeCategory extends SimpleJeiCategory {

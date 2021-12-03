@@ -28,7 +28,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/Component/JeiIngredient")
+@Document("mods/JEI/API/Component/JeiIngredient")
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
 // TODO("Replace all usages of this with JeiIngredient once generic inference is better")

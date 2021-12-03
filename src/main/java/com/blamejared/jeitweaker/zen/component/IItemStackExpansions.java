@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.item.IItemStack;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.api.BuiltinIngredientTypes;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -10,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-//@Document("mods/JEI/Component/IItemStackExpansions")
+@Document("mods/JEI/API/Component/IItemStackExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.item.IItemStack")
 @ZenRegister
 public final class IItemStackExpansions {

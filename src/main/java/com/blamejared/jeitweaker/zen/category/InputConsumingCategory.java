@@ -32,7 +32,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/Category/InputConsuming")
+@Document("mods/JEI/API/Category/InputConsuming")
 @ZenCodeType.Name("mods.jei.category.InputConsuming")
 @ZenRegister
 public final class InputConsumingCategory extends SimpleJeiCategory {

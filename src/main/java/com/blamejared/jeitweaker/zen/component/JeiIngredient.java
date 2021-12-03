@@ -20,7 +20,7 @@ import com.blamejared.jeitweaker.api.IngredientType;
  */
 /*
  TODO("Uncomment when generic type inference has gotten better")
-@Document("mods/JEI/Component/JeiIngredient")
+@Document("mods/JEI/API/Component/JeiIngredient")
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
 @ZenRegister
  */

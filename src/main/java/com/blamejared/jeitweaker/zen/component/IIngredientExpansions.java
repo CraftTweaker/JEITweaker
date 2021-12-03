@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotations.ZenRegister;
 import com.blamejared.crafttweaker.api.item.IIngredient;
+import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Arrays;
  *
  * @since 1.1.0
  */
-//@Document("mods/JEI/Component/IIngredientExpansions")
+@Document("mods/JEI/API/Component/IIngredientExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.item.IIngredient")
 @ZenRegister
 public final class IIngredientExpansions {

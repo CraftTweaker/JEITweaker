@@ -10,18 +10,18 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/Component/JeiDrawableAnimation")
+@Document("mods/JEI/API/Component/JeiDrawableAnimation")
 @ZenCodeType.Name("mods.jei.component.JeiDrawableAnimation")
 @ZenRegister
 public enum JeiDrawableAnimation {
-    @ZenCodeType.Field SHOW_TOP_TO_BOTTOM(IDrawableAnimated.StartDirection.TOP, false),
-    @ZenCodeType.Field SHOW_BOTTOM_TO_TOP(IDrawableAnimated.StartDirection.BOTTOM, false),
-    @ZenCodeType.Field SHOW_LEFT_TO_RIGHT(IDrawableAnimated.StartDirection.LEFT, false),
-    @ZenCodeType.Field SHOW_RIGHT_TO_LEFT(IDrawableAnimated.StartDirection.RIGHT, false),
-    @ZenCodeType.Field HIDE_TOP_TO_BOTTOM(IDrawableAnimated.StartDirection.TOP, true),
-    @ZenCodeType.Field HIDE_BOTTOM_TO_TOP(IDrawableAnimated.StartDirection.BOTTOM, true),
-    @ZenCodeType.Field HIDE_LEFT_TO_RIGHT(IDrawableAnimated.StartDirection.LEFT, true),
-    @ZenCodeType.Field HIDE_RIGHT_TO_LEFT(IDrawableAnimated.StartDirection.RIGHT, true);
+    SHOW_TOP_TO_BOTTOM(IDrawableAnimated.StartDirection.TOP, false),
+    SHOW_BOTTOM_TO_TOP(IDrawableAnimated.StartDirection.BOTTOM, false),
+    SHOW_LEFT_TO_RIGHT(IDrawableAnimated.StartDirection.LEFT, false),
+    SHOW_RIGHT_TO_LEFT(IDrawableAnimated.StartDirection.RIGHT, false),
+    HIDE_TOP_TO_BOTTOM(IDrawableAnimated.StartDirection.TOP, true),
+    HIDE_BOTTOM_TO_TOP(IDrawableAnimated.StartDirection.BOTTOM, true),
+    HIDE_LEFT_TO_RIGHT(IDrawableAnimated.StartDirection.LEFT, true),
+    HIDE_RIGHT_TO_LEFT(IDrawableAnimated.StartDirection.RIGHT, true);
     
     private final IDrawableAnimated.StartDirection direction;
     private final boolean inverted;
