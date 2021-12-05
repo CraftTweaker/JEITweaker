@@ -9,7 +9,7 @@ def botEmail = 'crafttweakerbot@gmail.com'
 def documentationDir = 'CrafttweakerDocumentation'
 def exportDirInRepo = 'docs_exported/1.16/jeitweaker'
 
-def docCommitMessage = "CI doc export for JeiTweaker build ${ -> env.BUILD_NUMBER}\n\nMatches git commit ${ -> env.GIT_COMMIT} on branch ${ -> env.BRANCH_NAME}"
+def docCommitMessage = { -> "CI doc export for JeiTweaker build ${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT} on branch ${env.BRANCH_NAME}" }
 
 def branchName = "1.16";
 
@@ -99,7 +99,7 @@ pipeline {
                                         sh "git config user.name $botUsername"
                                         sh "git config user.email $botEmail"
                                         sh 'git add -A'
-                                        sh "git diff-index --quiet HEAD || git commit -m '$docCommitMessage'"
+                                        sh "git diff-index --quiet HEAD || git commit -m '${docCommitMessage()}'"
                                         sh 'git push origin main'
                                     }
                                 }
