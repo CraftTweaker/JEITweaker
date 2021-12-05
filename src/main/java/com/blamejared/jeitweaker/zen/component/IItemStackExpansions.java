@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Component/IItemStackExpansions")
+@Document("mods/JEITweaker/API/Component/IItemStackExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.item.IItemStack")
 @ZenRegister
 public final class IItemStackExpansions {

@@ -52,7 +52,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Category/JeiCategory")
+@Document("mods/JEITweaker/API/Category/JeiCategory")
 @ZenCodeType.Name("mods.jei.category.JeiCategory")
 @ZenRegister
 public interface JeiCategory {

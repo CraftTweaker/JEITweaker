@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
 /**
  * Expands {@link MCTag} when typed with {@link Item} with JEI-specific conversions.
  */
-@Document("mods/JEI/API/Component/ItemTagExpansions")
+@Document("mods/JEITweaker/API/Component/ItemTagExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.tag.MCTag<crafttweaker.api.item.MCItemDefinition>")
 @ZenRegister
 public final class ItemTagExpansions {

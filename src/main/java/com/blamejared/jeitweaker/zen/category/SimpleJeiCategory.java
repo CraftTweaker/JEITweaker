@@ -31,7 +31,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Category/SimpleJeiCategory")
+@Document("mods/JEITweaker/API/Category/SimpleJeiCategory")
 @ZenCodeType.Name("mods.jei.category.SimpleJeiCategory")
 @ZenRegister
 public abstract class SimpleJeiCategory implements JeiCategory {

@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Recipe/JeiCategoryRecipeExpansion")
+@Document("mods/JEITweaker/API/Recipe/JeiCategoryRecipeExpansion")
 @ZenCodeType.Expansion("mods.jei.category.JeiCategory")
 @ZenRegister
 public final class JeiCategoryRecipeExpansion {

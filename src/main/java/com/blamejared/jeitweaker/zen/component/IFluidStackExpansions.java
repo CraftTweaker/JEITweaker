@@ -11,7 +11,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Component/IFluidStackExpansions")
+@Document("mods/JEITweaker/API/Component/IFluidStackExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.fluid.IFluidStack")
 @ZenRegister
 public final class IFluidStackExpansions {

@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Category/SimpleInputOutput")
+@Document("mods/JEITweaker/API/Category/SimpleInputOutput")
 @ZenCodeType.Name("mods.jei.category.SimpleInputOutput")
 @ZenRegister
 public final class SimpleInputOutputCategory extends SimpleJeiCategory {

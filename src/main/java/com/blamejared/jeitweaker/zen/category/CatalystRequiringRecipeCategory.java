@@ -29,7 +29,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Category/CatalystRequiringRecipe")
+@Document("mods/JEITweaker/API/Category/CatalystRequiringRecipe")
 @ZenCodeType.Name("mods.jei.category.CatalystRequiringRecipe")
 @ZenRegister
 public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {

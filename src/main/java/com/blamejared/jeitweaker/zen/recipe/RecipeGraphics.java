@@ -15,7 +15,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Recipe/JeiRecipeGraphics")
+@Document("mods/JEITweaker/API/Recipe/JeiRecipeGraphics")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipeGraphics")
 @ZenRegister
 public interface RecipeGraphics {

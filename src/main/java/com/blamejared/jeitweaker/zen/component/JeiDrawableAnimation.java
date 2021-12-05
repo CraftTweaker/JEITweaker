@@ -10,7 +10,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Component/JeiDrawableAnimation")
+@Document("mods/JEITweaker/API/Component/JeiDrawableAnimation")
 @ZenCodeType.Name("mods.jei.component.JeiDrawableAnimation")
 @ZenRegister
 public enum JeiDrawableAnimation {

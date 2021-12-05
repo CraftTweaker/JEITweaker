@@ -9,7 +9,7 @@ import org.openzen.zencode.java.ZenCodeType;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Component/JeiIngredientExpansions")
+@Document("mods/JEITweaker/API/Component/JeiIngredientExpansions")
 @ZenCodeType.Expansion("mods.jei.component.JeiIngredient")
 @ZenRegister
 public final class JeiIngredientExpansions {

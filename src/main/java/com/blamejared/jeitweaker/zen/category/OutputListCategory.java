@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Category/OutputList")
+@Document("mods/JEITweaker/API/Category/OutputList")
 @ZenCodeType.Name("mods.jei.category.OutputList")
 @ZenRegister
 public final class OutputListCategory extends SimpleJeiCategory {

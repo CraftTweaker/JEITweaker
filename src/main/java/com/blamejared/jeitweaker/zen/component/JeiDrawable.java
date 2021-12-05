@@ -27,7 +27,7 @@ import java.util.function.Supplier;
  *
  * @since 1.1.0
  */
-@Document("mods/JEI/API/Component/JeiDrawable")
+@Document("mods/JEITweaker/API/Component/JeiDrawable")
 @ZenCodeType.Name("mods.jei.component.JeiDrawable")
 @ZenRegister
 public final class JeiDrawable {

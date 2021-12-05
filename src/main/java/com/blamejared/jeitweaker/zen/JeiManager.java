@@ -29,7 +29,7 @@ import java.util.Arrays;
  *
  * @since 1.0.0
  */
-@Document("mods/JEI/API/JEI")
+@Document("mods/JEITweaker/API/JEI")
 @ZenCodeType.Name("mods.jei.JEI")
 @ZenRegister
 public final class JeiManager {
