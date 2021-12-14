@@ -221,6 +221,14 @@ publishing {
     }
 }
 
+// Disables Gradle's custom module metadata from being published to maven. The
+// metadata includes mapped dependencies which are not reasonably consumable by
+// other mod developers.
+tasks.withType(GenerateModuleMetadata) {
+
+    enabled = false
+}
+
 curseforge {
 
     apiKey = findProperty('curseforge_api_token') ?: 0
@@ -236,3 +244,4 @@ curseforge {
         addArtifact(deobfJar)
     }
 }
+
