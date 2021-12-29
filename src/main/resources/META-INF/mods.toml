@@ -23,6 +23,12 @@ Adds JEI integration for CraftTweaker
 	ordering = "NONE"
 	side = "BOTH"
   [[dependencies.jeitweaker]]
+	modId = "crafttweaker"
+	mandatory = true
+	versionRange = "[7.1,)"
+	ordering = "NONE"
+	side = "BOTH"
+  [[dependencies.jeitweaker]]
 	modId = "jei"
 	mandatory = false
 	versionRange = "[7.7.1.110,)"
