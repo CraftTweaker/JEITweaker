@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @since 1.1.0
  */
 @Document("mods/JEITweaker/API/Component/IIngredientExpansions")
-@ZenCodeType.Expansion("crafttweaker.api.item.IIngredient")
+@ZenCodeType.Expansion("crafttweaker.api.ingredient.IIngredient")
 @ZenRegister
 public final class IIngredientExpansions {
     
