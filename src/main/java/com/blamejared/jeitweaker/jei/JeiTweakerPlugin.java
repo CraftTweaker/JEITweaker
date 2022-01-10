@@ -1,7 +1,6 @@
 package com.blamejared.jeitweaker.jei;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.recipe.manager.CraftingTableRecipeManager;
 import com.blamejared.jeitweaker.JEITweaker;
 import com.blamejared.jeitweaker.api.BuiltinIngredientTypes;
 import com.blamejared.jeitweaker.api.IngredientType;
@@ -169,10 +168,13 @@ public final class JeiTweakerPlugin implements IModPlugin {
     private void registerCatalystsFor(final IRecipeCatalystRegistration registration, final JeiCategory category) {
         
         final ResourceLocation id = category.id();
+        final IIngredientManager ingredientManager = GrossInternalHacks.getIngredientManager();
+        
+        if (ingredientManager == null) return; // Prevent hard crashes
+        
         Arrays.stream(category.catalysts())
                 .map(RawJeiIngredient::cast)
-                .map(ingredient -> ingredient.getType().toJeiType(ingredient.getWrapped()))
-                .forEach(catalyst -> registration.addRecipeCatalyst(catalyst, id));
+                .forEach(ing -> registration.addRecipeCatalyst(ing.getType().toJeiIngredientType(ingredientManager), ing.getType().toJeiType(ing.getWrapped()), id));
     }
     
     private <T, U> void hideIngredientsFor(final IIngredientManager manager, final IngredientType<T, U> type) {

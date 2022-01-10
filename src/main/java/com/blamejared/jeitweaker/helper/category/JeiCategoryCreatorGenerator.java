@@ -12,6 +12,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -129,8 +130,8 @@ enum JeiCategoryCreatorGenerator {
         
         try {
             
-            return (JeiCategoryCreator<T>) LOADER.loadClass(name).newInstance();
-        } catch(final ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            return (JeiCategoryCreator<T>) LOADER.loadClass(name).getDeclaredConstructor().newInstance();
+        } catch(final ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             
             throw new RuntimeException("A critical error was encountered when initializing category creator " + name, e);
         }
