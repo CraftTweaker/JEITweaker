@@ -2,11 +2,11 @@ package com.blamejared.jeitweaker.api;
 
 
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
+import com.blamejared.crafttweaker.api.fluid.MCFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.impl.fluid.MCFluidStack;
-import com.blamejared.crafttweaker.impl.item.MCItemStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import com.blamejared.crafttweaker.api.item.MCItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Objects;

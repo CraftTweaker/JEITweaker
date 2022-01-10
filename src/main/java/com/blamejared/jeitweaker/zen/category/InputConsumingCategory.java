@@ -1,8 +1,7 @@
 package com.blamejared.jeitweaker.zen.category;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.InputConsumingCategoryBridge;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
@@ -11,7 +10,8 @@ import com.blamejared.jeitweaker.zen.component.JeiDrawableAnimation;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.BiPredicate;
@@ -42,9 +42,9 @@ public final class InputConsumingCategory extends SimpleJeiCategory {
     private static final JeiDrawable DEFAULT_ANIM = JeiDrawable.ofAnimated(GUI_ATLAS, 208, 232, 24, 24, 35, JeiDrawableAnimation.SHOW_BOTTOM_TO_TOP);
     
     private Pair<JeiDrawable, JeiDrawable> output;
-    private MCTextComponent baseResultText;
+    private Component baseResultText;
     
-    public InputConsumingCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+    public InputConsumingCategory(final ResourceLocation id, final Component name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.output = Pair.of(DEFAULT_BG, DEFAULT_ANIM);
@@ -76,7 +76,7 @@ public final class InputConsumingCategory extends SimpleJeiCategory {
      * @since 1.1.0
      */
     @ZenCodeType.Setter("baseResultText")
-    public void setBaseResultText(@ZenCodeType.Nullable final MCTextComponent baseExtra) {
+    public void setBaseResultText(@ZenCodeType.Nullable final Component baseExtra) {
         
         this.baseResultText = baseExtra;
     }
@@ -88,13 +88,13 @@ public final class InputConsumingCategory extends SimpleJeiCategory {
     }
     
     @Override
-    public BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+    public BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
         
-        final BiPredicate<JeiRecipe, ILogger> validator = (recipe, logger) -> {
+        final BiPredicate<JeiRecipe, Logger> validator = (recipe, logger) -> {
             
             if (recipe.getOutputs().length != 0) {
                 
-                logger.warning("Recipe " + recipe + " has outputs: they will be ignored in InputConsuming");
+                logger.warn("Recipe " + recipe + " has outputs: they will be ignored in InputConsuming");
             }
             
             if (recipe.getInputs().length != 1) {

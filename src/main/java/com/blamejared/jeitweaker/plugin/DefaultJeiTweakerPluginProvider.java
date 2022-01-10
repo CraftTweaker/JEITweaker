@@ -8,7 +8,7 @@ import com.blamejared.jeitweaker.api.IngredientEnumeratorRegistration;
 import com.blamejared.jeitweaker.api.IngredientTypeRegistration;
 import com.blamejared.jeitweaker.api.JeiTweakerPlugin;
 import com.blamejared.jeitweaker.api.JeiTweakerPluginProvider;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;

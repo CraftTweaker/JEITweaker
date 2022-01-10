@@ -1,17 +1,17 @@
 package com.blamejared.jeitweaker.zen.component;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.impl.tag.MCTag;
-import com.blamejared.crafttweaker.impl.tag.expansions.ExpandItemTag;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.tag.MCTag;
+import com.blamejared.crafttweaker.api.tag.expand.ExpandItemTag;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
 
 /**
  * Expands {@link MCTag} when typed with {@link Item} with JEI-specific conversions.
  */
 @Document("mods/JEITweaker/API/Component/ItemTagExpansions")
-@ZenCodeType.Expansion("crafttweaker.api.tag.MCTag<crafttweaker.api.item.MCItemDefinition>")
+@ZenCodeType.Expansion("crafttweaker.api.tag.MCTag<crafttweaker.api.item.ItemDefinition>")
 @ZenRegister
 public final class ItemTagExpansions {
     

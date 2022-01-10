@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.jei;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.impl.managers.CTCraftingTableManager;
+import com.blamejared.crafttweaker.api.recipe.manager.CraftingTableRecipeManager;
 import com.blamejared.jeitweaker.JEITweaker;
 import com.blamejared.jeitweaker.api.BuiltinIngredientTypes;
 import com.blamejared.jeitweaker.api.IngredientType;
@@ -27,11 +27,11 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Arrays;
@@ -213,19 +213,19 @@ public final class JeiTweakerPlugin implements IModPlugin {
                 .peek(manager::hideRecipeCategory)
                 .collect(Collectors.toSet());
         Sets.difference(targetCategories, hiddenCategories)
-                .forEach(invalid -> CraftTweakerAPI.logError("[JEITweaker] Unable to remove JEI category with id '%s' as it does not exist!", invalid));
+                .forEach(invalid -> CraftTweakerAPI.LOGGER.error("[JEITweaker] Unable to remove JEI category with id '{}' as it does not exist!", invalid));
     }
     
     private void hideRecipes(final IRecipeManager manager) {
     
         StateManager.INSTANCE.actionsState().onHiddenRecipes((categoryId, recipeId) -> {
     
-            final Optional<? extends IRecipe<?>> recipe = CTCraftingTableManager.recipeManager.getRecipe(recipeId);
+            final Optional<? extends Recipe<?>> recipe = CraftTweakerAPI.getRecipeManager().byKey(recipeId);
             
             if (recipe.isPresent()) {
                 manager.hideRecipe(recipe.get(), categoryId);
             } else {
-                CraftTweakerAPI.logError("[JEITweaker] Cannot hide recipe with id '%s' in category '%s' as it does not exist!", recipeId, categoryId);
+                CraftTweakerAPI.LOGGER.error("[JEITweaker] Cannot hide recipe with id '{}' in category '{}' as it does not exist!", recipeId, categoryId);
             }
         });
     }

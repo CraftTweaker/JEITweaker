@@ -1,20 +1,18 @@
 package com.blamejared.jeitweaker.jei;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecipe> {
@@ -42,13 +40,6 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
         return JeiTweakerRecipe.class;
     }
     
-    @Deprecated
-    @Override
-    public String getTitle() {
-        
-        return this.getTitleAsTextComponent().getString();
-    }
-    
     @Override
     public IDrawable getBackground() {
         
@@ -57,7 +48,7 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     
     @Override
     public IDrawable getIcon() {
-    
+        
         return this.zenCategory.icon().getDrawable(this.helpers.getGuiHelper());
     }
     
@@ -75,31 +66,33 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     }
     
     @Override
-    public ITextComponent getTitleAsTextComponent() {
+    public Component getTitle() {
         
-        return this.zenCategory.name().getInternal();
+        return this.zenCategory.name();
     }
     
     @Override
-    public void draw(final JeiTweakerRecipe recipe, final MatrixStack matrixStack, final double mouseX, final double mouseY) {
+    public void draw(final JeiTweakerRecipe recipe, final PoseStack matrixStack, final double mouseX, final double mouseY) {
         
         this.bridge.drawAdditionalComponent(matrixStack, mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
     }
     
     @Override
-    public List<ITextComponent> getTooltipStrings(final JeiTweakerRecipe recipe, final double mouseX, final double mouseY) {
+    public List<Component> getTooltipStrings(final JeiTweakerRecipe recipe, final double mouseX, final double mouseY) {
         
-        final List<MCTextComponent> categoryTips = this.bridge.getTooltips(mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
-        final List<MCTextComponent> recipeTips = this.bridge.allowCustomTooltips()? recipe.getTooltips(mouseX, mouseY) : Collections.emptyList();
+        final List<Component> categoryTips = this.bridge.getTooltips(mouseX, mouseY, this.helpers.getGuiHelper(), recipe::populateGraphics);
+        final List<Component> recipeTips = this.bridge.allowCustomTooltips() ? recipe.getTooltips(mouseX, mouseY) : Collections.emptyList();
         
-        if (categoryTips.isEmpty() && recipeTips.isEmpty()) return Collections.emptyList();
+        if(categoryTips.isEmpty() && recipeTips.isEmpty()) {
+            return Collections.emptyList();
+        }
         
-        final Stream<MCTextComponent> stream;
+        final Stream<Component> stream;
         
-        if (categoryTips.isEmpty()) {
+        if(categoryTips.isEmpty()) {
             
             stream = recipeTips.stream();
-        } else if (recipeTips.isEmpty()) {
+        } else if(recipeTips.isEmpty()) {
             
             stream = categoryTips.stream();
         } else {
@@ -107,7 +100,7 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
             stream = Stream.concat(categoryTips.stream(), recipeTips.stream());
         }
         
-        return stream.map(MCTextComponent::getInternal).collect(Collectors.toList());
+        return stream.toList();
     }
     
     @Override

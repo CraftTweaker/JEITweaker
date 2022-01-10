@@ -1,35 +1,37 @@
 package com.blamejared.jeitweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.impl.commands.CTCommandCollectionEvent;
-import com.blamejared.crafttweaker.impl.commands.CommandCaller;
+import com.blamejared.crafttweaker.api.command.CommandUtilities;
+import com.blamejared.crafttweaker.api.command.boilerplate.CommandImpl;
+import com.blamejared.crafttweaker.impl.event.CTCommandRegisterEvent;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
-
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import com.mojang.brigadier.Command;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class Events {
     
     @SubscribeEvent
-    public void onCommandCollection(CTCommandCollectionEvent event) {
+    public void onCommandCollection(CTCommandRegisterEvent event) {
         
-        // Cast required due to deprecation. TODO("Remove in 1.17")
-        event.registerDump("jeiCategories", "Lists the different JEI categories", (CommandCaller) commandContext -> {
-            
-            CraftTweakerAPI.logDump("List of all known JEI categories: ");
-            StateManager.INSTANCE.jeiGlobalState()
-                    .getCurrentJeiCategories()
-                    .stream()
-                    .map(it -> "- " + it)
-                    .sorted()
-                    .forEach(CraftTweakerAPI::logDump);
-            
-            // TODO("Move to Translatable Text Components")
-            final StringTextComponent message = new StringTextComponent(TextFormatting.GREEN + "Categories written to the log" + TextFormatting.RESET);
-            commandContext.getSource().sendFeedback(message, true);
-            return 0;
-        });
+        event.registerDump(new CommandImpl("jei_categories", new TranslatableComponent("jeitweaker.command.description.dump.jei_categories"), builder -> {
+            builder.executes(context -> {
+                ServerPlayer player = context.getSource().getPlayerOrException();
+                CraftTweakerAPI.LOGGER.info("List of all known JEI categories: ");
+                StateManager.INSTANCE.jeiGlobalState()
+                        .getCurrentJeiCategories()
+                        .stream()
+                        .map(it -> "- " + it)
+                        .sorted()
+                        .forEach(CraftTweakerAPI.LOGGER::info);
+                
+                CommandUtilities.send(CommandUtilities.openingLogFile(new TranslatableComponent("crafttweaker.command.list.check.log", CommandUtilities.makeNoticeable(new TranslatableComponent("jeitweaker.command.misc.categories")), CommandUtilities.getFormattedLogFile()).withStyle(ChatFormatting.GREEN)), player);
+                
+                return Command.SINGLE_SUCCESS;
+            });
+        }));
     }
     
 }

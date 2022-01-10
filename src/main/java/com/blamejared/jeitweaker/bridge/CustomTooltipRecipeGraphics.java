@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.bridge;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ public final class CustomTooltipRecipeGraphics implements RecipeGraphics {
         private final int y;
         private final int w;
         private final int h;
-        private final List<MCTextComponent> tips;
+        private final List<Component> tips;
         
-        TipData(final int x, final int y, final int w, final int h, final MCTextComponent... tips) {
+        TipData(final int x, final int y, final int w, final int h, final Component... tips) {
             
             this.x = x;
             this.y = y;
@@ -46,7 +46,7 @@ public final class CustomTooltipRecipeGraphics implements RecipeGraphics {
             return this.h;
         }
     
-        public List<MCTextComponent> tooltip() {
+        public List<Component> tooltip() {
         
             return this.tips;
         }
@@ -60,7 +60,7 @@ public final class CustomTooltipRecipeGraphics implements RecipeGraphics {
     }
     
     @Override
-    public void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final MCTextComponent... lines) {
+    public void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final Component... lines) {
     
         this.tipData.add(new TipData(x, y, activeAreaWidth, activeAreaHeight, lines));
     }

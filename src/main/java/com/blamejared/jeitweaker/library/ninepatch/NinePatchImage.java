@@ -1,9 +1,9 @@
 package com.blamejared.jeitweaker.library.ninepatch;
 
+import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.NativeImage;
-import net.minecraft.resources.IResource;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
 
 import java.io.IOException;
 
@@ -31,7 +31,7 @@ final class NinePatchImage {
     public static NinePatchImage from(final ResourceLocation atlas, final int u, final int v, final int width,
                                       final int height, final int texWidth, final int texHeight) throws InvalidNinePatchDataException {
         
-        try (final IResource resource = Minecraft.getInstance().getResourceManager().getResource(atlas)) {
+        try (final Resource resource = Minecraft.getInstance().getResourceManager().getResource(atlas)) {
             
             final NativeImage image = NativeImage.read(resource.getInputStream());
 

@@ -1,11 +1,10 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
+import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.mojang.datafixers.util.Pair;
-import net.minecraftforge.fml.LogicalSide;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -52,11 +51,11 @@ public final class ActionHideRegex implements IUndoableAction {
 
         return "JEI Hiding all ingredients from Regex: " + this.regex;
     }
-
+    
     @Override
-    public boolean shouldApplyOn(final LogicalSide side) {
-
-        return !CraftTweakerAPI.isServer();
+    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+        
+        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
     }
 
     @SuppressWarnings("unchecked")

@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.zen.recipe;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -37,7 +37,7 @@ public interface RecipeGraphics {
      * @since 1.1.0
      */
     @ZenCodeType.Method
-    default void setExtraComponent(final String key, final MCTextComponent component) {}
+    default void setExtraComponent(final String key, final Component component) {}
     
     /**
      * Sets the tooltip identified by the given key to the given set of components.
@@ -48,7 +48,7 @@ public interface RecipeGraphics {
      * @since 1.1.0
      */
     @ZenCodeType.Method
-    default void addTooltip(final String key, final MCTextComponent... lines) {}
+    default void addTooltip(final String key, final Component... lines) {}
     
     /**
      * Asks the category to render a tooltip with the given components as lines when the cursor is in the active area
@@ -63,5 +63,5 @@ public interface RecipeGraphics {
      * @since 1.1.0
      */
     @ZenCodeType.Method
-    default void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final MCTextComponent... lines) {}
+    default void addTooltip(final int x, final int y, final int activeAreaWidth, final int activeAreaHeight, final Component... lines) {}
 }

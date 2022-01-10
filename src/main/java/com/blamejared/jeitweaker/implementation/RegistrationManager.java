@@ -7,7 +7,7 @@ import com.blamejared.jeitweaker.api.IngredientEnumeratorRegistration;
 import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.api.IngredientTypeRegistration;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;

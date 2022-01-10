@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.jei;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.bridge.CustomTooltipRecipeGraphics;
 import com.blamejared.jeitweaker.bridge.ShapelessOnlyRecipeGraphics;
@@ -85,7 +85,7 @@ public final class JeiTweakerRecipe {
         this.recipe.doGraphics(graphics);
     }
 
-    List<MCTextComponent> getTooltips(final double x, final double y) {
+    List<Component> getTooltips(final double x, final double y) {
 
         return this.toolTips.get().stream()
                 .filter(it -> this.isInside(it, x, y))

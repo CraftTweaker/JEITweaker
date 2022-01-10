@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class JeiTweakerInitializer {
+    
     private JeiTweakerInitializer() {}
     
     public static void initialize() {
@@ -39,8 +40,8 @@ public final class JeiTweakerInitializer {
         final Type annotationType = Type.getType(JeiTweakerPlugin.class);
         return data.getAnnotations()
                 .stream()
-                .filter(it -> annotationType.equals(it.getAnnotationType()))
-                .map(ModFileScanData.AnnotationData::getClassType);
+                .filter(it -> annotationType.equals(it.annotationType()))
+                .map(ModFileScanData.AnnotationData::clazz);
     }
     
     @SuppressWarnings("unchecked")
@@ -48,13 +49,13 @@ public final class JeiTweakerInitializer {
         
         try {
             final Class<?> clazz = Class.forName(type.getClassName(), false, JeiTweakerInitializer.class.getClassLoader());
-            if (!JeiTweakerPluginProvider.class.isAssignableFrom(clazz)) {
+            if(!JeiTweakerPluginProvider.class.isAssignableFrom(clazz)) {
                 throw new ClassCastException(clazz.getName() + " does not extend JeiTweakerPluginProvider");
             }
             final Constructor<? extends JeiTweakerPluginProvider> constructor = ((Class<? extends JeiTweakerPluginProvider>) clazz).getConstructor();
             return constructor.newInstance();
-        } catch (final ReflectiveOperationException | ClassCastException e) {
-            CraftTweakerAPI.logThrowing("Unable to initialize JeiTweaker Plugin {}", e, type.getClassName());
+        } catch(final ReflectiveOperationException | ClassCastException e) {
+            CraftTweakerAPI.LOGGER.error("Unable to initialize JeiTweaker Plugin {}", type.getClassName(), e);
             return null;
         }
     }
@@ -69,4 +70,5 @@ public final class JeiTweakerInitializer {
             provider.registerIngredientEnumerators(manager);
         });
     }
+    
 }

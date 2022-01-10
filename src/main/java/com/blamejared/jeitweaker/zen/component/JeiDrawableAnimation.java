@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.zen.component;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import org.openzen.zencode.java.ZenCodeType;

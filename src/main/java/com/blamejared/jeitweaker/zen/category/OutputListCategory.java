@@ -1,8 +1,6 @@
 package com.blamejared.jeitweaker.zen.category;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.bridge.OutputListCategoryBridge;
@@ -10,7 +8,9 @@ import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.google.common.base.Suppliers;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.BiPredicate;
@@ -31,7 +31,7 @@ public final class OutputListCategory extends SimpleJeiCategory {
     private final Supplier<JeiDrawable> backgroundSupplier;
     private int rows;
     
-    public OutputListCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+    public OutputListCategory(final ResourceLocation id, final Component name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.rows = 1;
@@ -58,16 +58,16 @@ public final class OutputListCategory extends SimpleJeiCategory {
     }
     
     @Override
-    public BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+    public BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
         
-        final BiPredicate<JeiRecipe, ILogger> validator = (recipe, logger) -> {
+        final BiPredicate<JeiRecipe, Logger> validator = (recipe, logger) -> {
             
-            if (recipe.getInputs().length != 0) {
+            if(recipe.getInputs().length != 0) {
                 
-                logger.warning("Recipe " + recipe + " has inputs: they will be ignored in OutputList");
+                logger.warn("Recipe {} has inputs: they will be ignored in OutputList", recipe);
             }
             
-            if (recipe.getOutputs().length > this.rows * 9) {
+            if(recipe.getOutputs().length > this.rows * 9) {
                 
                 logger.error(String.format(
                         "Recipe %s has %d outputs, but only %d are supported with this configuration of OutputList",

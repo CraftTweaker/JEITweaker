@@ -1,11 +1,11 @@
 package com.blamejared.jeitweaker.helper.category;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -23,12 +23,12 @@ enum JeiCategoryCreatorGenerator {
     
     private static final String OF_DESCRIPTOR = Type.getMethodDescriptor(
             Type.getType(JeiCategory.class),
-            Type.getType(ResourceLocation.class), Type.getType(MCTextComponent.class), Type.getType(JeiDrawable.class), Type.getType(RawJeiIngredient[].class)
+            Type.getType(ResourceLocation.class), Type.getType(Component.class), Type.getType(JeiDrawable.class), Type.getType(RawJeiIngredient[].class)
     );
     
     private static final String TARGET_DESCRIPTOR = Type.getMethodDescriptor(
             Type.VOID_TYPE,
-            Type.getType(ResourceLocation.class), Type.getType(MCTextComponent.class), Type.getType(JeiDrawable.class), Type.getType(RawJeiIngredient[].class)
+            Type.getType(ResourceLocation.class), Type.getType(Component.class), Type.getType(JeiDrawable.class), Type.getType(RawJeiIngredient[].class)
     );
     
     private static final JeiCategoryCreatorLoader LOADER = new JeiCategoryCreatorLoader(JeiCategoryCreatorGenerator.class.getClassLoader());
@@ -44,13 +44,13 @@ enum JeiCategoryCreatorGenerator {
         
         try {
     
-            return Optional.of(typeToken.getConstructor(ResourceLocation.class, MCTextComponent.class, JeiDrawable.class, RawJeiIngredient[].class));
+            return Optional.of(typeToken.getConstructor(ResourceLocation.class, Component.class, JeiDrawable.class, RawJeiIngredient[].class));
         } catch (final NoSuchMethodException e) {
     
-            CraftTweakerAPI.logThrowing(
+            CraftTweakerAPI.LOGGER.error(
                     "Unable to generate category creator for class {} because no compatible constructor was found",
-                    e,
-                    typeToken.getName()
+                    typeToken.getName(),
+                    e
             );
             return Optional.empty();
         }

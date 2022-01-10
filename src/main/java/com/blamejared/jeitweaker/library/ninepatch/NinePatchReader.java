@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.library.ninepatch;
 
-import net.minecraft.client.renderer.texture.NativeImage;
+
+import com.mojang.blaze3d.platform.NativeImage;
 
 final class NinePatchReader {
     
@@ -13,7 +14,7 @@ final class NinePatchReader {
     static NinePatchImage read(final NinePatchCreator creator, final NativeImage image, final int x, final int y,
                                final int w, final int h, final int tw, final int ty) throws InvalidNinePatchDataException {
     
-        if (image.getFormat() != NativeImage.PixelFormat.RGBA) {
+        if (image.format() != NativeImage.Format.RGBA) {
         
             throw new InvalidNinePatchDataException("Image must be in RGBA format");
         }

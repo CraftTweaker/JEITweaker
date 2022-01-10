@@ -1,9 +1,9 @@
 package com.blamejared.jeitweaker.bridge;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 
@@ -73,7 +73,7 @@ public interface JeiCategoryPluginBridge {
      *
      * <p>Additional components may be animations, additional non-ingredient slots, or text overlays.</p>
      *
-     * @param poseStack The {@link MatrixStack PoseStack} used for rendering.
+     * @param poseStack The {@link PoseStack PoseStack} used for rendering.
      * @param mouseX The current x position of the cursor.
      * @param mouseY The current y position of the cursor.
      * @param guiHelper An instance of {@link IGuiHelper}.
@@ -82,10 +82,10 @@ public interface JeiCategoryPluginBridge {
      *
      * @since 1.1.0
      */
-    void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer);
+    void drawAdditionalComponent(final PoseStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer);
 
     /**
-     * Gets a list of {@link MCTextComponent} which can be used to render a tooltip at the current mouse position.
+     * Gets a list of {@link Component} which can be used to render a tooltip at the current mouse position.
      *
      * <p>If the recipe {@linkplain #allowCustomTooltips() allows arbitrary tooltips}, those are automatically managed
      * by JeiTweaker: the bridge <strong>must not</strong> handle the display of arbitrary tooltips. This method is
@@ -97,10 +97,10 @@ public interface JeiCategoryPluginBridge {
      * @param helper An instance of {@link IGuiHelper}.
      * @param graphicsConsumer A {@link Consumer} for {@link RecipeGraphics} which can be used to obtain tooltip
      *                         information from the recipe that is currently being queried for tooltips.
-     * @return A {@link List} containing {@link MCTextComponent}s that should be displayed as tooltips in the current
+     * @return A {@link List} containing {@link Component}s that should be displayed as tooltips in the current
      * location, or an {@linkplain java.util.Collections#emptyList() empty list} if no tooltip should be displayed.
      *
      * @since 1.1.0
      */
-    List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer);
+    List<Component> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer);
 }

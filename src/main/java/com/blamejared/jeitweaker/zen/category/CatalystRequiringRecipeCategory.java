@@ -1,17 +1,18 @@
 package com.blamejared.jeitweaker.zen.category;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.CatalystRequiringRecipeCategoryBridge;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
+import org.spongepowered.asm.logging.ILogger;
 
 import java.util.function.BiPredicate;
 import java.util.function.Supplier;
@@ -44,7 +45,7 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
     private int inputs;
     private int outputs;
     
-    public CatalystRequiringRecipeCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+    public CatalystRequiringRecipeCategory(final ResourceLocation id, final Component name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.inputs = 1;
@@ -77,15 +78,15 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
     @ZenCodeType.Setter("inputs")
     public void setInputs(final int inputs) {
         
-        if (inputs <= 0) {
+        if(inputs <= 0) {
             
-            CraftTweakerAPI.logError("Unable to use a CatalystRequiringRecipe without any input");
+            CraftTweakerAPI.LOGGER.error("Unable to use a CatalystRequiringRecipe without any input");
             return;
         }
         
-        if (inputs > MAX_INPUTS) {
+        if(inputs > MAX_INPUTS) {
             
-            CraftTweakerAPI.logError("Unable to set inputs of a CatalystRequiringRecipe to {}: max is {}", inputs, MAX_INPUTS);
+            CraftTweakerAPI.LOGGER.error("Unable to set inputs of a CatalystRequiringRecipe to {}: max is {}", inputs, MAX_INPUTS);
             return;
         }
         
@@ -101,19 +102,19 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
      */
     @ZenCodeType.Setter("outputs")
     public void setOutputs(final int outputs) {
-    
-        if (outputs <= 0) {
         
-            CraftTweakerAPI.logError("Unable to use a CatalystRequiringRecipe without any output");
+        if(outputs <= 0) {
+            
+            CraftTweakerAPI.LOGGER.error("Unable to use a CatalystRequiringRecipe without any output");
             return;
         }
-    
-        if (outputs > MAX_OUTPUTS) {
         
-            CraftTweakerAPI.logError("Unable to set outputs of a CatalystRequiringRecipe to {}: max is {}", outputs, MAX_OUTPUTS);
+        if(outputs > MAX_OUTPUTS) {
+            
+            CraftTweakerAPI.LOGGER.error("Unable to set outputs of a CatalystRequiringRecipe to {}: max is {}", outputs, MAX_OUTPUTS);
             return;
         }
-    
+        
         this.outputs = outputs;
     }
     
@@ -124,33 +125,33 @@ public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
     }
     
     @Override
-    public BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
-    
+    public BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
+        
         final boolean hasCatalyst = this.catalystDrawable == null;
         
-        final BiPredicate<JeiRecipe, ILogger> validator = (recipe, logger) -> {
-        
-            if (recipe.getOutputs().length > this.outputs) {
+        final BiPredicate<JeiRecipe, Logger> validator = (recipe, logger) -> {
             
+            if(recipe.getOutputs().length > this.outputs) {
+                
                 logger.error("Recipe " + recipe + " has " + recipe.getOutputs().length + " outputs: expected " + this.outputs);
                 return false;
             }
             
-            if (recipe.getInputs().length > (this.inputs + (hasCatalyst? 1 : 0))) {
-    
+            if(recipe.getInputs().length > (this.inputs + (hasCatalyst ? 1 : 0))) {
+                
                 logger.error("Recipe " + recipe + " has " + recipe.getInputs().length + " outputs: expected " + this.inputs);
                 return false;
             }
             
-            if (hasCatalyst && recipe.getInputs().length == 1) {
+            if(hasCatalyst && recipe.getInputs().length == 1) {
                 
                 logger.error("Recipe " + recipe + " specifies only a catalyst and no inputs");
                 return false;
             }
-        
+            
             return true;
         };
-    
+        
         return validator.and(super.getRecipeValidator());
     }
     

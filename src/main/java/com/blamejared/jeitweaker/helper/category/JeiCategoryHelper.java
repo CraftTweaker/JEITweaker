@@ -2,13 +2,13 @@ package com.blamejared.jeitweaker.helper.category;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.CraftTweakerRegistry;
-import com.blamejared.crafttweaker.impl.util.NameUtils;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.util.NameUtil;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -25,16 +25,16 @@ public final class JeiCategoryHelper {
     public static <T extends JeiCategory> T of(
             final Class<T> typeToken,
             final String id,
-            final MCTextComponent name,
+            final Component name,
             final JeiDrawable icon,
             final RawJeiIngredient[] catalysts,
             final Consumer<T> configurator
     ) {
         
-        final ResourceLocation checkedId = NameUtils.fromFixedName(
+        final ResourceLocation checkedId = NameUtil.fromFixedName(
                 id,
-                (fixed, mistakes) -> CraftTweakerAPI.logWarning(
-                        "Invalid category ID '%s' specified due to the following mistakes:\n%s\nThe new rename will be '%s'",
+                (fixed, mistakes) -> CraftTweakerAPI.LOGGER.warn(
+                        "Invalid category ID '{}' specified due to the following mistakes:\n{}\nThe new rename will be '{}'",
                         id,
                         String.join("\n", mistakes),
                         fixed

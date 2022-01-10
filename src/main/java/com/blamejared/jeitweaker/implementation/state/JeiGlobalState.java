@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.implementation.state;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;

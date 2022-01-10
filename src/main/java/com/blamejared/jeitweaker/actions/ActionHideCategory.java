@@ -1,10 +1,9 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
+import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.LogicalSide;
+import net.minecraft.resources.ResourceLocation;
 
 public final class ActionHideCategory implements IUndoableAction {
 
@@ -38,11 +37,11 @@ public final class ActionHideCategory implements IUndoableAction {
 
         return "Hiding Category '" + this.category + "' from JEI";
     }
-
+    
     @Override
-    public boolean shouldApplyOn(LogicalSide side) {
-
-        return !CraftTweakerAPI.isServer();
+    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+        
+        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
     }
 
 }

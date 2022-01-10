@@ -1,24 +1,23 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.crafttweaker.api.managers.IRecipeManager;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
+import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.mojang.datafixers.util.Pair;
-import net.minecraftforge.fml.LogicalSide;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public final class ActionHideMod implements IUndoableAction {
 
     private final String modId;
-    private final IRecipeManager.RecipeFilter exclude;
+    private final Predicate<String> exclude;
     private List<JeiIngredient<?, ?>> collectedIngredients;
 
-    public ActionHideMod(final String modId, final IRecipeManager.RecipeFilter exclude) {
+    public ActionHideMod(final String modId, final Predicate<String> exclude) {
 
         this.modId = modId;
         this.exclude = exclude;
@@ -55,11 +54,11 @@ public final class ActionHideMod implements IUndoableAction {
 
         return "JEI Hiding all ingredients from Mod: " + this.modId;
     }
-
+    
     @Override
-    public boolean shouldApplyOn(final LogicalSide side) {
-
-        return !CraftTweakerAPI.isServer();
+    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+        
+        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
     }
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.zen.component;
 
-import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
+import com.blamejared.crafttweaker.api.bracket.CommandStringDisplayable;
 import com.blamejared.jeitweaker.api.IngredientType;
 
 /**

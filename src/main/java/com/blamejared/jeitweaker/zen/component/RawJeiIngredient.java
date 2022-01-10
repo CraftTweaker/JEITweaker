@@ -1,11 +1,9 @@
 package com.blamejared.jeitweaker.zen.component;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.brackets.CommandStringDisplayable;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.bracket.CommandStringDisplayable;
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
-import com.blamejared.crafttweaker.api.item.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.impl.tag.MCTag;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -21,8 +19,8 @@ import org.openzen.zencode.java.ZenCodeType;
  * {@link IItemStackExpansions#asJeiIngredient(IItemStack)} for more information.</p>
  *
  * <p>Moreover, other types can automatically convert to an array of JEI ingredients, for even less boilerplate and ease
- * of usage. Refer to {@link IIngredientExpansions#asJeiIngredientArray(IIngredient)} and
- * {@link ItemTagExpansions#asJeiIngredientArray(MCTag)} for more information.</p>
+ * of usage. Refer to {@link IIngredientExpansions#asJeiIngredientArray(com.blamejared.crafttweaker.api.ingredient.IIngredient)} and
+ * {@link ItemTagExpansions#asJeiIngredientArray(com.blamejared.crafttweaker.api.tag.MCTag)} for more information.</p>
  *
  * <p><strong>For mod developers:</strong> do not use this class internally, use the generic version.</p>
  *

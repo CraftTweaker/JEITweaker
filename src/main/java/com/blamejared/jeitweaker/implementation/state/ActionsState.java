@@ -1,17 +1,15 @@
 package com.blamejared.jeitweaker.implementation.state;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +26,7 @@ public final class ActionsState {
     private final Set<ResourceLocation> hiddenRecipeCategories;
     private final Set<Pair<ResourceLocation, ResourceLocation>> hiddenRecipes;
     
-    private final Map<IngredientType<?, ?>, Map<Object, MCTextComponent[]>> descriptions;
+    private final Map<IngredientType<?, ?>, Map<Object, Component[]>> descriptions;
     
     private final Multimap<IngredientType<?, ?>, Object> customIngredients;
     private final List<JeiCategory> customCategories;
@@ -61,7 +59,7 @@ public final class ActionsState {
         this.hiddenRecipes.add(Pair.of(category, recipe));
     }
     
-    public <T, U> void addDescription(final JeiIngredient<T, U> ingredient, final MCTextComponent... description) {
+    public <T, U> void addDescription(final JeiIngredient<T, U> ingredient, final Component... description) {
         
         // TODO("Maybe merging?")
         this.descriptions.computeIfAbsent(ingredient.getType(), it -> new HashMap<>())
@@ -130,11 +128,11 @@ public final class ActionsState {
     }
     
     @SuppressWarnings("unchecked")
-    public <T, U> void onDescriptionsFor(final IngredientType<T, U> type, final BiConsumer<T, ITextComponent[]> consumer) {
+    public <T, U> void onDescriptionsFor(final IngredientType<T, U> type, final BiConsumer<T, Component[]> consumer) {
         
         this.descriptions.getOrDefault(type, Collections.emptyMap())
                 .forEach((ingredient, description) ->
-                        consumer.accept((T) ingredient, Arrays.stream(description).map(MCTextComponent::getInternal).toArray(ITextComponent[]::new)));
+                        consumer.accept((T) ingredient, description));
     }
     
     public <T, U> Collection<T> getCustomIngredientsForType(final IngredientType<T, U> type) {
@@ -147,4 +145,5 @@ public final class ActionsState {
         
         return (Collection<T>) collection;
     }
+    
 }

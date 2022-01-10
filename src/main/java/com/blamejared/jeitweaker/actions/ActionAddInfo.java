@@ -1,18 +1,19 @@
 package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
+import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.fml.LogicalSide;
 
 public final class ActionAddInfo<T, U> implements IUndoableAction {
 
     private final JeiIngredient<T, U> ingredient;
-    private final MCTextComponent[] description;
+    private final Component[] description;
 
-    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final MCTextComponent... description) {
+    public ActionAddInfo(final JeiIngredient<T, U> ingredient, final Component... description) {
 
         this.ingredient = ingredient;
         this.description = description;
@@ -41,11 +42,11 @@ public final class ActionAddInfo<T, U> implements IUndoableAction {
 
         return "Adding JEI Info for: " + this.ingredient.getCommandString();
     }
-
+    
     @Override
-    public boolean shouldApplyOn(LogicalSide side) {
-
-        return !CraftTweakerAPI.isServer();
+    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+        
+        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
     }
 
 }

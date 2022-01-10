@@ -1,14 +1,14 @@
 package com.blamejared.jeitweaker.bridge;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
 import com.blamejared.jeitweaker.zen.category.CustomRecipeCategory;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +31,7 @@ public final class CustomRecipeCategoryBridge implements JeiCategoryPluginBridge
             final Collection<CustomRecipeCategory.TextData> text,
             final boolean canBeShapeless
     ) {
-
+        
         this.slots = slots;
         this.drawables = drawables;
         this.tips = tips;
@@ -76,14 +76,14 @@ public final class CustomRecipeCategoryBridge implements JeiCategoryPluginBridge
     }
     
     @Override
-    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {
+    public void drawAdditionalComponent(final PoseStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {
         
         this.drawText(poseStack);
         this.drawDrawables(poseStack, guiHelper);
     }
     
     @Override
-    public List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
+    public List<Component> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
         
         return this.tips.stream()
                 .filter(it -> this.isInside(it, x, y))
@@ -92,19 +92,24 @@ public final class CustomRecipeCategoryBridge implements JeiCategoryPluginBridge
                 .collect(Collectors.toList());
     }
     
-    private void drawText(final MatrixStack poseStack) {
+    private void drawText(final PoseStack poseStack) {
         
-        final FontRenderer font = Minecraft.getInstance().fontRenderer;
-        this.text.forEach(it -> font.func_243246_a(poseStack, it.text().get(0).getInternal(), it.topLeft().x(), it.topLeft().y(), 0xFFFFFF));
+        final Font font = Minecraft.getInstance().font;
+        this.text.forEach(it -> font.drawShadow(poseStack, it.text().get(0), it.topLeft().x(), it.topLeft()
+                .y(), 0xFFFFFF));
     }
     
-    private void drawDrawables(final MatrixStack poseStack, final IGuiHelper guiHelper) {
-    
-        this.drawables.forEach(it -> it.drawable().getDrawable(guiHelper).draw(poseStack, it.coordinates().x(), it.coordinates().y()));
+    private void drawDrawables(final PoseStack poseStack, final IGuiHelper guiHelper) {
+        
+        this.drawables.forEach(it -> it.drawable()
+                .getDrawable(guiHelper)
+                .draw(poseStack, it.coordinates().x(), it.coordinates().y()));
     }
     
     private boolean isInside(final CustomRecipeCategory.TextData tipData, final double x, final double y) {
-    
-        return tipData.topLeft().x() <= x && x <= tipData.activeArea().x() && tipData.topLeft().y() <= y && y <= tipData.activeArea().y();
+        
+        return tipData.topLeft().x() <= x && x <= tipData.activeArea().x() && tipData.topLeft()
+                .y() <= y && y <= tipData.activeArea().y();
     }
+    
 }

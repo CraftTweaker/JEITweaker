@@ -1,16 +1,17 @@
 package com.blamejared.jeitweaker.zen.category;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.helper.category.JeiCategoryHelper;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
+import org.spongepowered.asm.logging.ILogger;
 
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
  * With JeiTweaker, you have control only on the {@code path} portion of the location, whereas the ID is fixed to the
  * one that represents the JeiTweaker mod.</p>
  *
- * <p>The name is a {@link MCTextComponent} which identifies the category. It can be considered the human-friendly
+ * <p>The name is a {@link net.minecraft.network.chat.Component} which identifies the category. It can be considered the human-friendly
  * version of the category ID. More than one category can have the same name, although this is discouraged as a matter
  * of clarity towards the player.</p>
  *
@@ -62,7 +63,7 @@ public interface JeiCategory {
      *
      * @param typeToken The class acting as type token of the category to create.
      * @param id The ID of the category to create.
-     * @param name A {@link MCTextComponent} representing the name of the category.
+     * @param name A {@link Component} representing the name of the category.
      * @param icon A {@link JeiDrawable} that acts as the icon for the category.
      * @param catalysts An array of {@link RawJeiIngredient} acting as catalysts for the category. It must not be empty.
      * @param <T> The type of the category to create. It must extend {@link JeiCategory}.
@@ -74,7 +75,7 @@ public interface JeiCategory {
     static <T extends JeiCategory> JeiCategory create(
             final Class<T> typeToken,
             final String id,
-            final MCTextComponent name,
+            final Component name,
             final JeiDrawable icon,
             final RawJeiIngredient[] catalysts
     ) {
@@ -88,7 +89,7 @@ public interface JeiCategory {
      *
      * @param typeToken The class acting as type token of the category to create.
      * @param id The ID of the category to create.
-     * @param name A {@link MCTextComponent} representing the name of the category.
+     * @param name A {@link Component} representing the name of the category.
      * @param icon A {@link JeiDrawable} that acts as the icon for the category.
      * @param catalysts An array of {@link RawJeiIngredient} acting as catalysts for the category. It must not be empty.
      * @param configurator A {@link Consumer} allowing configuration of the category as it gets built.
@@ -101,7 +102,7 @@ public interface JeiCategory {
     static <T extends JeiCategory> JeiCategory create(
             final Class<T> typeToken,
             final String id,
-            final MCTextComponent name,
+            final Component name,
             final JeiDrawable icon,
             final RawJeiIngredient[] catalysts,
             final Consumer<T> configurator
@@ -128,7 +129,7 @@ public interface JeiCategory {
      * @since 1.1.0
      */
     @ZenCodeType.Getter("name")
-    MCTextComponent name();
+    Component name();
     
     /**
      * Gets the {@link JeiDrawable} that acts as the icon for this category.
@@ -189,7 +190,7 @@ public interface JeiCategory {
      *
      * @since 1.1.0
      */
-    default BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+    default BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
         
         return (recipe, logger) -> true;
     }

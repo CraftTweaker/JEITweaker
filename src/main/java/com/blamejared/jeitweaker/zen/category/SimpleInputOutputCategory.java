@@ -1,15 +1,15 @@
 package com.blamejared.jeitweaker.zen.category;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.bridge.SimpleInputOutputCategoryBridge;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.function.BiPredicate;
@@ -29,7 +29,7 @@ public final class SimpleInputOutputCategory extends SimpleJeiCategory {
     
     private final JeiDrawable background;
     
-    public SimpleInputOutputCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+    public SimpleInputOutputCategory(final ResourceLocation id, final Component name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         super(id, name, icon, catalysts);
         this.background = JeiDrawable.of(GUI_ATLAS, 0, 0, 82, 33);
@@ -42,9 +42,9 @@ public final class SimpleInputOutputCategory extends SimpleJeiCategory {
     }
     
     @Override
-    public BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+    public BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
         
-        final BiPredicate<JeiRecipe, ILogger> other = (recipe, logger) -> {
+        final BiPredicate<JeiRecipe, Logger> other = (recipe, logger) -> {
             
             if (recipe.getInputs().length != 1) {
                 

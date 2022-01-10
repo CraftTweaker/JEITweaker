@@ -1,11 +1,10 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.actions.IRuntimeAction;
-import com.blamejared.crafttweaker.api.logger.ILogger;
+import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
+import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
-import net.minecraftforge.fml.LogicalSide;
+import org.apache.logging.log4j.Logger;
 
 public final class ActionAddRecipeToCategory implements IRuntimeAction {
     
@@ -30,16 +29,19 @@ public final class ActionAddRecipeToCategory implements IRuntimeAction {
         return "Adding recipe " + this.recipe + " to custom JEI category " + this.category.id();
     }
     
-    @Override
-    public boolean validate(final ILogger logger) {
     
+    @Override
+    public boolean validate(Logger logger) {
+        
         return this.category.getRecipeValidator().test(this.recipe, logger);
     }
     
+    
     @Override
-    public boolean shouldApplyOn(final LogicalSide side) {
-        
-        return !CraftTweakerAPI.isServer();
+    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+
+        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
     }
+    
     
 }

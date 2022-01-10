@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker.implementation.state;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
 import com.blamejared.jeitweaker.api.IngredientEnumerator;
 import com.blamejared.jeitweaker.api.IngredientType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;

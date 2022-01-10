@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker.implementation;
 import com.blamejared.jeitweaker.api.IngredientType;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.runtime.IIngredientManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.BiPredicate;
 import java.util.function.Function;

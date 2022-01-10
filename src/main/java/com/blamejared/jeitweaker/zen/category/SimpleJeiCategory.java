@@ -1,16 +1,17 @@
 package com.blamejared.jeitweaker.zen.category;
 
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.logger.ILogger;
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.JEITweaker;
 import com.blamejared.jeitweaker.api.IngredientType;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
 import org.openzen.zencode.java.ZenCodeType;
+import org.spongepowered.asm.logging.ILogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,13 +40,13 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     static final ResourceLocation GUI_ATLAS = new ResourceLocation(JEITweaker.MOD_ID, "textures/gui/jei/atlas.png");
     
     private final ResourceLocation id;
-    private final MCTextComponent name;
+    private final Component name;
     private final JeiDrawable icon;
     private final RawJeiIngredient[] catalysts;
     
     private List<JeiRecipe> recipes;
     
-    public SimpleJeiCategory(final ResourceLocation id, final MCTextComponent name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
+    public SimpleJeiCategory(final ResourceLocation id, final Component name, final JeiDrawable icon, final RawJeiIngredient... catalysts) {
         
         this.id = id;
         this.name = name;
@@ -60,7 +61,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     }
     
     @Override
-    public final MCTextComponent name() {
+    public final Component name() {
         
         return this.name;
     }
@@ -90,7 +91,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
     }
     
     @Override
-    public BiPredicate<JeiRecipe, ILogger> getRecipeValidator() {
+    public BiPredicate<JeiRecipe, Logger> getRecipeValidator() {
         
         return (recipe, logger) -> {
             
@@ -106,7 +107,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
         return String.format("JeiCategory[id='%s',type=%s]", this.id, this.getClass().getSimpleName());
     }
     
-    private void verifyNoMixedSlotsIn(final ILogger logger, final RawJeiIngredient[][] slots, final Supplier<String> in) {
+    private void verifyNoMixedSlotsIn(final Logger logger, final RawJeiIngredient[][] slots, final Supplier<String> in) {
     
         Arrays.stream(slots).forEach(slot -> {
             
@@ -119,7 +120,7 @@ public abstract class SimpleJeiCategory implements JeiCategory {
                 
                 if (mismatchingTypes > 0) {
                     
-                    logger.warning(String.format("Found multiple ingredients in %s of different types: this might not work", in.get()));
+                    logger.warn("Found multiple ingredients in {} of different types: this might not work", in.get());
                 }
             }
         });

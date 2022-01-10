@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.zen.recipe;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.actions.ActionAddRecipeToCategory;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;

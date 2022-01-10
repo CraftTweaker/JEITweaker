@@ -1,9 +1,9 @@
 package com.blamejared.jeitweaker.bridge;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 
@@ -58,10 +58,10 @@ public final class OutputListCategoryBridge implements JeiCategoryPluginBridge {
     }
 
     @Override
-    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
+    public void drawAdditionalComponent(final PoseStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {}
 
     @Override
-    public List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
+    public List<Component> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
 
         return Collections.emptyList();
     }

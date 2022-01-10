@@ -1,10 +1,10 @@
 package com.blamejared.jeitweaker.bridge;
 
-import com.blamejared.crafttweaker.impl.util.text.MCTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.network.chat.Component;
 import com.blamejared.jeitweaker.api.CoordinateFixer;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.RecipeGraphics;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -20,7 +20,7 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
 
         private static final String TIP_ID = "process_detail";
 
-        private MCTextComponent[] tip;
+        private Component[] tip;
 
         TooltipDetailGatherer() {
 
@@ -28,12 +28,12 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         }
 
         @Override
-        public void addTooltip(final String key, final MCTextComponent... lines) {
+        public void addTooltip(final String key, final Component... lines) {
 
             if (TIP_ID.equals(key)) this.tip = lines;
         }
-
-        MCTextComponent[] tip() {
+    
+        Component[] tip() {
 
             return this.tip;
         }
@@ -122,14 +122,14 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
     }
 
     @Override
-    public void drawAdditionalComponent(final MatrixStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {
+    public void drawAdditionalComponent(final PoseStack poseStack, final double mouseX, final double mouseY, final IGuiHelper guiHelper, final Consumer<RecipeGraphics> graphicsConsumer) {
 
         this.drawCovers(poseStack, guiHelper);
         this.drawCatalyst(poseStack, guiHelper);
     }
 
     @Override
-    public List<MCTextComponent> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
+    public List<Component> getTooltips(final double x, final double y, final IGuiHelper helper, final Consumer<RecipeGraphics> graphicsConsumer) {
 
         if (this.isInsideArrow(x, y)) {
 
@@ -139,7 +139,7 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         return Collections.emptyList();
     }
 
-    private void drawCovers(final MatrixStack poseStack, final IGuiHelper helper) {
+    private void drawCovers(final PoseStack poseStack, final IGuiHelper helper) {
 
         final IDrawable cover = this.cover.getDrawable(helper);
         this.drawInputCovers(poseStack, cover);
@@ -147,7 +147,7 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         this.drawCatalystCover(poseStack, cover);
     }
 
-    private void drawInputCovers(final MatrixStack poseStack, final IDrawable cover) {
+    private void drawInputCovers(final PoseStack poseStack, final IDrawable cover) {
 
         for (int i = this.inputs; i < this.maxInputs; ++i) {
 
@@ -156,7 +156,7 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         }
     }
 
-    private void drawOutputCovers(final MatrixStack poseStack, final IDrawable cover) {
+    private void drawOutputCovers(final PoseStack poseStack, final IDrawable cover) {
 
         for (int i = this.outputs; i < this.maxOutputs; ++i) {
 
@@ -165,14 +165,14 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         }
     }
 
-    private void drawCatalystCover(final MatrixStack poseStack, final IDrawable cover) {
+    private void drawCatalystCover(final PoseStack poseStack, final IDrawable cover) {
 
         if (this.hasCatalyst) return;
 
         cover.draw(poseStack, CATALYST_X, CATALYST_Y);
     }
 
-    private void drawCatalyst(final MatrixStack poseStack, final IGuiHelper helper) {
+    private void drawCatalyst(final PoseStack poseStack, final IGuiHelper helper) {
 
         if (this.hasCatalyst) return;
 
@@ -185,11 +185,11 @@ public final class CatalystRequiringRecipeCategoryBridge implements JeiCategoryP
         return ARROW_X <= mouseX && mouseX <= ARROW_X + ARROW_W && ARROW_Y <= mouseY && mouseY <= ARROW_Y + ARROW_H;
     }
 
-    private List<MCTextComponent> gatherArrowTip(final Consumer<RecipeGraphics> graphicsConsumer) {
+    private List<Component> gatherArrowTip(final Consumer<RecipeGraphics> graphicsConsumer) {
 
         final TooltipDetailGatherer graphics = new TooltipDetailGatherer();
         graphicsConsumer.accept(graphics);
-        final MCTextComponent[] tip = graphics.tip();
+        final Component[] tip = graphics.tip();
         return tip == null? Collections.emptyList() : Arrays.asList(tip);
     }
 

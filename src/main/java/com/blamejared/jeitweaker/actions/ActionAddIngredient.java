@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.actions.IUndoableAction;
+import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 

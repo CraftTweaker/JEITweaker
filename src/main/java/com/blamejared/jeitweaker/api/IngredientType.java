@@ -2,7 +2,7 @@ package com.blamejared.jeitweaker.api;
 
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.runtime.IIngredientManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Represents an ingredient type inside JeiTweaker.
