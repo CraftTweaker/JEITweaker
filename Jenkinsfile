@@ -7,11 +7,11 @@ def botUsername = 'crafttweakerbot'
 def botEmail = 'crafttweakerbot@gmail.com'
 
 def documentationDir = 'CrafttweakerDocumentation'
-def exportDirInRepo = 'docs_exported/1.16/jeitweaker'
+def exportDirInRepo = 'docs_exported/1.17/jeitweaker'
 
 def docCommitMessage = { -> "CI doc export for JeiTweaker build ${env.BUILD_NUMBER}\n\nMatches git commit ${env.GIT_COMMIT} on branch ${env.BRANCH_NAME}" }
 
-def branchName = "1.16";
+def branchName = "1.17";
 
 pipeline {
     agent any
@@ -67,6 +67,9 @@ pipeline {
                     }
                 }
                 stage('Exporting Documentation') {
+                    when {
+                        branch "branchName"
+                    }
                     stages {
                         stage('Cloning Repository') {
                             steps {

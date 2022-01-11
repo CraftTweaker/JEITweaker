@@ -3,7 +3,7 @@ package com.blamejared.jeitweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.command.CommandUtilities;
 import com.blamejared.crafttweaker.api.command.boilerplate.CommandImpl;
-import com.blamejared.crafttweaker.impl.event.CTCommandRegisterEvent;
+import com.blamejared.crafttweaker.api.event.type.CTCommandRegisterEvent;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.mojang.brigadier.Command;
 import net.minecraft.ChatFormatting;

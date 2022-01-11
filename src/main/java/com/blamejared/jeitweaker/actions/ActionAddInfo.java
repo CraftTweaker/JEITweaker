@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.actions;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
+import com.blamejared.crafttweaker.platform.Services;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import com.blamejared.jeitweaker.zen.component.JeiIngredient;
 import net.minecraft.network.chat.Component;
@@ -45,8 +46,8 @@ public final class ActionAddInfo<T, U> implements IUndoableAction {
     
     @Override
     public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
-        
-        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
+    
+        return Services.DISTRIBUTION.getDistributionType().isClient();
     }
 
 }

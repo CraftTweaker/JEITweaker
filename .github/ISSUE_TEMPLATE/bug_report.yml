@@ -53,6 +53,7 @@ body:
       
         If you version isn't listed, then select "other" and list your version in the issue description.
       options:
+        - 1.17
         - 1.16
         - Other
     validations:
@@ -61,28 +62,28 @@ body:
     attributes:
       label: Forge version
       description: What version of Forge are you using?
-      placeholder: 36.1.32
+      placeholder: 37.0.0
     validations:
       required: true
   - type: input
     attributes:
       label: CraftTweaker version
       description: What version of CraftTweaker are you using?
-      placeholder: 7.1.0.315
+      placeholder: 8.0.0+20
     validations:
       required: true
   - type: input
     attributes:
       label: JEITweaker version
       description: What version of JEITweaker are you using?
-      placeholder: 1.1.0.40
+      placeholder: 2.0.0+1
     validations:
       required: true
   - type: input
     attributes:
       label: JEI version
       description: What version of JEI are you using?
-      placeholder: 7.7.1.137
+      placeholder: 8.1.0.26
     validations:
       required: true
   - type: textarea

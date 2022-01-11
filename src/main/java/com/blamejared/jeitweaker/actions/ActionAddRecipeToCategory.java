@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.actions;
 
 import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
+import com.blamejared.crafttweaker.platform.Services;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +11,7 @@ public final class ActionAddRecipeToCategory implements IRuntimeAction {
     
     private final JeiCategory category;
     private final JeiRecipe recipe;
-
+    
     public ActionAddRecipeToCategory(final JeiCategory category, final JeiRecipe recipe) {
         
         this.category = category;
@@ -39,8 +40,8 @@ public final class ActionAddRecipeToCategory implements IRuntimeAction {
     
     @Override
     public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
-
-        return ScriptLoadingOptions.CLIENT_RECIPES_UPDATED_SCRIPT_SOURCE.equals(source);
+        
+        return Services.DISTRIBUTION.getDistributionType().isClient();
     }
     
     
