@@ -85,7 +85,7 @@ minecraft {
 modTemplate {
     mcVersion "1.17.1"
     curseHomepage "https://www.curseforge.com/minecraft/mc-mods/jeitweaker"
-    displayName "JEITweaker"
+    displayName 'JEITweaker'
 
     changelog {
         enabled true
@@ -106,7 +106,7 @@ modTemplate {
 
 dependencies {
     def mcDep = minecraft 'net.minecraftforge:forge:1.17.1-37.1.1'
-    def ctDep = fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.17.1:8.0.0+22')
+    def ctDep = fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.17.1:8.0.0+23')
 
     implementation ctDep
     compileOnly 'mezz.jei:jei-1.17.1:8.1.0.26:api'

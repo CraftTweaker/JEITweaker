@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.library.ninepatch;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.google.common.base.Suppliers;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,7 +10,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Matrix4f;
 import mezz.jei.api.gui.drawable.IDrawable;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
@@ -98,7 +99,8 @@ public final class NinePatchDrawable implements IDrawable {
             return;
         }
         
-        Minecraft.getInstance().getTextureManager().bindForSetup(image.atlas());
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, image.atlas());
         final Tesselator tessellator = Tesselator.getInstance();
         final BufferBuilder buffer = tessellator.getBuilder();
         final Matrix4f pose = poseStack.last().pose();
@@ -108,7 +110,6 @@ public final class NinePatchDrawable implements IDrawable {
         this.drawNinePatch(image, buffer, pose, xOffset, yOffset);
         
         tessellator.end();
-        ;
     }
     
     private void drawNinePatch(final NinePatchImage image, final BufferBuilder buffer, final Matrix4f pose, final int xOffset, final int yOffset) {

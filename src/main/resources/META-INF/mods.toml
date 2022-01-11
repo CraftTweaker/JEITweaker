@@ -25,7 +25,7 @@ Adds JEI integration for CraftTweaker
   [[dependencies.jeitweaker]]
 	modId = "crafttweaker"
 	mandatory = true
-	versionRange = "[8.0.0+22,)"
+	versionRange = "[8.0.0+23,)"
 	ordering = "NONE"
 	side = "BOTH"
   [[dependencies.jeitweaker]]
