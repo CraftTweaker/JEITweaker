@@ -17,7 +17,7 @@ apply plugin: 'com.blamejared.modtemplate'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = com.blamejared.modtemplate.Utils.updatingVersion('2.0.0')
+version = com.blamejared.modtemplate.Utils.updatingVersion('3.0.0')
 group = 'com.blamejared.jeitweaker'
 archivesBaseName = 'JEITweaker-1.18.1'
 
@@ -26,6 +26,7 @@ java {
 }
 
 repositories {
+    mavenLocal()
     maven {
         url "https://dvs1.progwml6.com/files/maven"
         content {
@@ -112,11 +113,11 @@ dependencies {
     compileOnly 'mezz.jei:jei-1.18.1:9.2.1.69:api'
     runtimeOnly fg.deobf('mezz.jei:jei-1.18.1:9.2.1.69')
 
-//    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.17.1:2.0.0.15'
-//    annotationProcessor 'com.google.code.gson:gson:2.8.6'
-//    annotationProcessor 'org.reflections:reflections:0.9.10'
-//    annotationProcessor mcDep
-//    annotationProcessor ctDep
+    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.18.1:20.0.0'
+    annotationProcessor 'com.google.code.gson:gson:2.8.6'
+    annotationProcessor 'org.reflections:reflections:0.9.10'
+    annotationProcessor 'net.minecraftforge:forge:1.18.1-39.0.18'
+    annotationProcessor 'com.blamejared.crafttweaker:CraftTweaker-forge-1.18.1:9.0.0+15'
 }
 
 jar {

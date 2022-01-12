@@ -77,7 +77,7 @@ body:
     attributes:
       label: JEITweaker version
       description: What version of JEITweaker are you using?
-      placeholder: 2.0.0+1
+      placeholder: 3.0.0+1
     validations:
       required: true
   - type: input
