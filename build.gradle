@@ -19,10 +19,10 @@ apply plugin: 'maven-publish'
 
 version = com.blamejared.modtemplate.Utils.updatingVersion('2.0.0')
 group = 'com.blamejared.jeitweaker'
-archivesBaseName = 'JEITweaker-1.17.1'
+archivesBaseName = 'JEITweaker-1.18.1'
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(16)
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
 repositories {
@@ -41,7 +41,7 @@ repositories {
     }
 }
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: '1.18.1'
     runs {
         client {
             workingDirectory project.file('run')
@@ -83,7 +83,7 @@ minecraft {
 }
 
 modTemplate {
-    mcVersion "1.17.1"
+    mcVersion "1.18.1"
     curseHomepage "https://www.curseforge.com/minecraft/mc-mods/jeitweaker"
     displayName 'JEITweaker'
 
@@ -105,12 +105,12 @@ modTemplate {
 }
 
 dependencies {
-    def mcDep = minecraft 'net.minecraftforge:forge:1.17.1-37.1.1'
-    def ctDep = fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.17.1:8.0.0+23')
+    def mcDep = minecraft 'net.minecraftforge:forge:1.18.1-39.0.18'
+    def ctDep = fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.18.1:9.0.0+15')
 
     implementation ctDep
-    compileOnly 'mezz.jei:jei-1.17.1:8.1.0.26:api'
-    runtimeOnly fg.deobf('mezz.jei:jei-1.17.1:8.1.0.26')
+    compileOnly 'mezz.jei:jei-1.18.1:9.2.1.69:api'
+    runtimeOnly fg.deobf('mezz.jei:jei-1.18.1:9.2.1.69')
 
 //    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.17.1:2.0.0.15'
 //    annotationProcessor 'com.google.code.gson:gson:2.8.6'
@@ -242,7 +242,7 @@ curseforge {
         releaseType = 'release'
         changelog = file("changelog.md")
         changelogType = 'markdown'
-        addGameVersion '1.17.1'
+        addGameVersion '1.18.1'
 
 //        addArtifact(sourcesJar)
 //        addArtifact(javadocJar)
