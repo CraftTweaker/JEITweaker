@@ -68,7 +68,7 @@ pipeline {
                 }
                 stage('Exporting Documentation') {
                     when {
-                        branch "branchName"
+                        branch branchName
                     }
                     stages {
                         stage('Cloning Repository') {

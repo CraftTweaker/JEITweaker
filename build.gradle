@@ -105,18 +105,20 @@ modTemplate {
 }
 
 dependencies {
-    def mcDep = minecraft 'net.minecraftforge:forge:1.17.1-37.1.1'
-    def ctDep = fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.17.1:8.0.0+23')
+    def ctDep = 'com.blamejared.crafttweaker:CraftTweaker-forge-1.17.1:8.0.0+27'
+    // Not actually sure if this even works, or if it is even required.
+    def mcDep = 'net.minecraftforge:forge:1.17.1-37.1.1'
+    minecraft mcDep
 
-    implementation ctDep
+    implementation fg.deobf(ctDep)
     compileOnly 'mezz.jei:jei-1.17.1:8.1.0.26:api'
     runtimeOnly fg.deobf('mezz.jei:jei-1.17.1:8.1.0.26')
 
-//    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.17.1:2.0.0.15'
-//    annotationProcessor 'com.google.code.gson:gson:2.8.6'
-//    annotationProcessor 'org.reflections:reflections:0.9.10'
-//    annotationProcessor mcDep
-//    annotationProcessor ctDep
+    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.17.1:2.0.0.27'
+    annotationProcessor 'com.google.code.gson:gson:2.8.6'
+    annotationProcessor 'org.reflections:reflections:0.9.10'
+    annotationProcessor mcDep
+    annotationProcessor ctDep
 }
 
 jar {
@@ -250,3 +252,6 @@ curseforge {
     }
 }
 
+compileJava {
+    options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"
+}
