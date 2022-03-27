@@ -107,6 +107,8 @@ public final class JeiManager {
      * <p>Optionally, some ingredients can be excluded based on their registry name from the hiding by making use of the
      * {@link Predicate<String>}.</p>
      *
+     * <p>Note, the exclusion filter works on the full registry name, unlike recipe filters which work on the path without the modid.</p>
+     *
      * @param modId   The mod ID of the ingredients that should be hidden.
      * @param exclude An optional exclusion filter.
      *
