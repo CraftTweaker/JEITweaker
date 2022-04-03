@@ -1,8 +1,9 @@
 package com.blamejared.jeitweaker.helper.category;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.CraftTweakerRegistry;
+import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.util.NameUtil;
+import com.blamejared.crafttweaker.impl.registry.CraftTweakerRegistry;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
@@ -51,11 +52,13 @@ public final class JeiCategoryHelper {
     }
     
     private static void lookup(final Map<Class<?>, JeiCategoryCreator<?>> map) {
-    
-        CraftTweakerRegistry.getZenClassRegistry()
-                .getImplementationsOf(JeiCategory.class)
+        
+        CraftTweakerRegistry.get().getZenClassRegistry()
+                .getImplementationsOf(CraftTweakerAPI.getRegistry()
+                        .findLoader(CraftTweakerConstants.DEFAULT_LOADER_NAME), JeiCategory.class)
                 .stream()
                 .filter(type -> !Modifier.isAbstract(type.getModifiers()))
                 .forEach(type -> JeiCategoryCreator.of(type).ifPresent(creator -> map.put(type, creator)));
     }
+    
 }

@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
+import com.blamejared.crafttweaker.api.zencode.IScriptLoadSource;
 import com.blamejared.crafttweaker.platform.Services;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
@@ -39,7 +39,7 @@ public final class ActionAddRecipeToCategory implements IRuntimeAction {
     
     
     @Override
-    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+    public boolean shouldApplyOn(IScriptLoadSource source) {
         
         return Services.DISTRIBUTION.getDistributionType().isClient();
     }

@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.zen.component;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.tag.MCTag;
 import com.blamejared.crafttweaker.api.tag.expand.ExpandItemTag;
+import com.blamejared.crafttweaker.api.tag.type.KnownTag;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.world.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
@@ -11,7 +12,7 @@ import org.openzen.zencode.java.ZenCodeType;
  * Expands {@link MCTag} when typed with {@link Item} with JEI-specific conversions.
  */
 @Document("mods/JEITweaker/API/Component/ItemTagExpansions")
-@ZenCodeType.Expansion("crafttweaker.api.tag.MCTag<crafttweaker.api.item.ItemDefinition>")
+@ZenCodeType.Expansion("crafttweaker.api.tag.type.KnownTag<crafttweaker.api.item.ItemDefinition>")
 @ZenRegister
 public final class ItemTagExpansions {
     
@@ -24,7 +25,7 @@ public final class ItemTagExpansions {
      * @since 1.1.0
      */
     @ZenCodeType.Caster(implicit = true)
-    public static RawJeiIngredient[] asJeiIngredientArray(final MCTag<Item> tag) {
+    public static RawJeiIngredient[] asJeiIngredientArray(final KnownTag<Item> tag) {
         
         return IIngredientExpansions.asJeiIngredientArray(ExpandItemTag.asIIngredient(tag));
     }

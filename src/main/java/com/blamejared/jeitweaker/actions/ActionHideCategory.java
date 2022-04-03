@@ -1,7 +1,7 @@
 package com.blamejared.jeitweaker.actions;
 
-import com.blamejared.crafttweaker.api.ScriptLoadingOptions;
 import com.blamejared.crafttweaker.api.action.base.IUndoableAction;
+import com.blamejared.crafttweaker.api.zencode.IScriptLoadSource;
 import com.blamejared.crafttweaker.platform.Services;
 import com.blamejared.jeitweaker.implementation.state.StateManager;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +40,7 @@ public final class ActionHideCategory implements IUndoableAction {
     }
     
     @Override
-    public boolean shouldApplyOn(ScriptLoadingOptions.ScriptLoadSource source) {
+    public boolean shouldApplyOn(IScriptLoadSource source) {
         
         return Services.DISTRIBUTION.getDistributionType().isClient();
     }

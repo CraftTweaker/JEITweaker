@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 
 version = com.blamejared.modtemplate.Utils.updatingVersion('3.0.0')
 group = 'com.blamejared.jeitweaker'
-archivesBaseName = 'JEITweaker-1.18.1'
+archivesBaseName = 'JEITweaker-1.18.2'
 
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -42,7 +42,7 @@ repositories {
     }
 }
 minecraft {
-    mappings channel: 'official', version: '1.18.1'
+    mappings channel: 'official', version: '1.18.2'
     runs {
         client {
             workingDirectory project.file('run')
@@ -84,7 +84,7 @@ minecraft {
 }
 
 modTemplate {
-    mcVersion "1.18.1"
+    mcVersion "1.18.2"
     curseHomepage "https://www.curseforge.com/minecraft/mc-mods/jeitweaker"
     displayName 'JEITweaker'
 
@@ -106,17 +106,17 @@ modTemplate {
 }
 
 dependencies {
-    def ctDep = 'com.blamejared.crafttweaker:CraftTweaker-forge-1.18.1:9.0.0+19'
+    def ctDep = 'com.blamejared.crafttweaker:CraftTweaker-forge-1.18.2:9.1.86'
     // Not actually sure if this even works, or if it is even required.
-    def mcDep = 'net.minecraftforge:forge:1.18.1-39.0.18'
+    def mcDep = 'net.minecraftforge:forge:1.18.2-40.0.36'
     minecraft mcDep
 
 
     implementation fg.deobf(ctDep)
-    compileOnly 'mezz.jei:jei-1.18.1:9.2.1.69:api'
-    runtimeOnly fg.deobf('mezz.jei:jei-1.18.1:9.2.1.69')
+    compileOnly 'mezz.jei:jei-1.18.2:9.5.5.174:api'
+    runtimeOnly fg.deobf('mezz.jei:jei-1.18.2:9.5.5.174')
 
-    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.18.1:2.0.0.19'
+    annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.18.2:2.0.0.86'
     annotationProcessor 'com.google.code.gson:gson:2.8.6'
     annotationProcessor 'org.reflections:reflections:0.9.10'
     annotationProcessor mcDep
@@ -246,7 +246,7 @@ curseforge {
         releaseType = 'release'
         changelog = file("changelog.md")
         changelogType = 'markdown'
-        addGameVersion '1.18.1'
+        addGameVersion '1.18.2'
 
 //        addArtifact(sourcesJar)
 //        addArtifact(javadocJar)

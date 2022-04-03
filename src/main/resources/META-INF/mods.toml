@@ -1,36 +1,36 @@
 modLoader = "javafml"
-loaderVersion = "[39,)"
+loaderVersion = "[40,)"
 license = "MIT"
 [[mods]]
 modId = "jeitweaker"
 version = "${file.jarVersion}"
 displayName = "JEI Tweaker"
 authors = "Jaredlll08"
-updateJSONURL = "https://updates.blamejared.com/get?n=JEITweaker&gv=1.18.1"
+updateJSONURL = "https://updates.blamejared.com/get?n=JEITweaker&gv=1.18.2"
 description = '''
 Adds JEI integration for CraftTweaker
 '''
   [[dependencies.jeitweaker]]
 	modId = "forge"
 	mandatory = true
-	versionRange = "[39,)"
+	versionRange = "[40,)"
 	ordering = "NONE"
 	side = "BOTH"
   [[dependencies.jeitweaker]]
 	modId = "minecraft"
 	mandatory = true
-	versionRange = "[1.18.1,)"
+	versionRange = "[1.18.2,)"
 	ordering = "NONE"
 	side = "BOTH"
   [[dependencies.jeitweaker]]
 	modId = "crafttweaker"
 	mandatory = true
-	versionRange = "[9.0.0+15,)"
+	versionRange = "[9.1.86,)"
 	ordering = "NONE"
 	side = "BOTH"
   [[dependencies.jeitweaker]]
 	modId = "jei"
 	mandatory = false
-	versionRange = "[9.2.1.69,)"
+	versionRange = "[9.5.5.174,)"
 	ordering = "NONE"
 	side = "BOTH"
