@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
+import mezz.jei.api.constants.ModIds;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
@@ -39,7 +40,7 @@ import java.util.function.Consumer;
 // TODO("Expose methods?")
 @Document("mods/JEITweaker/API/Recipe/JeiRecipe")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipe")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class JeiRecipe {
     
     private final JeiCategory owningCategory;

@@ -5,6 +5,7 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.library.ninepatch.NinePatchDrawable;
+import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -29,7 +30,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Component/JeiDrawable")
 @ZenCodeType.Name("mods.jei.component.JeiDrawable")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class JeiDrawable {
     
     private volatile Function<IGuiHelper, IDrawable> delegate;

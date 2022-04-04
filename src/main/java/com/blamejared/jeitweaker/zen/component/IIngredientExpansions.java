@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.zen.component;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import mezz.jei.api.constants.ModIds;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import java.util.Arrays;
  */
 @Document("mods/JEITweaker/API/Component/IIngredientExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.ingredient.IIngredient")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class IIngredientExpansions {
     
     /**

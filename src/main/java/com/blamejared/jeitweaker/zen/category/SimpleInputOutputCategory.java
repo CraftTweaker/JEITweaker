@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.zen.category;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
@@ -24,7 +25,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/SimpleInputOutput")
 @ZenCodeType.Name("mods.jei.category.SimpleInputOutput")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class SimpleInputOutputCategory extends SimpleJeiCategory {
     
     private final JeiDrawable background;

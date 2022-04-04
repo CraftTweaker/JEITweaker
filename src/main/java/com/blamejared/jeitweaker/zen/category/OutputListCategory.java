@@ -8,6 +8,7 @@ import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
 import com.google.common.base.Suppliers;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +26,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/OutputList")
 @ZenCodeType.Name("mods.jei.category.OutputList")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class OutputListCategory extends SimpleJeiCategory {
     
     private final Supplier<JeiDrawable> backgroundSupplier;

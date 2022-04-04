@@ -13,6 +13,7 @@ import com.blamejared.jeitweaker.actions.ActionHideRecipe;
 import com.blamejared.jeitweaker.actions.ActionHideRegex;
 import com.blamejared.jeitweaker.zen.category.JeiCategory;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
@@ -26,7 +27,7 @@ import java.util.function.Predicate;
  */
 @Document("mods/JEITweaker/API/JEI")
 @ZenCodeType.Name("mods.jei.JEI")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class JeiManager {
     
     /**

@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -12,7 +13,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @Document("mods/JEITweaker/API/Component/JeiDrawableAnimation")
 @ZenCodeType.Name("mods.jei.component.JeiDrawableAnimation")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public enum JeiDrawableAnimation {
     SHOW_TOP_TO_BOTTOM(IDrawableAnimated.StartDirection.TOP, false),
     SHOW_BOTTOM_TO_TOP(IDrawableAnimated.StartDirection.BOTTOM, false),

@@ -6,6 +6,7 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.tag.type.KnownTag;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import mezz.jei.api.constants.ModIds;
 import org.openzen.zencode.java.ZenCodeType;
 
 /**
@@ -29,7 +30,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @Document("mods/JEITweaker/API/Component/JeiIngredient")
 @ZenCodeType.Name("mods.jei.component.JeiIngredient")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 // TODO("Replace all usages of this with JeiIngredient once generic inference is better")
 public interface RawJeiIngredient extends CommandStringDisplayable {
     

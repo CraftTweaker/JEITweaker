@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.zen.recipe;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import org.openzen.zencode.java.ZenCodeType;
@@ -17,7 +18,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @Document("mods/JEITweaker/API/Recipe/JeiRecipeGraphics")
 @ZenCodeType.Name("mods.jei.recipe.JeiRecipeGraphics")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public interface RecipeGraphics {
     
     /**

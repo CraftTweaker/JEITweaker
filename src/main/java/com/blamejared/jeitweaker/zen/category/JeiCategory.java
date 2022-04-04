@@ -7,6 +7,7 @@ import com.blamejared.jeitweaker.helper.category.JeiCategoryHelper;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Logger;
@@ -55,7 +56,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/JeiCategory")
 @ZenCodeType.Name("mods.jei.category.JeiCategory")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public interface JeiCategory {
     
     /**

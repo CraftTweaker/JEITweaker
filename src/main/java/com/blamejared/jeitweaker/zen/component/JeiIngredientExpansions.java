@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.zen.component;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import mezz.jei.api.constants.ModIds;
 import org.openzen.zencode.java.ZenCodeType;
 
 /**
@@ -11,7 +12,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @Document("mods/JEITweaker/API/Component/JeiIngredientExpansions")
 @ZenCodeType.Expansion("mods.jei.component.JeiIngredient")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class JeiIngredientExpansions {
     
     /**

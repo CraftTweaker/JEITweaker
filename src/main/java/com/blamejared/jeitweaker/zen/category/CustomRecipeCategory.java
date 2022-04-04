@@ -8,6 +8,7 @@ import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectRBTreeMap;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.openzen.zencode.java.ZenCodeType;
@@ -26,7 +27,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/Custom")
 @ZenCodeType.Name("mods.jei.category.Custom")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class CustomRecipeCategory extends SimpleJeiCategory {
     
     public static final class Coordinates {

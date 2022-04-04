@@ -8,6 +8,7 @@ import com.blamejared.jeitweaker.bridge.JeiCategoryPluginBridge;
 import com.blamejared.jeitweaker.zen.component.JeiDrawable;
 import com.blamejared.jeitweaker.zen.component.RawJeiIngredient;
 import com.blamejared.jeitweaker.zen.recipe.JeiRecipe;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +33,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/CatalystRequiringRecipe")
 @ZenCodeType.Name("mods.jei.category.CatalystRequiringRecipe")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class CatalystRequiringRecipeCategory extends SimpleJeiCategory {
     
     private static final JeiDrawable BACKGROUND = JeiDrawable.of(GUI_ATLAS, 94, 69, 162, 44);

@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.zen.category;
 
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.network.chat.Component;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.bridge.InputConsumingCategoryBridge;
@@ -34,7 +35,7 @@ import java.util.function.Supplier;
  */
 @Document("mods/JEITweaker/API/Category/InputConsuming")
 @ZenCodeType.Name("mods.jei.category.InputConsuming")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class InputConsumingCategory extends SimpleJeiCategory {
     
     private static final JeiDrawable BACKGROUND = JeiDrawable.of(GUI_ATLAS, 94, 20, 162, 49);

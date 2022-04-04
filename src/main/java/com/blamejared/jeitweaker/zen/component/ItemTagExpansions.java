@@ -5,6 +5,7 @@ import com.blamejared.crafttweaker.api.tag.MCTag;
 import com.blamejared.crafttweaker.api.tag.expand.ExpandItemTag;
 import com.blamejared.crafttweaker.api.tag.type.KnownTag;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
+import mezz.jei.api.constants.ModIds;
 import net.minecraft.world.item.Item;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -13,7 +14,7 @@ import org.openzen.zencode.java.ZenCodeType;
  */
 @Document("mods/JEITweaker/API/Component/ItemTagExpansions")
 @ZenCodeType.Expansion("crafttweaker.api.tag.type.KnownTag<crafttweaker.api.item.ItemDefinition>")
-@ZenRegister
+@ZenRegister(modDeps = ModIds.JEI_ID)
 public final class ItemTagExpansions {
     
     /**
