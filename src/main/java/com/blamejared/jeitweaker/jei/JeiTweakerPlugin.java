@@ -12,6 +12,7 @@ import com.google.common.collect.Sets;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IJeiHelpers;
+import mezz.jei.api.helpers.IPlatformFluidHelper;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.RecipeType;
@@ -56,9 +57,9 @@ public final class JeiTweakerPlugin implements IModPlugin {
     }
     
     @Override
-    public void registerFluidSubtypes(final ISubtypeRegistration registration) {
+    public <T> void registerFluidSubtypes(final ISubtypeRegistration registration, final IPlatformFluidHelper<T> platformFluidHelper) {
         
-        this.registerSubtypesFor(BuiltinIngredientTypes.FLUID.get(), registration::hasSubtypeInterpreter, FluidStack::getFluid, Fluid[]::new, registration::useNbtForSubtypes);
+        this.registerSubtypesFor(BuiltinIngredientTypes.FLUID.get(), it -> false, FluidStack::getFluid, Fluid[]::new, registration::useNbtForSubtypes);
     }
     
     @Override

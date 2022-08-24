@@ -29,12 +29,14 @@ public final class JeiTweakerCategory implements IRecipeCategory<JeiTweakerRecip
     }
     
     @Override
+    @SuppressWarnings("removal")
     public ResourceLocation getUid() {
         
         return this.zenCategory.id();
     }
     
     @Override
+    @SuppressWarnings("removal")
     public Class<? extends JeiTweakerRecipe> getRecipeClass() {
         
         return JeiTweakerRecipe.class;

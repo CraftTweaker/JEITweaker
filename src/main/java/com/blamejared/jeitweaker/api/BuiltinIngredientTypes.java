@@ -42,6 +42,7 @@ public final class BuiltinIngredientTypes {
      *
      * @since 1.1.0
      */
+    // TODO("Forge only")
     public static final IngredientTypeHolder<IFluidStack, FluidStack> FLUID = IngredientTypeHolder.of(
             new ResourceLocation("fluid"),
             IFluidStack.class,
