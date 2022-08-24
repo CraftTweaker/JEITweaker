@@ -15,6 +15,12 @@ import net.minecraftforge.fml.ModList;
 @CraftTweakerPlugin("jeitweaker:default")
 public class CTJEITweakerPlugin implements ICraftTweakerPlugin {
     
+    public CTJEITweakerPlugin() {
+        if(ModList.get().isLoaded("roughlyenoughitems")) {
+            CraftTweakerAPI.LOGGER.info("[JeiTweaker] REI identified");
+        }
+    }
+    
     @Override
     public void registerCommands(ICommandRegistrationHandler handler) {
         

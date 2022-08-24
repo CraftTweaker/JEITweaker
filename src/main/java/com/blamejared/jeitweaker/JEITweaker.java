@@ -1,7 +1,6 @@
 package com.blamejared.jeitweaker;
 
 import com.blamejared.jeitweaker.implementation.JeiTweakerInitializer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -13,7 +12,7 @@ public class JEITweaker {
     @SuppressWarnings("SpellCheckingInspection") public static final String MOD_ID = "jeitweaker";
     
     public JEITweaker() {
-    
+
         if(!ModList.get().isLoaded("jei")) {
             return;
         }
