@@ -1,0 +1,40 @@
+modLoader="javafml"
+loaderVersion="[43,)"
+license="MIT License"
+issueTrackerURL="https://github.com/CraftTweaker/JeiTweaker/issues"
+showAsResourcePack=false
+
+[[mods]]
+modId="jeitweaker"
+version="${file.jarVersion}"
+displayName="JeiTweaker"
+displayURL="https://minecraft.curseforge.com/projects/jeitweaker"
+updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.19.2"
+logoFile="logo.png"
+authors="Jaredlll08, TheSilkMiner"
+description="CraftTweaker addon providing integration with JEI"
+
+[[dependencies.jeitweaker]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.19.2]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.jeitweaker]]
+modId="forge"
+mandatory=true
+versionRange="[43.2,44)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.jeitweaker]]
+modId="crafttweaker"
+mandatory=true
+versionRange="[10.1,11)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.jeitweaker]]
+modId="jei"
+mandatory=false
+versionRange="[11.5,12)"
+ordering="NONE"
+side="BOTH"
