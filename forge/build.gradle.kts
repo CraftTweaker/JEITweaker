@@ -68,11 +68,13 @@ dependencies {
 
     apiImplementation(project(":common", "apiConfiguration"))
     apiImplementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${Constants.MINECRAFT_VERSION}:${Constants.CRAFTTWEAKER_VERSION}"))
+    apiImplementation(fg.deobf("mezz.jei:jei-${Constants.MINECRAFT_VERSION}-common-api:${Constants.JEI_VERSION}"))
     apiImplementation(fg.deobf("mezz.jei:jei-${Constants.MINECRAFT_VERSION}-forge-api:${Constants.JEI_VERSION}"))
 
     implementation(project(":common", "apiConfiguration"))
     implementation(project(":common"))
     implementation(fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${Constants.MINECRAFT_VERSION}:${Constants.CRAFTTWEAKER_VERSION}"))
+    implementation(fg.deobf("mezz.jei:jei-${Constants.MINECRAFT_VERSION}-common-api:${Constants.JEI_VERSION}"))
     implementation(fg.deobf("mezz.jei:jei-${Constants.MINECRAFT_VERSION}-forge-api:${Constants.JEI_VERSION}"))
 
     runtimeOnly(fg.deobf("mezz.jei:jei-${Constants.MINECRAFT_VERSION}-forge:${Constants.JEI_VERSION}"))

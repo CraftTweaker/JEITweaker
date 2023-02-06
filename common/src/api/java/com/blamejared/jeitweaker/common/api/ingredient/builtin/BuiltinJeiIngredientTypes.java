@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.common.api.ingredient.builtin;
 
 import com.blamejared.crafttweaker.api.item.IItemStack;
+import com.blamejared.jeitweaker.common.api.JeiTweakerApi;
 import com.blamejared.jeitweaker.common.api.JeiTweakerConstants;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientType;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +21,6 @@ public final class BuiltinJeiIngredientTypes {
     }
     
     public static JeiIngredientType<?, ?> fluidStack() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return JeiTweakerApi.get().fluidJeiIngredient();
     }
 }
