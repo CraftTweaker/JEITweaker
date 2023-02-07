@@ -1,10 +1,8 @@
-package com.blamejared.jeitweaker.forge.ingredient.builtin;
+package com.blamejared.jeitweaker.forge.plugin;
 
 import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
-import mezz.jei.api.forge.ForgeTypes;
-import mezz.jei.api.ingredients.IIngredientType;
 import net.minecraft.core.Registry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -26,11 +24,6 @@ final class FluidConverters implements JeiIngredientConverter<FluidStack, IFluid
             final IFluidStack zenType
     ) {
         return creator.of(jeiType, FluidStack::copy, zenType.asImmutable());
-    }
-    
-    @Override
-    public IIngredientType<FluidStack> toJeiIngredientType() {
-        return ForgeTypes.FLUID_STACK;
     }
     
     @Override

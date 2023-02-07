@@ -1,10 +1,8 @@
-package com.blamejared.jeitweaker.common.api.ingredient.builtin;
+package com.blamejared.jeitweaker.common.plugin.builtin;
 
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.IIngredientType;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,11 +24,6 @@ final class ItemStackConverters implements JeiIngredientConverter<ItemStack, IIt
             final IItemStack zenType
     ) {
         return creator.of(jeiType, ItemStack::copy, zenType.asImmutable());
-    }
-    
-    @Override
-    public IIngredientType<ItemStack> toJeiIngredientType() {
-        return VanillaTypes.ITEM_STACK;
     }
     
     @Override
