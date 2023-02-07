@@ -8,11 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public final class EnvironmentVerifier {
-    private record ModList(Set<String> names, String special) {
-        ModList(final Set<String> names) {
-            this(names, null);
-        }
-        
+    private record ModList(Set<String> names) {
         ModList(final String... mods) {
             this(Set.of(mods));
         }
@@ -44,18 +40,22 @@ public final class EnvironmentVerifier {
             return this.level;
         }
         
-        String message(final ModList mods) {
-            return this.formatMessage.formatted(mods.names(), mods.special() == null? "" : ("; " + mods.special()));
+        String message(final ModList mods, final String specialMessage) {
+            return this.formatMessage.formatted(mods.names(), specialMessage == null? "" : ("; " + specialMessage));
         }
     }
     
-    private record ModEnvironment(ModList list, EnvironmentSupport support) {
+    private record ModEnvironment(ModList list, EnvironmentSupport support, String specialMessage) {
+        ModEnvironment(final ModList list, final EnvironmentSupport support) {
+            this(list, support, null);
+        }
+        
         boolean matches() {
             return this.list().matches();
         }
         
         void report(final Logger logger) {
-            final String message = "JEITweaker Environmental Check: %s".formatted(this.support().message(this.list()));
+            final String message = "JEITweaker Environmental Check: %s".formatted(this.support().message(this.list(), this.specialMessage()));
             logger.log(this.support().level(), message);
         }
     }
@@ -66,8 +66,8 @@ public final class EnvironmentVerifier {
     
     private static final List<ModEnvironment> ENVIRONMENTS = List.of(
             new ModEnvironment(new ModList(JEI), EnvironmentSupport.FULL),
-            new ModEnvironment(new ModList(Set.of(REI, REI_PC)/*, "consider using ReiTweaker instead"*/), EnvironmentSupport.PARTIAL),
-            new ModEnvironment(new ModList(Set.of(REI)/*, "consider using ReiTweaker instead"*/), EnvironmentSupport.NONE),
+            new ModEnvironment(new ModList(Set.of(REI, REI_PC)), EnvironmentSupport.PARTIAL/*, "consider using ReiTweaker instead"*/),
+            new ModEnvironment(new ModList(Set.of(REI)), EnvironmentSupport.NONE/*, "consider using ReiTweaker instead"*/),
             new ModEnvironment(new ModList(), EnvironmentSupport.NONE)
     );
     
