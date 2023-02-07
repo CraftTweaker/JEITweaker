@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
-final class FluidConverters implements JeiIngredientConverter<FluidStack, IFluidStack> {
+final class FluidStackConverters implements JeiIngredientConverter<FluidStack, IFluidStack> {
     @Override
     public JeiIngredientCreator.Creator<FluidStack, IFluidStack> toFullIngredientFromJei(final JeiIngredientCreator.FromJei creator, final FluidStack jeiType) {
         return creator.of(jeiType, FluidStack::copy);
