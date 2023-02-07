@@ -9,4 +9,6 @@ public interface PlatformBridge {
     PlatformBridge INSTANCE = Util.make(() -> ServiceLoader.load(PlatformBridge.class).findFirst().orElseThrow());
     
     JeiIngredientType<?, ?> fluidJeiIngredient();
+    
+    boolean isModLoaded(final String modId);
 }
