@@ -20,4 +20,12 @@ public final class JeiIngredients {
     public static <J, Z> ZenJeiIngredient toZenIngredient(final JeiIngredient<J, Z> jeiIngredient) {
         return JeiTweakerApi.get().ingredientZenFromJei(jeiIngredient);
     }
+    
+    public static <J, Z> String toCommandString(final JeiIngredient<J, Z> jeiIngredient) {
+        return Objects.requireNonNull(jeiIngredient, "jeiIngredient").toString(); // Must be overridden to return the command string by contract
+    }
+    
+    public static <J, Z> String toRegistryName(final JeiIngredient<J, Z> jeiIngredient) {
+        return Objects.requireNonNull(jeiIngredient, "jeiIngredient").type().converter().toRegistryNameFromZen(jeiIngredient.zenContent());
+    }
 }

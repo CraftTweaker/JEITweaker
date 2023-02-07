@@ -1,6 +1,7 @@
 package com.blamejared.jeitweaker.common.zen.ingredient;
 
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredient;
+import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredients;
 import com.blamejared.jeitweaker.common.api.zen.ingredient.ZenJeiIngredient;
 
 import java.util.Objects;
@@ -22,7 +23,7 @@ public final class JeiIngredientBundlingZenJeiIngredient<J, Z> implements ZenJei
     
     @Override
     public String getCommandString() {
-        return this.wrapped.toString();
+        return JeiIngredients.toCommandString(this.wrapped);
     }
     
     @Override

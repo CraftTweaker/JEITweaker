@@ -5,6 +5,7 @@ import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredientType;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 
 final class ItemStackConverters implements JeiIngredientConverter<ItemStack, IItemStack> {
@@ -45,6 +46,11 @@ final class ItemStackConverters implements JeiIngredientConverter<ItemStack, IIt
     @Override
     public String toCommandStringFromZen(final IItemStack zenType) {
         return zenType.getCommandString();
+    }
+    
+    @Override
+    public String toRegistryNameFromJei(final ItemStack jeiType) {
+        return Registry.ITEM.getKey(jeiType.getItem()).toString();
     }
     
 }

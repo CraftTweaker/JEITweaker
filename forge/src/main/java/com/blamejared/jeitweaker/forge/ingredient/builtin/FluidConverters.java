@@ -5,6 +5,7 @@ import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.ingredients.IIngredientType;
+import net.minecraft.core.Registry;
 import net.minecraftforge.fluids.FluidStack;
 
 final class FluidConverters implements JeiIngredientConverter<FluidStack, IFluidStack> {
@@ -45,6 +46,12 @@ final class FluidConverters implements JeiIngredientConverter<FluidStack, IFluid
     @Override
     public String toCommandStringFromZen(final IFluidStack zenType) {
         return zenType.getCommandString();
+    }
+    
+    @Override
+    @SuppressWarnings("deprecation") // I don't care, I am not using ForgeRegistries
+    public String toRegistryNameFromJei(final FluidStack jeiType) {
+        return Registry.FLUID.getKey(jeiType.getFluid()).toString();
     }
     
 }

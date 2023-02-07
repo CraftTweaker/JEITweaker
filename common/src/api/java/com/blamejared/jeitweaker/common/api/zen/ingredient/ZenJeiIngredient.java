@@ -6,8 +6,7 @@ import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.common.api.zen.JeiTweakerZenConstants;
 import org.openzen.zencode.java.ZenCodeType;
 
-@Document("mods/JEITweaker/API/Ingredient/JeiIngredient")
+@Document("mods/JeiTweaker/API/Ingredient/JeiIngredient")
 @ZenCodeType.Name(JeiTweakerZenConstants.INGREDIENT_PACKAGE_NAME + ".JeiIngredient")
 @ZenRegister
-public interface ZenJeiIngredient extends CommandStringDisplayable {
-}
+public interface ZenJeiIngredient extends CommandStringDisplayable {}
