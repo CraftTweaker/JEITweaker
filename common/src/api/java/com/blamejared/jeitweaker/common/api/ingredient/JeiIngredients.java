@@ -10,7 +10,7 @@ public final class JeiIngredients {
     private JeiIngredients() {}
     
     public static <J, Z> IIngredientType<J> jeiIngredientTypeOf(final JeiIngredient<J, Z> jeiIngredient) {
-        return Objects.requireNonNull(jeiIngredient, "jeiIngredient").type().converter().toJeiIngredientType();
+        return JeiIngredientTypes.toJeiType(Objects.requireNonNull(jeiIngredient, "jeiIngredient").type());
     }
     
     public static <J, Z> JeiIngredient<J, Z> toJeiIngredient(final ZenJeiIngredient zenJeiIngredient) {
