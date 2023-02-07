@@ -11,6 +11,7 @@ public final class JeiTweakerCraftTweakerPlugin implements ICraftTweakerPlugin {
     @Override
     public void initialize() {
         EnvironmentVerifier.scanAndReportEnvironment(JeiTweakerInitializer.get().jeiTweakerLogger());
+        JeiTweakerInitializer.get().pluginManager().initializePlugins();
     }
     
 }
