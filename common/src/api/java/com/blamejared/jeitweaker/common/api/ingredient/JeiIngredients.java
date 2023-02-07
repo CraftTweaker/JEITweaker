@@ -3,6 +3,7 @@ package com.blamejared.jeitweaker.common.api.ingredient;
 import com.blamejared.jeitweaker.common.api.JeiTweakerApi;
 import com.blamejared.jeitweaker.common.api.zen.ingredient.ZenJeiIngredient;
 import mezz.jei.api.ingredients.IIngredientType;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public final class JeiIngredients {
         return Objects.requireNonNull(jeiIngredient, "jeiIngredient").toString(); // Must be overridden to return the command string by contract
     }
     
-    public static <J, Z> String toRegistryName(final JeiIngredient<J, Z> jeiIngredient) {
+    public static <J, Z> ResourceLocation toRegistryName(final JeiIngredient<J, Z> jeiIngredient) {
         return JeiIngredientTypes.converterFor(Objects.requireNonNull(jeiIngredient, "jeiIngredient").type()).toRegistryNameFromZen(jeiIngredient.zenContent());
     }
 }

@@ -1,6 +1,6 @@
 package com.blamejared.jeitweaker.common.api.ingredient;
 
-import mezz.jei.api.ingredients.IIngredientType;
+import net.minecraft.resources.ResourceLocation;
 
 public interface JeiIngredientConverter<J, Z> {
     JeiIngredientCreator.Creator<J, Z> toFullIngredientFromJei(final JeiIngredientCreator.FromJei creator, final J jeiType);
@@ -10,13 +10,13 @@ public interface JeiIngredientConverter<J, Z> {
     J toJeiFromZen(final Z zenType);
     Z toZenFromJei(final J jeiType);
     String toCommandStringFromZen(final Z zenType);
-    String toRegistryNameFromJei(final J jeiType);
+    ResourceLocation toRegistryNameFromJei(final J jeiType);
     
     default String toCommandStringFromJei(final J jeiType) {
         return this.toCommandStringFromZen(this.toZenFromJei(jeiType));
     }
     
-    default String toRegistryNameFromZen(final Z zenType) {
+    default ResourceLocation toRegistryNameFromZen(final Z zenType) {
         return this.toRegistryNameFromJei(this.toJeiFromZen(zenType));
     }
 }

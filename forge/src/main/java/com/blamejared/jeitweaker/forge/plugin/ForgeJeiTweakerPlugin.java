@@ -15,7 +15,7 @@ public final class ForgeJeiTweakerPlugin implements JeiTweakerPluginProvider {
     public void registerIngredientTypes(final JeiIngredientTypeRegistration registration) {
         registration.registerIngredientType(
                 JeiIngredientType.of(JeiTweakerConstants.rl("fluid_stack"), FluidStack.class, IFluidStack.class),
-                new FluidConverters(),
+                new FluidStackConverters(),
                 ForgeTypes.FLUID_STACK
         );
     }
