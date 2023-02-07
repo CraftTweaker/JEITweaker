@@ -8,7 +8,7 @@ showAsResourcePack=false
 modId="jeitweaker"
 version="${file.jarVersion}"
 displayName="JeiTweaker"
-displayURL="https://minecraft.curseforge.com/projects/jeitweaker"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/jeitweaker"
 updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.19.2"
 logoFile="logo.png"
 authors="Jaredlll08, TheSilkMiner"
