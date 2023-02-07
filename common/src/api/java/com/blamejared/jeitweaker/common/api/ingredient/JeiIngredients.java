@@ -26,6 +26,6 @@ public final class JeiIngredients {
     }
     
     public static <J, Z> String toRegistryName(final JeiIngredient<J, Z> jeiIngredient) {
-        return Objects.requireNonNull(jeiIngredient, "jeiIngredient").type().converter().toRegistryNameFromZen(jeiIngredient.zenContent());
+        return JeiIngredientTypes.converterFor(Objects.requireNonNull(jeiIngredient, "jeiIngredient").type()).toRegistryNameFromZen(jeiIngredient.zenContent());
     }
 }

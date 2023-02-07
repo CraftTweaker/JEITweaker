@@ -1,7 +1,9 @@
 package com.blamejared.jeitweaker.common.ingredient;
 
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredient;
+import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientType;
+import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientTypes;
 
 import java.util.Objects;
 
@@ -13,8 +15,12 @@ abstract sealed class SimpleJeiIngredient<J, Z> implements JeiIngredient<J, Z> p
     }
     
     @Override
-    public JeiIngredientType<J, Z> type() {
+    public final JeiIngredientType<J, Z> type() {
         return this.type;
+    }
+    
+    protected final JeiIngredientConverter<J, Z> converter() {
+        return JeiIngredientTypes.converterFor(this.type());
     }
     
     @Override
