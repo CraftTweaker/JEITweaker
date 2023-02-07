@@ -1,20 +1,19 @@
 package com.blamejared.jeitweaker.forge.platform;
 
-import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientType;
 import com.blamejared.jeitweaker.common.platform.PlatformBridge;
-import com.blamejared.jeitweaker.forge.ingredient.builtin.ForgeJeiIngredientTypes;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 public class ForgePlatform implements PlatformBridge {
     
     @Override
-    public JeiIngredientType<?, ?> fluidJeiIngredient() {
-        return ForgeJeiIngredientTypes.FLUID_STACK;
+    public boolean isModLoaded(final String modId) {
+        return ModList.get().isLoaded(modId);
     }
     
     @Override
-    public boolean isModLoaded(final String modId) {
-        return ModList.get().isLoaded(modId);
+    public boolean isDevEnv() {
+        return !FMLEnvironment.production;
     }
     
 }
