@@ -7,8 +7,6 @@ public interface JeiIngredientConverter<J, Z> {
     JeiIngredientCreator.Creator<J, Z> toFullIngredientFromZen(final JeiIngredientCreator.FromZen creator, final Z zenType);
     JeiIngredientCreator.Creator<J, Z> toFullIngredientFromBoth(final JeiIngredientCreator.FromBoth creator, final J jeiType, final Z zenType);
     
-    IIngredientType<J> toJeiIngredientType();
-    
     J toJeiFromZen(final Z zenType);
     Z toZenFromJei(final J jeiType);
     String toCommandStringFromZen(final Z zenType);

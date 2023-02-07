@@ -11,33 +11,30 @@ public final class JeiIngredientType<J, Z> {
     private final ResourceLocation id;
     private final TypeToken<J> jeiType;
     private final TypeToken<Z> zenType;
-    private final JeiIngredientConverter<J, Z> converter;
     
-    private JeiIngredientType(final ResourceLocation id, final TypeToken<J> jeiType, final TypeToken<Z> zenType, final JeiIngredientConverter<J, Z> converter) {
+    private JeiIngredientType(final ResourceLocation id, final TypeToken<J> jeiType, final TypeToken<Z> zenType) {
         this.id = id;
         this.jeiType = jeiType;
         this.zenType = zenType;
-        this.converter = converter;
     }
     
-    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final Class<J> jeiType, final Class<Z> zenType, final JeiIngredientConverter<J, Z> converter) {
-        return of(id, TypeToken.of(jeiType), TypeToken.of(zenType), converter);
+    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final Class<J> jeiType, final Class<Z> zenType) {
+        return of(id, TypeToken.of(jeiType), TypeToken.of(zenType));
     }
     
-    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final Class<J> jeiType, final TypeToken<Z> zenType, final JeiIngredientConverter<J, Z> converter) {
-        return of(id, TypeToken.of(jeiType), zenType, converter);
+    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final Class<J> jeiType, final TypeToken<Z> zenType) {
+        return of(id, TypeToken.of(jeiType), zenType);
     }
     
-    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final TypeToken<J> jeiType, final Class<Z> zenType, final JeiIngredientConverter<J, Z> converter) {
-        return of(id, jeiType, TypeToken.of(zenType), converter);
+    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final TypeToken<J> jeiType, final Class<Z> zenType) {
+        return of(id, jeiType, TypeToken.of(zenType));
     }
     
-    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final TypeToken<J> jeiType, final TypeToken<Z> zenType, final JeiIngredientConverter<J, Z> converter) {
+    public static <J, Z> JeiIngredientType<J, Z> of(final ResourceLocation id, final TypeToken<J> jeiType, final TypeToken<Z> zenType) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(jeiType, "jeiType");
         Objects.requireNonNull(zenType, "zenType");
-        Objects.requireNonNull(converter, "converter");
-        return new JeiIngredientType<>(id, jeiType, zenType, converter);
+        return new JeiIngredientType<>(id, jeiType, zenType);
     }
     
     public ResourceLocation id() {
@@ -50,10 +47,6 @@ public final class JeiIngredientType<J, Z> {
     
     public Type zenType() {
         return this.zenType.getType();
-    }
-    
-    public JeiIngredientConverter<J, Z> converter() {
-        return this.converter;
     }
     
     @Override
