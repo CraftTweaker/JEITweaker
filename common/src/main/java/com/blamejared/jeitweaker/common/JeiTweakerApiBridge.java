@@ -2,6 +2,7 @@ package com.blamejared.jeitweaker.common;
 
 import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.blamejared.jeitweaker.common.api.JeiTweakerApi;
+import com.blamejared.jeitweaker.common.api.command.JeiCommand;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredient;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientType;
@@ -32,7 +33,12 @@ public final class JeiTweakerApiBridge implements JeiTweakerApi {
         if (zenJeiIngredient instanceof final JeiIngredientBundlingZenJeiIngredient<?, ?> wrapped) {
             return GenericUtil.uncheck(wrapped.unwrap());
         }
-        throw new IllegalArgumentException("Illegal ZenJeiIngredient: not obtained through JeiIngredients");
+        throw new IllegalArgumentException("Illegal ZenJeiIngredient %s: not obtained through JeiIngredients".formatted(zenJeiIngredient));
+    }
+    
+    @Override
+    public <T> void enqueueCommand(final JeiCommand<T> command) {
+        JeiTweakerInitializer.get().commandManager().enqueueCommand(command);
     }
     
 }
