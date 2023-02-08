@@ -3,7 +3,6 @@ package com.blamejared.jeitweaker.common.api.ingredient;
 import com.google.common.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;
 
-import java.lang.reflect.Type;
 import java.util.Objects;
 
 @SuppressWarnings("UnstableApiUsage")
@@ -41,12 +40,12 @@ public final class JeiIngredientType<J, Z> {
         return this.id;
     }
     
-    public Type jeiType() {
-        return this.jeiType.getType();
+    public TypeToken<J> jeiType() {
+        return this.jeiType;
     }
     
-    public Type zenType() {
-        return this.zenType.getType();
+    public TypeToken<Z> zenType() {
+        return this.zenType;
     }
     
     @Override
@@ -66,7 +65,7 @@ public final class JeiIngredientType<J, Z> {
     
     @Override
     public String toString() {
-        return "JeiIngredientType[%s]{%s->%s}".formatted(this.id(), this.jeiType().getTypeName(), this.zenType().getTypeName());
+        return "JeiIngredientType[%s]{%s->%s}".formatted(this.id(), this.jeiType(), this.zenType());
     }
     
 }

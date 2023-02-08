@@ -44,13 +44,13 @@ public final class JeiCommandType<T> {
         return this.id;
     }
     
-    public Type argumentType() {
-        return this.argumentType.getType();
+    public TypeToken<T> argumentType() {
+        return this.argumentType;
     }
     
     @Override
     public String toString() {
-        return "JeiCommandType[%s@%s]".formatted(this.id(), this.argumentType().getTypeName());
+        return "JeiCommandType[%s@%s]".formatted(this.id(), this.argumentType());
     }
     
 }
