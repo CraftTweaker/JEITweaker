@@ -29,7 +29,11 @@ public final class JeiIngredientTypeRegistry {
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(jeiType, "jeiType");
-        // TODO("Type verification between type.jeiType and jeiType")
+    
+        //noinspection UnstableApiUsage
+        if (type.jeiType().isSubtypeOf(jeiType.getIngredientClass())) {
+            throw new IllegalArgumentException("Type " + type + " does not match the JEI type " + jeiType + ", nor it is a subtype");
+        }
         
         if (this.ingredientTypes.containsValue(type)) {
             throw new IllegalArgumentException("Type " + type + " has already been registered");
