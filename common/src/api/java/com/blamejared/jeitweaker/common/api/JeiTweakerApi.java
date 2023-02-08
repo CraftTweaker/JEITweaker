@@ -24,5 +24,6 @@ public interface JeiTweakerApi {
     <J, Z> JeiIngredientConverter<J, Z> ingredientConverterFromIngredientType(final JeiIngredientType<J, Z> type);
     <J, Z> IIngredientType<J> jeiFromIngredientType(final JeiIngredientType<J, Z> type);
     
+    boolean shouldApplyAction();
     <T> void enqueueCommand(final JeiCommand<T> command);
 }

@@ -9,6 +9,7 @@ import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientType;
 import com.blamejared.jeitweaker.common.api.zen.ingredient.ZenJeiIngredient;
 import com.blamejared.jeitweaker.common.ingredient.SimpleJeiIngredientCreator;
+import com.blamejared.jeitweaker.common.platform.PlatformBridge;
 import com.blamejared.jeitweaker.common.zen.ingredient.JeiIngredientBundlingZenJeiIngredient;
 import mezz.jei.api.ingredients.IIngredientType;
 import net.minecraft.resources.ResourceLocation;
@@ -51,6 +52,11 @@ public final class JeiTweakerApiBridge implements JeiTweakerApi {
     @Override
     public <J, Z> IIngredientType<J> jeiFromIngredientType(final JeiIngredientType<J, Z> type) {
         return JeiTweakerInitializer.get().registries().jeiIngredientTypeRegistry().jeiTypeOf(type);
+    }
+    
+    @Override
+    public boolean shouldApplyAction() {
+        return PlatformBridge.INSTANCE.isClient();
     }
     
     @Override

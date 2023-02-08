@@ -9,6 +9,7 @@ public interface PlatformBridge {
     
     boolean isModLoaded(final String modId);
     
+    boolean isClient();
     boolean isDevEnv();
     
 }
