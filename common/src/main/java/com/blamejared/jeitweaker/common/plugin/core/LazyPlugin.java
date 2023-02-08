@@ -28,7 +28,7 @@ final class LazyPlugin implements JeiTweakerPluginProvider {
                 try {
                     return (JeiTweakerPluginProvider) adaptedHandle.invokeExact();
                 } catch (final Throwable t) {
-                    throw new IllegalStateException("Unable to construct plugin instance for " + clazz.getName(), e);
+                    throw new IllegalStateException("Unable to construct plugin instance for " + clazz.getName(), t);
                 }
             });
         } catch(final NoSuchMethodException | IllegalAccessException e) {
