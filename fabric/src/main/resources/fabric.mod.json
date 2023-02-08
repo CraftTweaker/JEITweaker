@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "jeitweaker",
+  "version": "${version}",
+  "name": "JeiTweaker",
+  "description": "CraftTweaker addon providing integration with JEI",
+  "authors": [
+    "Jaredlll08",
+    "TheSilkMiner"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/jeitweaker",
+    "sources": "https://github.com/CraftTweaker/JeiTweaker",
+    "issues": "https://github.com/CraftTweaker/JeiTweaker/issues"
+  },
+  "license": "MIT License",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.blamejared.jeitweaker.fabric.JeiTweaker"
+    ]
+  },
+  "mixins": [
+    "jeitweaker.common.mixins.json",
+    "jeitweaker.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.13",
+    "fabric-api": "*",
+    "minecraft": "1.19.2",
+    "java": ">=17",
+    "crafttweaker": ">=10.1.31",
+    "jei": ">=11.5.2.1007"
+  }
+}
