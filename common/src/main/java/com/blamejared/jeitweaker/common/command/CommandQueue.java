@@ -29,7 +29,7 @@ public final class CommandQueue<T> implements Queue<JeiCommand<T>> {
     public void runCommands(final T argument) {
         JeiCommand<T> head;
         while ((head = this.poll()) != null) {
-            head.execute(argument);
+            SafeJeiCommandManager.safeOf(head).execute(argument);
         }
         assert this.isEmpty();
     }
