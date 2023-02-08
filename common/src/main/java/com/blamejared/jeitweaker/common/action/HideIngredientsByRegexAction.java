@@ -6,32 +6,26 @@ import com.blamejared.jeitweaker.common.api.command.JeiCommandTypes;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredient;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientTypes;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredients;
-import it.unimi.dsi.fastutil.Pair;
 import mezz.jei.api.ingredients.IIngredientType;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class HideModAction extends JeiTweakerAction {
-    private final String mod;
-    private final Predicate<String> inclusionFilter;
+public final class HideIngredientsByRegexAction extends JeiTweakerAction {
+    private final Pattern regex;
     
-    private HideModAction(final String mod, final Predicate<String> inclusionFilter) {
-        this.mod = mod;
-        this.inclusionFilter = inclusionFilter;
+    private HideIngredientsByRegexAction(final Pattern regex) {
+        this.regex = regex;
     }
     
-    public static HideModAction of(final String mod, final Predicate<String> exclusionFilter) {
-        return new HideModAction(
-                Objects.requireNonNull(mod, "mod"),
-                Objects.requireNonNull(exclusionFilter, "exclusionFilter").negate()
-        );
+    public static HideIngredientsByRegexAction of(final String pattern) {
+        return new HideIngredientsByRegexAction(Pattern.compile(Objects.requireNonNull(pattern, "pattern")));
     }
     
     @Override
@@ -41,18 +35,16 @@ public final class HideModAction extends JeiTweakerAction {
     
     @Override
     public String describe() {
-        return "Hiding all ingredients from mod %s from JEI".formatted(this.mod);
+        return "Hiding all ingredients matching regex '%s' from JEI".formatted(this.regex.pattern());
     }
     
     private void hide(final IJeiRuntime runtime) {
         final IIngredientManager manager = runtime.getIngredientManager();
-        final Predicate<ResourceLocation> mergedFilter = it -> this.mod.equals(it.getNamespace()) && this.inclusionFilter.test(it.toString());
+        final Predicate<String> matcher = this.regex.asMatchPredicate();
         
         manager.getRegisteredIngredientTypes().stream()
                 .flatMap(type -> this.ingredientsOfType(manager, type))
-                .map(ingredient -> Pair.of(JeiIngredients.toRegistryName(ingredient), ingredient))
-                .filter(it -> mergedFilter.test(it.first()))
-                .map(Pair::value)
+                .filter(ingredient -> matcher.test(JeiIngredients.toRegistryName(ingredient).toString()))
                 .collect(Collectors.groupingBy(JeiIngredients::jeiIngredientTypeOf, Collectors.mapping(JeiIngredient::jeiContent, Collectors.toList())))
                 .forEach((type, ingredient) -> this.doHide(manager, type, ingredient));
     }
@@ -68,5 +60,4 @@ public final class HideModAction extends JeiTweakerAction {
         }
         manager.removeIngredientsAtRuntime(type, ingredients);
     }
-    
 }

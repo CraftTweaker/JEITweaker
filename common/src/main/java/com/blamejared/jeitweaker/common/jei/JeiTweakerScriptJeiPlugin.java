@@ -22,12 +22,12 @@ import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 
 @JeiPlugin
-public final class JeiTweakerJeiPlugin implements IModPlugin {
-    private static final ResourceLocation ID = JeiTweakerConstants.rl("jei");
+public final class JeiTweakerScriptJeiPlugin implements IModPlugin {
+    private static final ResourceLocation ID = JeiTweakerConstants.rl("script");
     
     private final CommandManager commandManager;
     
-    public JeiTweakerJeiPlugin() {
+    public JeiTweakerScriptJeiPlugin() {
         this.commandManager = JeiTweakerInitializer.get().commandManager();
     }
     

@@ -4,9 +4,9 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.common.action.AddIngredientAction;
-import com.blamejared.jeitweaker.common.action.HideByRegexAction;
+import com.blamejared.jeitweaker.common.action.HideIngredientsByRegexAction;
 import com.blamejared.jeitweaker.common.action.HideIngredientAction;
-import com.blamejared.jeitweaker.common.action.HideModAction;
+import com.blamejared.jeitweaker.common.action.HideModIngredientsAction;
 import com.blamejared.jeitweaker.common.api.zen.JeiTweakerZenConstants;
 import com.blamejared.jeitweaker.common.api.zen.ingredient.ZenJeiIngredient;
 import org.openzen.zencode.java.ZenCodeType;
@@ -28,12 +28,12 @@ public final class JeiTweaker {
     }
     
     @ZenCodeType.Method
-    public static void hideMod(final String modId, @ZenCodeType.Optional("(name as string) => { return false; }") final Predicate<String> exclusionFilter) {
-        CraftTweakerAPI.apply(HideModAction.of(modId, exclusionFilter));
+    public static void hideModIngredients(final String modId, @ZenCodeType.Optional("(name as string) => { return false; }") final Predicate<String> exclusionFilter) {
+        CraftTweakerAPI.apply(HideModIngredientsAction.of(modId, exclusionFilter));
     }
     
     @ZenCodeType.Method
-    public static void hideByRegex(final String pattern) {
-        CraftTweakerAPI.apply(HideByRegexAction.of(pattern));
+    public static void hideIngredientsByRegex(final String pattern) {
+        CraftTweakerAPI.apply(HideIngredientsByRegexAction.of(pattern));
     }
 }
