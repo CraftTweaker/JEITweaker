@@ -4,7 +4,6 @@ import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.google.common.reflect.TypeToken;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -13,6 +12,10 @@ import java.util.Map;
 public final class JeiCommandType<T> {
     private static final Map<String, JeiCommandType<?>> CATALOG_TYPE_CATALOG = new Object2ObjectArrayMap<>();
     private static final Collection<JeiCommandType<?>> VALUES = Collections.unmodifiableCollection(CATALOG_TYPE_CATALOG.values());
+    
+    static {
+        JeiCommandTypes.init(); // Force-load the class containing all command types
+    }
     
     private final String id;
     private final TypeToken<T> argumentType;

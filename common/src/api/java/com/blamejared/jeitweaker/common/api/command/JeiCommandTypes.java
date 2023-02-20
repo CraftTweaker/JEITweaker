@@ -33,4 +33,6 @@ public final class JeiCommandTypes {
     public static final JeiCommandType<IVanillaCategoryExtensionRegistration> VANILLA_EXTENSION = JeiCommandType.of("vanilla_extension", IVanillaCategoryExtensionRegistration.class);
     
     private JeiCommandTypes() {}
+    
+    static void init() {}
 }
