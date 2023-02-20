@@ -31,7 +31,7 @@ public final class JeiIngredientTypeRegistry {
         Objects.requireNonNull(jeiType, "jeiType");
     
         //noinspection UnstableApiUsage
-        if (type.jeiType().isSubtypeOf(jeiType.getIngredientClass())) {
+        if (!type.jeiType().isSubtypeOf(jeiType.getIngredientClass())) {
             throw new IllegalArgumentException("Type " + type + " does not match the JEI type " + jeiType + ", nor it is a subtype");
         }
         
