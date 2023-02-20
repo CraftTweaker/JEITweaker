@@ -6,6 +6,7 @@ import com.blamejared.crafttweaker_annotations.annotations.Document;
 import com.blamejared.jeitweaker.common.action.AddIngredientAction;
 import com.blamejared.jeitweaker.common.action.AddIngredientInformationAction;
 import com.blamejared.jeitweaker.common.action.HideCategoryAction;
+import com.blamejared.jeitweaker.common.action.HideIngredientsAction;
 import com.blamejared.jeitweaker.common.action.HideIngredientsByRegexAction;
 import com.blamejared.jeitweaker.common.action.HideIngredientAction;
 import com.blamejared.jeitweaker.common.action.HideModIngredientsAction;
@@ -40,6 +41,11 @@ public final class JeiTweaker {
     @ZenCodeType.Method
     public static void hideIngredient(final ZenJeiIngredient ingredient) {
         CraftTweakerAPI.apply(HideIngredientAction.of(ingredient));
+    }
+    
+    @ZenCodeType.Method
+    public static void hideIngredients(final ZenJeiIngredient... ingredients) {
+        CraftTweakerAPI.apply(HideIngredientsAction.of(ingredients));
     }
     
     @ZenCodeType.Method
