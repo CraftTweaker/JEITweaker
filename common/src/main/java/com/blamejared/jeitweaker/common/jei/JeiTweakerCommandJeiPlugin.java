@@ -30,16 +30,18 @@ public final class JeiTweakerCommandJeiPlugin implements IModPlugin {
     }
     
     private void storeCategories(final IJeiRuntime runtime) {
+        JeiCategoriesState.get().registerStatesProvider(() -> this.states(runtime));
+    }
+    
+    private Set<JeiCategoriesState.JeiCategoryState> states(final IJeiRuntime runtime) {
         final IRecipeManager recipeManager = runtime.getRecipeManager();
-        
+    
         final Set<IRecipeCategory<?>> visibleCategories = recipeManager.createRecipeCategoryLookup().get().collect(Collectors.toSet());
         final Set<IRecipeCategory<?>> hiddenCategories = UnintuitiveApiHelper.getHiddenRecipeCategories(recipeManager);
-        final Set<JeiCategoriesState.JeiCategoryState> categoryStates = Stream.concat(
+        return Stream.concat(
                 this.stateStream(visibleCategories, JeiCategoriesState.JeiCategoryState::ofVisible),
                 this.stateStream(hiddenCategories, JeiCategoriesState.JeiCategoryState::ofHidden)
         ).collect(Collectors.toSet());
-        
-        JeiCategoriesState.get().registerStates(categoryStates);
     }
     
     private Stream<JeiCategoriesState.JeiCategoryState> stateStream(
