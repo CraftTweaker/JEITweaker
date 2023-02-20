@@ -14,48 +14,35 @@ public final class JeiTweakerInitializer {
     private final CommandManager commandManager;
     private final PluginManager pluginManager;
     
-    private boolean init;
-    
     private JeiTweakerInitializer() {
         this.jeiTweakerLogger = CraftTweakerAPI.LOGGER; // Preparing for 1.19.3 :P
         this.registries = new JeiTweakerRegistries();
         this.commandManager = CommandManager.of();
         this.pluginManager = PluginManager.of(this.jeiTweakerLogger, this.registries);
-        this.init = false;
+        this.initialize();
     }
     
     public static JeiTweakerInitializer get() {
         return INSTANCE;
     }
     
-    public void initialize() {
-        if (this.init) return;
-        this.pluginManager.discoverPlugins();
-        this.init = true;
-    }
-    
     public CommandManager commandManager() {
-        this.ensureInit();
         return this.commandManager;
     }
     
     public PluginManager pluginManager() {
-        this.ensureInit();
         return this.pluginManager;
     }
     
     public JeiTweakerRegistries registries() {
-        this.ensureInit();
         return this.registries;
     }
     
     public Logger jeiTweakerLogger() {
-        this.ensureInit();
         return this.jeiTweakerLogger;
     }
     
-    private void ensureInit() {
-        if (this.init) return;
-        this.initialize();
+    private void initialize() {
+        this.pluginManager.discoverPlugins();
     }
 }
