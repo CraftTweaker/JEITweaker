@@ -30,23 +30,27 @@ public final class JeiTweakerCommandJeiPlugin implements IModPlugin {
     }
     
     private void storeCategories(final IJeiRuntime runtime) {
-        JeiCategoriesState.get().registerStatesProvider(() -> this.states(runtime));
+        JeiCategoriesState.get().registerStatesProvider((visible, hidden) -> this.states(runtime, visible, hidden));
     }
     
-    private Set<JeiCategoriesState.JeiCategoryState> states(final IJeiRuntime runtime) {
+    private Set<JeiCategoriesState.JeiCategoryState> states(
+            final IJeiRuntime runtime,
+            final JeiCategoriesState.JeiCategoryState.Creator visible,
+            final JeiCategoriesState.JeiCategoryState.Creator hidden
+    ) {
         final IRecipeManager recipeManager = runtime.getRecipeManager();
     
         final Set<IRecipeCategory<?>> visibleCategories = recipeManager.createRecipeCategoryLookup().get().collect(Collectors.toSet());
         final Set<IRecipeCategory<?>> hiddenCategories = UnintuitiveApiHelper.getHiddenRecipeCategories(recipeManager);
         return Stream.concat(
-                this.stateStream(visibleCategories, JeiCategoriesState.JeiCategoryState::ofVisible),
-                this.stateStream(hiddenCategories, JeiCategoriesState.JeiCategoryState::ofHidden)
+                this.stateStream(visibleCategories, visible),
+                this.stateStream(hiddenCategories, hidden)
         ).collect(Collectors.toSet());
     }
     
     private Stream<JeiCategoriesState.JeiCategoryState> stateStream(
             final Set<IRecipeCategory<?>> categories,
-            final Function<ResourceLocation, JeiCategoriesState.JeiCategoryState> constructor
+            final JeiCategoriesState.JeiCategoryState.Creator constructor
     ) {
         return categories.stream().map(UnintuitiveApiHelper::getRecipeCategoryId).map(constructor);
     }

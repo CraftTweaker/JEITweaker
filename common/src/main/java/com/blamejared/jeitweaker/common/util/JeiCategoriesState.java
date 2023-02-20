@@ -15,32 +15,52 @@ import java.util.SortedSet;
 import java.util.Spliterator;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public final class JeiCategoriesState {
-    public record JeiCategoryState(ResourceLocation id, Visibility visibility) implements Comparable<JeiCategoryState> {
-        private enum Visibility {
+    public interface JeiCategoryState extends Comparable<JeiCategoryState> {
+        enum Visibility {
             VISIBLE("visible"),
             HIDDEN("hidden");
-            
+        
             private final String friendlyName;
-            
+        
             Visibility(final String friendlyName) {
                 this.friendlyName = friendlyName;
             }
-            
+        
             @Override
             public String toString() {
                 return this.friendlyName;
             }
         }
         
+        @FunctionalInterface
+        interface Creator extends Function<ResourceLocation, JeiCategoryState> {}
+        
+        ResourceLocation id();
+        Visibility visibility();
+        @Override String toString();
+    }
+    
+    @SuppressWarnings("ClassCanBeRecord") // No, I want the static factory method only
+    private static final class JeiCategoryStateProvider implements JeiCategoryState {
         private static final Comparator<JeiCategoryState> COMPARATOR = Comparator.comparing(JeiCategoryState::visibility)
                 .thenComparing(JeiCategoryState::id, Comparator.comparing(ResourceLocation::getNamespace).thenComparing(ResourceLocation::getPath));
+    
+        private final ResourceLocation id;
+        private final Visibility visibility;
+        
+        private JeiCategoryStateProvider(final ResourceLocation id, final Visibility visibility) {
+            this.id = id;
+            this.visibility = visibility;
+        }
         
         public static JeiCategoryState ofVisible(final ResourceLocation id) {
             return of(id, Visibility.VISIBLE);
@@ -51,7 +71,17 @@ public final class JeiCategoriesState {
         }
         
         private static JeiCategoryState of(final ResourceLocation id, final Visibility visibility) {
-            return new JeiCategoryState(Objects.requireNonNull(id, "id"), visibility);
+            return new JeiCategoryStateProvider(Objects.requireNonNull(id, "id"), visibility);
+        }
+        
+        @Override
+        public ResourceLocation id() {
+            return this.id;
+        }
+        
+        @Override
+        public Visibility visibility() {
+            return this.visibility;
         }
         
         @Override
@@ -275,8 +305,8 @@ public final class JeiCategoriesState {
         return INSTANCE.get();
     }
     
-    public void registerStatesProvider(final Supplier<Set<JeiCategoryState>> states) {
-        this.states.updateState(states);
+    public void registerStatesProvider(final BiFunction<JeiCategoryState.Creator, JeiCategoryState.Creator, Set<JeiCategoryState>> states) {
+        this.states.updateState(() -> states.apply(JeiCategoryStateProvider::ofVisible, JeiCategoryStateProvider::ofHidden));
     }
     
     public Stream<JeiCategoryState> knownCategoryStates() {
