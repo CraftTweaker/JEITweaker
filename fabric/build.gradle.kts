@@ -35,17 +35,15 @@ modTemplate {
 }
 
 dependencies {
-    val mcDep = minecraft(group = "com.mojang", name = "minecraft", version = Constants.MINECRAFT_VERSION)
+    minecraft(group = "com.mojang", name = "minecraft", version = Constants.MINECRAFT_VERSION)
     mappings(loom.layered {
         officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-${Constants.MINECRAFT_VERSION}:${Constants.PARCHMENT_VERSION}@zip")
     })
 
-    annotationProcessor(group = "com.blamejared.crafttweaker", name = "Crafttweaker_Annotation_Processors-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
-    annotationProcessor(group = "com.google.code.gson", name = "gson", version = "2.8.6")
-    annotationProcessor(group = "org.reflections", name = "reflections", version = "0.9.10")
-    annotationProcessor(mcDep)
-    annotationProcessor(group = "com.blamejared.crafttweaker", name = "CraftTweaker-fabric-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
+    annotationProcessor(group = "com.blamejared.crafttweaker", name = "Crafttweaker_Annotation_Processors", version = Constants.CRAFTTWEAKER_ANNOTATIONS_VERSION)
+    // TODO("For some reason, Fabric crashes, but not common: this requires looking into it")
+    annotationProcessor(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
 
     apiImplementation(project(":common", "apiConfiguration"))
     // CT and JEI are implicitly added because Loom does not support per-source-set deobfuscated dependencies

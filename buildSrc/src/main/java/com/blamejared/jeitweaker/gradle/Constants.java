@@ -24,6 +24,7 @@ public final class Constants {
     public static final String JAVA_VERSION = JavaVersion.VERSION_17.getMajorVersion();
     public static final String MINECRAFT_VERSION = "1.19.2";
     @SuppressWarnings("SpellCheckingInspection") public static final String CRAFTTWEAKER_VERSION = "10.1.31";
+    @SuppressWarnings("SpellCheckingInspection") public static final String CRAFTTWEAKER_ANNOTATIONS_VERSION = "3.0.0.8";
     public static final String JEI_VERSION = "11.5.2.1007";
     public static final String PARCHMENT_VERSION = "2022.10.09";
     public static final String FORGE_VERSION = "43.2.4";

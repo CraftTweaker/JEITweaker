@@ -57,13 +57,10 @@ modTemplate {
 }
 
 dependencies {
-    val mcDep = minecraft(group = "net.minecraftforge", name = "forge", version = "${Constants.MINECRAFT_VERSION}-${Constants.FORGE_VERSION}")
+    minecraft(group = "net.minecraftforge", name = "forge", version = "${Constants.MINECRAFT_VERSION}-${Constants.FORGE_VERSION}")
 
     annotationProcessor(group = "org.spongepowered", name = "mixin", version = "0.8.5-SNAPSHOT", classifier = "processor")
-    annotationProcessor(group = "com.blamejared.crafttweaker", name = "Crafttweaker_Annotation_Processors-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
-    annotationProcessor(group = "com.google.code.gson", name = "gson", version = "2.8.6")
-    annotationProcessor(group = "org.reflections", name = "reflections", version = "0.9.10")
-    annotationProcessor(mcDep)
+    annotationProcessor(group = "com.blamejared.crafttweaker", name = "Crafttweaker_Annotation_Processors", version = Constants.CRAFTTWEAKER_ANNOTATIONS_VERSION)
     annotationProcessor(group = "com.blamejared.crafttweaker", name = "CraftTweaker-forge-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
 
     apiImplementation(project(":common", "apiConfiguration"))

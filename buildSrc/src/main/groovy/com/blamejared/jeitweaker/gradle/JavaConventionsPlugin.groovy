@@ -64,7 +64,7 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         }
 
         project.tasks.withType(JavaCompile).configureEach {
-            options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${project.file('docsOut')}"
+            options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${project.rootProject.file('docsOut')}"
                     << "-Acrafttweaker.processor.document.multi_source=true"
             options.encoding = StandardCharsets.UTF_8.toString()
             options.release.set(Integer.parseInt(Constants.JAVA_VERSION))
