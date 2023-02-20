@@ -1,5 +1,6 @@
 package com.blamejared.jeitweaker.common.action;
 
+import com.blamejared.crafttweaker.api.util.GenericUtil;
 import com.blamejared.jeitweaker.common.api.action.JeiTweakerAction;
 import com.blamejared.jeitweaker.common.api.command.JeiCommand;
 import com.blamejared.jeitweaker.common.api.command.JeiCommandTypes;
@@ -48,7 +49,7 @@ public final class HideIngredientsAction extends JeiTweakerAction {
         final IIngredientManager manager = runtime.getIngredientManager();
         this.ingredients.stream()
                 .collect(Collectors.groupingBy(JeiIngredients::jeiIngredientTypeOf, Collectors.mapping(JeiIngredient::jeiContent, Collectors.toList())))
-                .forEach((type, ingredient) -> this.hide(manager, type, ingredient));
+                .forEach((type, ingredient) -> this.hide(manager, GenericUtil.uncheck(type), GenericUtil.uncheck(ingredient))); // I guess?
     }
     
     private <J> void hide(final IIngredientManager manager, final IIngredientType<J> type, final List<J> ingredients) {

@@ -5,7 +5,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
-public class ForgePlatform implements PlatformBridge {
+public final class ForgePlatform implements PlatformBridge {
     
     @Override
     public boolean isModLoaded(final String modId) {
