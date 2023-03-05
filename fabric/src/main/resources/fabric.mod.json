@@ -19,6 +19,10 @@
   "entrypoints": {
     "main": [
       "com.blamejared.jeitweaker.fabric.JeiTweaker"
+    ],
+    "jei_mod_plugin": [
+      "com.blamejared.jeitweaker.common.jei.JeiTweakerCommandJeiPlugin",
+      "com.blamejared.jeitweaker.common.jei.JeiTweakerScriptJeiPlugin"
     ]
   },
   "mixins": [
