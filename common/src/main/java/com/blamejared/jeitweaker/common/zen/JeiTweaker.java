@@ -49,7 +49,7 @@ public final class JeiTweaker {
     }
     
     @ZenCodeType.Method
-    public static void hideModIngredients(final String modId, @ZenCodeType.Optional("(name as string) => { return false; }") final Predicate<String> exclusionFilter) {
+    public static void hideModIngredients(final String modId, @ZenCodeType.Optional("(path as string) => { return false; }") final Predicate<String> exclusionFilter) {
         CraftTweakerAPI.apply(HideModIngredientsAction.of(modId, exclusionFilter));
     }
     

@@ -46,7 +46,7 @@ public final class HideModIngredientsAction extends JeiTweakerAction {
     
     private void hide(final IJeiRuntime runtime) {
         final IIngredientManager manager = runtime.getIngredientManager();
-        final Predicate<ResourceLocation> mergedFilter = it -> this.mod.equals(it.getNamespace()) && this.inclusionFilter.test(it.toString());
+        final Predicate<ResourceLocation> mergedFilter = it -> this.mod.equals(it.getNamespace()) && this.inclusionFilter.test(it.getPath());
         
         manager.getRegisteredIngredientTypes().stream()
                 .flatMap(type -> this.ingredientsOfType(manager, type))
