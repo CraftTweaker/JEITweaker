@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -62,11 +63,11 @@ public final class JeiCategoriesState {
             this.visibility = visibility;
         }
         
-        public static JeiCategoryState ofVisible(final ResourceLocation id) {
+        static JeiCategoryState ofVisible(final ResourceLocation id) {
             return of(id, Visibility.VISIBLE);
         }
         
-        public static JeiCategoryState ofHidden(final ResourceLocation id) {
+        static JeiCategoryState ofHidden(final ResourceLocation id) {
             return of(id, Visibility.HIDDEN);
         }
         
@@ -98,7 +99,7 @@ public final class JeiCategoriesState {
     
     private static final class ReloadableLazyCategoryStateSortedSet implements SortedSet<JeiCategoryState> {
         private final SortedSet<JeiCategoryState> backend;
-        private final SortedSet<JeiCategoryState> exposedView;
+        @UnmodifiableView private final SortedSet<JeiCategoryState> exposedView;
         private final AtomicReference<Supplier<Set<JeiCategoryState>>> updatedStateSupplier;
         
         ReloadableLazyCategoryStateSortedSet(final SortedSet<JeiCategoryState> backend) {
