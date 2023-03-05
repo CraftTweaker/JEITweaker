@@ -44,6 +44,7 @@ public final class PluginManager {
     
     public void initializePlugins() {
         this.logger.info("Running JeiTweaker plugin initialization");
+        this.allPlugins(null, (plugin, nothing) -> plugin.initialize());
         this.allPlugins(JeiIngredientTypeRegistrar.of(this.registries.jeiIngredientTypeRegistry()), JeiTweakerPluginProvider::registerIngredientTypes);
         this.logger.info("JeiTweaker plugin initialization completed successfully");
     }

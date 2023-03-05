@@ -37,6 +37,11 @@ final class LazyPlugin implements JeiTweakerPluginProvider {
     }
     
     @Override
+    public void initialize() {
+        this.plugin().initialize();
+    }
+    
+    @Override
     public void registerIngredientTypes(final JeiIngredientTypeRegistration registration) {
         this.plugin().registerIngredientTypes(registration);
     }

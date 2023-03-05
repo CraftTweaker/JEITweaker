@@ -6,6 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 
 record DecoratedPlugin(ResourceLocation id, JeiTweakerPluginProvider plugin) implements JeiTweakerPluginProvider {
     @Override
+    public void initialize() {
+        this.plugin().initialize();
+    }
+    
+    @Override
     public void registerIngredientTypes(final JeiIngredientTypeRegistration registration) {
         this.plugin().registerIngredientTypes(registration);
     }
