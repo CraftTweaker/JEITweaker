@@ -67,7 +67,7 @@ public final class JeiIngredientTypeRegistry {
     
     private <K, V, R extends V, T extends K> R queryMap(final Map<K, V> map, final T key) {
         return GenericUtil.uncheck(map.computeIfAbsent(Objects.requireNonNull(key, "key"), it -> {
-            throw new IllegalArgumentException("No known Jei ingredient mapped by " + it);
+            throw new IllegalArgumentException("No known Jei ingredient type mapped by " + it);
         }));
     }
 }

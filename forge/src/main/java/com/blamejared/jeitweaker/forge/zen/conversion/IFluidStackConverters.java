@@ -15,6 +15,8 @@ import org.openzen.zencode.java.ZenCodeType;
 @TypedExpansion(IFluidStack.class)
 @ZenRegister
 public final class IFluidStackConverters {
+    private IFluidStackConverters() {}
+    
     @ZenCodeType.Caster(implicit = true)
     public static ZenJeiIngredient asJeiIngredient(final IFluidStack $this) {
         return JeiIngredients.toZenIngredient(JeiIngredient.ofZen(GenericUtil.uncheck(BuiltinJeiIngredientTypes.fluidStack()), $this));

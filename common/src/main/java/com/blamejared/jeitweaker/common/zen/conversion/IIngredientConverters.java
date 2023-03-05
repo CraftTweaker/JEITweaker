@@ -15,6 +15,8 @@ import org.openzen.zencode.java.ZenCodeType;
 @TypedExpansion(IIngredient.class)
 @ZenRegister
 public final class IIngredientConverters {
+    private IIngredientConverters() {}
+    
     @ZenCodeType.Caster(implicit = true)
     public static ZenJeiIngredient[] asJeiIngredient(final IIngredient $this) {
         final IItemStack[] items = $this.getItems();
@@ -22,7 +24,7 @@ public final class IIngredientConverters {
         
         final ZenJeiIngredient[] array = new ZenJeiIngredient[s];
         for (int i = 0; i < s; ++i) {
-            array[i] = JeiIngredients.toZenIngredient(JeiIngredient.ofZen(BuiltinJeiIngredientTypes.itemStack(), items[i]));
+            array[i] = IItemStackConverters.asJeiIngredient(items[i]);
         }
         
         return array;

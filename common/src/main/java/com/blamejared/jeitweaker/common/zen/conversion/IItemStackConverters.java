@@ -14,6 +14,8 @@ import org.openzen.zencode.java.ZenCodeType;
 @TypedExpansion(IItemStack.class)
 @ZenRegister
 public final class IItemStackConverters {
+    private IItemStackConverters() {}
+    
     @ZenCodeType.Caster(implicit = true)
     public static ZenJeiIngredient asJeiIngredient(final IItemStack $this) {
         return JeiIngredients.toZenIngredient(JeiIngredient.ofZen(BuiltinJeiIngredientTypes.itemStack(), $this));
