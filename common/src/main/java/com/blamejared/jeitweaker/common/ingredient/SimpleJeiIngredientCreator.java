@@ -50,7 +50,7 @@ public final class SimpleJeiIngredientCreator implements JeiIngredientCreator {
     
         @Override
         public <J, Z> Creator<J, Z> of(final J jeiContent, final UnaryOperator<J> jeiCopier, final Z zenContent, final UnaryOperator<Z> zenCopier) {
-            return type -> BothJeiIngredient.of(type, jeiContent, jeiCopier, zenContent, zenCopier);
+            return type -> BothJeiIngredient.of(type, jeiContent, jeiCopier == null? UnaryOperator.identity() : jeiCopier, zenContent, zenCopier);
         }
     }
     
