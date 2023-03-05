@@ -75,8 +75,10 @@ final class JavaConventionsPlugin implements Plugin<Project> {
             options.tags = [
                     'apiNote:a:Api Note:',
                     'implSpec:a:Implementation Specifications:',
-                    'implNote:a:Implementation Note:'
+                    'implNote:a:Implementation Note:',
+                    'docParam'
             ]
+            options.addStringOption('Xdoclint:none', '-quiet')
         }
         project.tasks.withType(Jar).configureEach {
             manifest {
