@@ -25,7 +25,11 @@ public final class ZenOnlyJeiIngredient<J, Z> extends SimpleJeiIngredient<J, Z> 
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(zenIngredient, "zenIngredient");
         Objects.requireNonNull(copier, "copier");
-        return new ZenOnlyJeiIngredient<>(type, zenIngredient, copier);
+        
+        final Z storedZenIngredient = copier.apply(zenIngredient);
+        Objects.requireNonNull(storedZenIngredient, "copier.apply(zenIngredient)");
+        
+        return new ZenOnlyJeiIngredient<>(type, storedZenIngredient, copier);
     }
     
     @Override

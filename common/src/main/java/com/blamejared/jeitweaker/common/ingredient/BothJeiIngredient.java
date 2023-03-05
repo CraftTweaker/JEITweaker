@@ -46,7 +46,13 @@ public final class BothJeiIngredient<J, Z> extends SimpleJeiIngredient<J, Z> {
         Objects.requireNonNull(jeiCopier, "jeiCopier");
         Objects.requireNonNull(zenIngredient, "zenIngredient");
         Objects.requireNonNull(zenCopier, "zenCopier");
-        return new BothJeiIngredient<>(type, jeiIngredient, jeiCopier, zenIngredient, zenCopier);
+        
+        final J storedJeiIngredient = jeiCopier.apply(jeiIngredient);
+        final Z storedZenIngredient = zenCopier.apply(zenIngredient);
+        
+        Objects.requireNonNull(storedJeiIngredient, "jeiCopier.apply(jeiIngredient)");
+        Objects.requireNonNull(storedZenIngredient, "zenCopier.apply(zenIngredient)");
+        return new BothJeiIngredient<>(type, storedJeiIngredient, jeiCopier, storedZenIngredient, zenCopier);
     }
     
     @Override

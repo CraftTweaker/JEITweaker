@@ -25,7 +25,11 @@ public final class JeiOnlyJeiIngredient<J, Z> extends SimpleJeiIngredient<J, Z> 
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(jeiIngredient, "jeiIngredient");
         Objects.requireNonNull(copier, "copier");
-        return new JeiOnlyJeiIngredient<>(type, jeiIngredient, copier);
+        
+        final J storedJeiIngredient = copier.apply(jeiIngredient);
+        Objects.requireNonNull(storedJeiIngredient, "copier.apply(jeiIngredient)");
+        
+        return new JeiOnlyJeiIngredient<>(type, storedJeiIngredient, copier);
     }
     
     @Override
