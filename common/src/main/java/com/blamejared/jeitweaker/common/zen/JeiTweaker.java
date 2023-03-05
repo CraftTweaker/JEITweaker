@@ -134,6 +134,8 @@ public final class JeiTweaker {
      *
      * @docParam ingredients <item:minecraft:redstone_dust> | <item:minecraft:iron_ingot>
      *
+     * @docParam ingredients [<item:minecraft:stone>, <item:minecraft:compass>}
+     *
      * @since 4.0.0
      */
     @ZenCodeType.Method
