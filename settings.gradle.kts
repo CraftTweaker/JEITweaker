@@ -28,3 +28,11 @@ pluginManagement {
 
 rootProject.name = "JEITweaker"
 include("common", "fabric", "forge")
+
+if (file("CraftTweaker-Annotation-Processors").exists()) {
+    includeBuild("CraftTweaker-Annotation-Processors") {
+        dependencySubstitution {
+            substitute(module("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors")).using(project(":"))
+        }
+    }
+}

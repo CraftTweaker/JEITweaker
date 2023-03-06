@@ -18,4 +18,7 @@ dependencies {
     compileOnly(group = "org.spongepowered", name = "mixin", version = "0.8.4")
     compileOnly(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
     compileOnly(group = "mezz.jei", name = "jei-${Constants.MINECRAFT_VERSION}-common-api", version = Constants.JEI_VERSION)
+
+    annotationProcessor(group = "com.blamejared.crafttweaker", name = "Crafttweaker_Annotation_Processors", version = Constants.CRAFTTWEAKER_ANNOTATIONS_VERSION)
+    annotationProcessor(group = "com.blamejared.crafttweaker", name = "CraftTweaker-common-${Constants.MINECRAFT_VERSION}", version = Constants.CRAFTTWEAKER_VERSION)
 }
