@@ -79,6 +79,7 @@ tasks {
         }
     }
     publishToCurseForge {
+        enabled = false;
         with(upload(Constants.MOD_CURSE_ID, project.buildDir.resolve("libs/${base.archivesName.get()}-$version.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
             changelog = Utils.getFullChangelog(project)
