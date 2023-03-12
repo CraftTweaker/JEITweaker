@@ -25,7 +25,7 @@ public final class Constants {
     public static final String MINECRAFT_VERSION = "1.19.2";
     @SuppressWarnings("SpellCheckingInspection") public static final String CRAFTTWEAKER_VERSION = "10.1.36";
     @SuppressWarnings("SpellCheckingInspection") public static final String CRAFTTWEAKER_ANNOTATIONS_VERSION = "3.0.0.11";
-    public static final String JEI_VERSION = "11.5.2.1007";
+    public static final String JEI_VERSION = "11.6.0.1013";
     public static final String PARCHMENT_VERSION = "2022.10.09";
     public static final String FORGE_VERSION = "43.2.4";
     public static final String FABRIC_VERSION = "0.14.13";
