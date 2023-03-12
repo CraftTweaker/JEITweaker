@@ -20,7 +20,10 @@ pipeline {
     }
 
     environment {
-        ORG_GRADLE_PROJECT_secretFile = credentials('mod_build_secrets')
+        curseforgeApiToken = credentials('curseforge_token')
+        discordCFWebhook = credentials('discord_cf_webhook')
+        versionTrackerKey = credentials('version_tracker_key')
+        versionTrackerAPI = credentials('version_tracker_api')
     }
 
     stages {
