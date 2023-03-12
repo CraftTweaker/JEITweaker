@@ -42,11 +42,10 @@ tasks.create("postDiscord") {
             }
 
             downloadSources.add(
-                    "<:maven:932165250738970634> `\"${project(":core").group}:${project(":core").base.archivesName.get()}:${
-                        project(":core").version
+                    "<:maven:932165250738970634> `\"${project(":common").group}:${project(":common").base.archivesName.get()}:${
+                        project(":common").version
                     }\"`"
             )
-
             downloadSources.add(
                     "<:maven:932165250738970634> `\"${project(":fabric").group}:${project(":fabric").base.archivesName.get()}:${
                         project(":fabric").version
@@ -55,12 +54,6 @@ tasks.create("postDiscord") {
             downloadSources.add(
                     "<:maven:932165250738970634> `\"${project(":forge").group}:${project(":forge").base.archivesName.get()}:${
                         project(":forge").version
-                    }\"`"
-            )
-
-            downloadSources.add(
-                    "<:maven:932165250738970634> `\"${project(":vanilla").group}:${project(":vanilla").base.archivesName.get()}:${
-                        project(":vanilla").version
                     }\"`"
             )
 
