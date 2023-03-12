@@ -63,7 +63,7 @@ pipeline {
                 stage('Deploying to CurseForge') {
                     steps {
                         echo 'Deploying to CurseForge'
-                        sh './gradlew curseforge'
+                        sh './gradlew publishToCurseForge postDiscord'
                     }
                 }
                 stage('Exporting Documentation') {
