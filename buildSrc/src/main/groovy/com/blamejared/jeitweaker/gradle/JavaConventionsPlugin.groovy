@@ -83,16 +83,16 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         project.tasks.withType(Jar).configureEach {
             manifest {
                 attributes([
-                        'Specification-Title' : Constants.MOD_NAME,
-                        'Specification-Vendor' : Constants.MOD_AUTHOR,
-                        'Specification-Version' : archiveVersion.get(),
-                        'Implementation-Title' : project.name,
-                        'Implementation-Version' : archiveVersion.get(),
-                        'Implementation-Vendor' : Constants.MOD_AUTHOR,
-                        'Implementation-Timestamp' : new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()),
-                        'Timestamp' : System.currentTimeMillis(),
-                        'Built-On-Java' : "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})",
-                        'Built-On-Minecraft' : Constants.MINECRAFT_VERSION
+                        'Specification-Title'     : Constants.MOD_NAME,
+                        'Specification-Vendor'    : Constants.MOD_AUTHOR,
+                        'Specification-Version'   : archiveVersion.get(),
+                        'Implementation-Title'    : project.name,
+                        'Implementation-Version'  : archiveVersion.get(),
+                        'Implementation-Vendor'   : Constants.MOD_AUTHOR,
+                        'Implementation-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()),
+                        'Timestamp'               : System.currentTimeMillis(),
+                        'Built-On-Java'           : "${System.getProperty("java.vm.version")} (${System.getProperty("java.vm.vendor")})",
+                        'Built-On-Minecraft'      : Constants.MINECRAFT_VERSION
                 ])
             }
         }
@@ -165,9 +165,11 @@ final class JavaConventionsPlugin implements Plugin<Project> {
 
     private static void setUpDefaults(final Project project) {
         project.group = Constants.MOD_GROUP
-        project.version = Utils.updatingSemVersion(Constants.MOD_VERSION)
+        project.version = Utils.updatingVersion(Constants.MOD_VERSION)
 
-        project.tasks.withType(GenerateModuleMetadata)*.setEnabled(false)
+        project.tasks.withType(GenerateModuleMetadata) {
+            enabled = false
+        }
 
         project.repositories.with {
             add mavenCentral()

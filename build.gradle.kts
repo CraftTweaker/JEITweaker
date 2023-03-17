@@ -12,6 +12,8 @@ plugins {
     id("com.blamejared.modtemplate")
 }
 
+version = Utils.updatingVersion(Constants.MOD_VERSION)
+
 tasks.create("postDiscord") {
 
     doLast {
