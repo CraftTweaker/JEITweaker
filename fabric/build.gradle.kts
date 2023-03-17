@@ -1,5 +1,6 @@
 import com.blamejared.jeitweaker.gradle.Constants
 import com.blamejared.modtemplate.Utils
+import net.darkhax.curseforgegradle.Constants as CFG_Constants
 
 plugins {
     id("com.blamejared.jeitweaker.java-conventions")
@@ -80,12 +81,12 @@ tasks {
     }
     publishToCurseForge {
         with(upload(Constants.MOD_CURSE_ID, project.buildDir.resolve("libs/${base.archivesName.get()}-$version.jar"))) {
-            changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
+            changelogType = CFG_Constants.CHANGELOG_MARKDOWN
             changelog = Utils.getFullChangelog(project)
             releaseType = when (Constants.FABRIC_RELEASE) {
-                Constants.Release.RELEASE -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
-                Constants.Release.BETA -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
-                Constants.Release.ALPHA -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_ALPHA
+                Constants.Release.RELEASE -> CFG_Constants.RELEASE_TYPE_RELEASE
+                Constants.Release.BETA -> CFG_Constants.RELEASE_TYPE_BETA
+                Constants.Release.ALPHA -> CFG_Constants.RELEASE_TYPE_ALPHA
             }
             addJavaVersion("Java ${Constants.JAVA_VERSION}")
             addGameVersion("Fabric")
@@ -98,7 +99,6 @@ tasks {
                 project.ext.set("curse_file_url", "${Constants.MOD_CURSE}/files/${curseFileId}")
             }
         }
-        dependsOn(project.tasks.remapJar)
     }
     jar {
         duplicatesStrategy = DuplicatesStrategy.FAIL

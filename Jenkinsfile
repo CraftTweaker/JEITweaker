@@ -116,12 +116,6 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            archive 'build/libs/**.jar'
-            archive 'changelog.md'
-        }
-    }
     options {
         disableConcurrentBuilds()
     }
