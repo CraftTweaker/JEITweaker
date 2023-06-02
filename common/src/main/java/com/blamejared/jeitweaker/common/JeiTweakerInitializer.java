@@ -4,21 +4,24 @@ import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.jeitweaker.common.command.CommandManager;
 import com.blamejared.jeitweaker.common.plugin.core.PluginManager;
 import com.blamejared.jeitweaker.common.registry.JeiTweakerRegistries;
+import com.google.common.base.Suppliers;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Supplier;
 
 public final class JeiTweakerInitializer {
     private static final JeiTweakerInitializer INSTANCE = new JeiTweakerInitializer();
     
     private final Logger jeiTweakerLogger;
     private final JeiTweakerRegistries registries;
-    private final CommandManager commandManager;
-    private final PluginManager pluginManager;
+    private final Supplier<CommandManager> commandManager;
+    private final Supplier<PluginManager> pluginManager;
     
     private JeiTweakerInitializer() {
         this.jeiTweakerLogger = CraftTweakerAPI.LOGGER; // Preparing for 1.19.3 :P
         this.registries = new JeiTweakerRegistries();
-        this.commandManager = CommandManager.of();
-        this.pluginManager = PluginManager.of(this.jeiTweakerLogger, this.registries);
+        this.commandManager = Suppliers.memoize(CommandManager::of);
+        this.pluginManager = Suppliers.memoize(() -> PluginManager.of(this.jeiTweakerLogger, this.registries));
         this.initialize();
     }
     
@@ -27,11 +30,11 @@ public final class JeiTweakerInitializer {
     }
     
     public CommandManager commandManager() {
-        return this.commandManager;
+        return this.commandManager.get();
     }
     
     public PluginManager pluginManager() {
-        return this.pluginManager;
+        return this.pluginManager.get();
     }
     
     public JeiTweakerRegistries registries() {
@@ -43,6 +46,6 @@ public final class JeiTweakerInitializer {
     }
     
     private void initialize() {
-        this.pluginManager.discoverPlugins();
+        this.pluginManager.get().discoverPlugins();
     }
 }

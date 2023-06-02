@@ -28,8 +28,8 @@ public final class Constants {
     public static final String JEI_VERSION = "11.6.0.1013";
     public static final String PARCHMENT_VERSION = "2022.10.09";
     public static final String FORGE_VERSION = "43.2.4";
-    public static final String FABRIC_VERSION = "0.14.13";
-    public static final String FABRIC_API_VERSION = "0.73.0+1.19.2";
+    public static final String FABRIC_VERSION = "0.14.19";
+    public static final String FABRIC_API_VERSION = "0.75.1+1.19.2";
     
     public static final Release FABRIC_RELEASE = Release.BETA;
     public static final Release FORGE_RELEASE = Release.BETA;
