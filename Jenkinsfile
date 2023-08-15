@@ -20,6 +20,7 @@ pipeline {
     }
 
     environment {
+        modrinth_token = credentials('modrinth_token')
         curseforgeApiToken = credentials('curseforge_token')
         discordCFWebhook = credentials('discord_cf_webhook')
         versionTrackerKey = credentials('version_tracker_key')

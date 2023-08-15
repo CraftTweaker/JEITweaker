@@ -33,8 +33,10 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         applyIdeaPlugin target
         applyMavenPlugin target
         applyGradleModUtils target
-        applyModrinth target
-        applyCurseTemplate target
+        if (target.name != "common") {
+            applyModrinth target
+            applyCurseTemplate target
+        }
         setUpDefaults target
     }
 
