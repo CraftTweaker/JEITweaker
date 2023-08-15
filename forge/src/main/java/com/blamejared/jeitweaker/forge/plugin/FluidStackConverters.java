@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.fluid.IFluidStack;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -45,7 +46,7 @@ final class FluidStackConverters implements JeiIngredientConverter<FluidStack, I
     @Override
     @SuppressWarnings("deprecation") // I don't care, I am not using ForgeRegistries
     public ResourceLocation toRegistryNameFromJei(final FluidStack jeiType) {
-        return Registry.FLUID.getKey(jeiType.getFluid());
+        return BuiltInRegistries.FLUID.getKey(jeiType.getFluid());
     }
     
 }

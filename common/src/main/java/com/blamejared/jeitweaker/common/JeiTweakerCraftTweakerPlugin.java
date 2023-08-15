@@ -31,7 +31,7 @@ public final class JeiTweakerCraftTweakerPlugin implements ICraftTweakerPlugin {
                     final ServerPlayer player = context.getSource().getPlayerOrException();
                     JeiCategoriesState.get()
                             .knownCategoryStates()
-                            .forEach(CraftTweakerAPI.LOGGER::info);
+                            .forEach(CommandUtilities.COMMAND_LOGGER::info);
                     CommandUtilities.send(
                             CommandUtilities.openingLogFile(
                                     Component.translatable(

@@ -1,5 +1,5 @@
 import com.blamejared.jeitweaker.gradle.Constants
-import com.blamejared.modtemplate.Utils
+import com.blamejared.gradle.mod.utils.GMUtils
 import com.diluv.schoomp.message.embed.Embed
 import com.diluv.schoomp.message.Message
 import com.diluv.schoomp.Webhook
@@ -9,10 +9,9 @@ import java.util.StringJoiner
 
 plugins {
     base
-    id("com.blamejared.modtemplate")
 }
 
-version = Utils.updatingVersion(Constants.MOD_VERSION)
+version = GMUtils.updatingVersion(Constants.MOD_VERSION)
 
 tasks.create("postDiscord") {
 
@@ -68,7 +67,7 @@ tasks.create("postDiscord") {
             }
 
             // Just use the Forge changelog for now, the files are the same anyway.
-            embed.addField("Changelog", Utils.getCIChangelog(project, Constants.GIT_REPO).take(1000), false)
+            embed.addField("Changelog", GMUtils.smallChangelog(project, Constants.GIT_REPO).take(1000), false)
 
             embed.color = 0xF16436
             message.addEmbed(embed)

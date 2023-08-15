@@ -32,9 +32,9 @@
   "depends": {
     "fabricloader": ">=0.14.13",
     "fabric-api": "*",
-    "minecraft": "1.19.2",
+    "minecraft": "1.20.1",
     "java": ">=17",
-    "crafttweaker": ">=10.1.31",
-    "jei": ">=11.6.0.1013"
+    "crafttweaker": ">=14.0.12",
+    "jei": ">=15.2.0.25"
   }
 }

@@ -1,8 +1,10 @@
 package com.blamejared.jeitweaker.gradle
 
-import com.blamejared.modtemplate.ModTemplatePlugin
-import com.blamejared.modtemplate.Utils
-import com.blamejared.modtemplate.extensions.ModTemplateExtension
+import com.blamejared.gradle.mod.utils.GMUtils
+import com.blamejared.gradle.mod.utils.GradleModUtilsPlugin
+import com.blamejared.gradle.mod.utils.extensions.VersionTrackerExtension
+import com.modrinth.minotaur.Minotaur
+import com.modrinth.minotaur.ModrinthExtension
 import net.darkhax.curseforgegradle.CurseForgeGradlePlugin
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import org.gradle.api.Plugin
@@ -30,7 +32,8 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         applyJavaPlugin target
         applyIdeaPlugin target
         applyMavenPlugin target
-        applyModTemplate target
+        applyGradleModUtils target
+        applyModrinth target
         applyCurseTemplate target
         setUpDefaults target
     }
@@ -132,26 +135,15 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         }
     }
 
-    private static void applyModTemplate(final Project project) {
-        project.plugins.apply ModTemplatePlugin
+    private static void applyGradleModUtils(final Project project) {
+        project.plugins.apply GradleModUtilsPlugin
 
-        final modTemplate = project.extensions.findByType ModTemplateExtension
-        modTemplate.mcVersion Constants.MINECRAFT_VERSION
-        modTemplate.curseHomepage Constants.MOD_CURSE
-        modTemplate.displayName Constants.MOD_NAME
-        modTemplate.changelog.with {
-            enabled false
-            firstCommit Constants.GIT_FIRST_COMMIT
-            repo Constants.GIT_REPO
-            changelogFile 'changelog.md'
-        }
-        modTemplate.versionTracker.with {
-            enabled true
-            endpoint System.getenv('versionTrackerAPI')
-            author Constants.MOD_AUTHOR
-            projectName "${Constants.MOD_NAME}-${project.name}"
-            homepage Constants.MOD_CURSE
-            uid System.getenv('versionTrackerKey')
+        final versionTracker = project.extensions.findByType VersionTrackerExtension
+        versionTracker.with {
+            mcVersion.set(Constants.MINECRAFT_VERSION)
+            author.set("Jared") // Author is more a username
+            projectName.set(Constants.MOD_NAME)
+            homepage.set(Constants.MOD_CURSE)
         }
     }
 
@@ -163,9 +155,24 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         targetTask.apiToken = System.getenv('curseforgeApiToken') ?: 0
     }
 
+    private static void applyModrinth(final Project project) {
+        project.plugins.apply Minotaur
+
+        project.extensions.findByType(ModrinthExtension).with {
+            token.set(GMUtils.locateProperty(project, "modrinth_token"))
+            projectId.set(Constants.MOD_MODRINTH_ID)
+            changelog.set(GMUtils.smallChangelog(project, Constants.GIT_REPO))
+            dependencies.with {
+                required.project("crafttweaker")
+                required.project("jei")
+            }
+        }
+
+    }
+
     private static void setUpDefaults(final Project project) {
         project.group = Constants.MOD_GROUP
-        project.version = Utils.updatingVersion(Constants.MOD_VERSION)
+        project.version = GMUtils.updatingVersion(Constants.MOD_VERSION)
 
         project.tasks.withType(GenerateModuleMetadata) {
             enabled = false

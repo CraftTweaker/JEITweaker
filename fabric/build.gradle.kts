@@ -1,6 +1,6 @@
 import com.blamejared.jeitweaker.gradle.Constants
-import com.blamejared.modtemplate.Utils
 import net.darkhax.curseforgegradle.Constants as CFG_Constants
+import com.blamejared.gradle.mod.utils.GMUtils
 
 plugins {
     id("com.blamejared.jeitweaker.java-conventions")
@@ -29,10 +29,6 @@ loom {
             programArg("nogui")
         }
     }
-}
-
-modTemplate {
-    modLoader("Fabric")
 }
 
 dependencies {
@@ -82,12 +78,8 @@ tasks {
     publishToCurseForge {
         with(upload(Constants.MOD_CURSE_ID, project.buildDir.resolve("libs/${base.archivesName.get()}-$version.jar"))) {
             changelogType = CFG_Constants.CHANGELOG_MARKDOWN
-            changelog = Utils.getFullChangelog(project)
-            releaseType = when (Constants.FABRIC_RELEASE) {
-                Constants.Release.RELEASE -> CFG_Constants.RELEASE_TYPE_RELEASE
-                Constants.Release.BETA -> CFG_Constants.RELEASE_TYPE_BETA
-                Constants.Release.ALPHA -> CFG_Constants.RELEASE_TYPE_ALPHA
-            }
+            changelog = GMUtils.smallChangelog(project, Constants.GIT_REPO)
+            releaseType = Constants.FABRIC_RELEASE.curseforge()
             addJavaVersion("Java ${Constants.JAVA_VERSION}")
             addGameVersion("Fabric")
             addGameVersion(Constants.MINECRAFT_VERSION)
@@ -103,4 +95,11 @@ tasks {
     jar {
         duplicatesStrategy = DuplicatesStrategy.FAIL
     }
+}
+
+modrinth {
+    versionName.set("Fabric-${Constants.MINECRAFT_VERSION}-$version")
+    versionType.set(Constants.FABRIC_RELEASE.modrinth())
+    uploadFile.set(tasks.remapJar.get())
+    required.project("fabric-api")
 }

@@ -12,16 +12,16 @@ import java.util.function.Supplier;
 public final class JeiTweakerInitializer {
     private static final JeiTweakerInitializer INSTANCE = new JeiTweakerInitializer();
     
-    private final Logger jeiTweakerLogger;
+    private final Supplier<Logger> jeiTweakerLogger;
     private final JeiTweakerRegistries registries;
     private final Supplier<CommandManager> commandManager;
     private final Supplier<PluginManager> pluginManager;
     
     private JeiTweakerInitializer() {
-        this.jeiTweakerLogger = CraftTweakerAPI.LOGGER; // Preparing for 1.19.3 :P
+        this.jeiTweakerLogger = Suppliers.memoize(() -> CraftTweakerAPI.getLogger("JEITweaker"));
         this.registries = new JeiTweakerRegistries();
         this.commandManager = Suppliers.memoize(CommandManager::of);
-        this.pluginManager = Suppliers.memoize(() -> PluginManager.of(this.jeiTweakerLogger, this.registries));
+        this.pluginManager = Suppliers.memoize(() -> PluginManager.of(this.jeiTweakerLogger.get(), this.registries));
         this.initialize();
     }
     
@@ -42,7 +42,7 @@ public final class JeiTweakerInitializer {
     }
     
     public Logger jeiTweakerLogger() {
-        return this.jeiTweakerLogger;
+        return this.jeiTweakerLogger.get();
     }
     
     private void initialize() {

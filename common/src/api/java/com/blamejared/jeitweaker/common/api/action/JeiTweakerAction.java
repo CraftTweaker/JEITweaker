@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.action.base.IRuntimeAction;
 import com.blamejared.crafttweaker.api.zencode.IScriptLoadSource;
 import com.blamejared.jeitweaker.common.api.JeiTweakerApi;
 import com.blamejared.jeitweaker.common.api.command.JeiCommand;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Represents an action carried out by JeiTweaker.
@@ -44,10 +45,15 @@ public abstract class JeiTweakerAction implements IRuntimeAction {
      * @since 4.0.0
      */
     @Override
-    public boolean shouldApplyOn(final IScriptLoadSource source) {
+    public boolean shouldApplyOn(IScriptLoadSource source, Logger logger) {
+        
         return JeiTweakerApi.get().shouldApplyAction();
     }
     
-    // TODO("getSystemName")
+    @Override
+    public String systemName() {
+        
+        return "JEITweaker";
+    }
     
 }

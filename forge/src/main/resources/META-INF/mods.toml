@@ -9,7 +9,7 @@ modId="jeitweaker"
 version="${file.jarVersion}"
 displayName="JeiTweaker"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/jeitweaker"
-updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.19.2"
+updateJSONURL="https://updates.blamejared.com/get?n=JEITweaker&gv=1.20.1"
 logoFile="logo.png"
 authors="Jaredlll08, TheSilkMiner"
 description="CraftTweaker addon providing integration with JEI"
@@ -17,24 +17,24 @@ description="CraftTweaker addon providing integration with JEI"
 [[dependencies.jeitweaker]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.2]"
+versionRange="[1.20.1]"
 ordering="NONE"
 side="BOTH"
 [[dependencies.jeitweaker]]
 modId="forge"
 mandatory=true
-versionRange="[43.2,44)"
+versionRange="[47.1.3]"
 ordering="NONE"
 side="BOTH"
 [[dependencies.jeitweaker]]
 modId="crafttweaker"
 mandatory=true
-versionRange="[10.1,11)"
+versionRange="[14.0.12,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.jeitweaker]]
 modId="jei"
 mandatory=false
-versionRange="[11.5,12)"
+versionRange="[15.2.0.25,)"
 ordering="NONE"
 side="BOTH"

@@ -4,6 +4,7 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientConverter;
 import com.blamejared.jeitweaker.common.api.ingredient.JeiIngredientCreator;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -44,7 +45,7 @@ final class ItemStackConverters implements JeiIngredientConverter<ItemStack, IIt
     
     @Override
     public ResourceLocation toRegistryNameFromJei(final ItemStack jeiType) {
-        return Registry.ITEM.getKey(jeiType.getItem());
+        return BuiltInRegistries.ITEM.getKey(jeiType.getItem());
     }
     
 }

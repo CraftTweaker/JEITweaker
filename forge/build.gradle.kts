@@ -1,5 +1,5 @@
+import com.blamejared.gradle.mod.utils.GMUtils
 import com.blamejared.jeitweaker.gradle.Constants
-import com.blamejared.modtemplate.Utils
 
 plugins {
     id("com.blamejared.jeitweaker.java-conventions")
@@ -52,10 +52,6 @@ mixin {
     sequenceOf("forge", "common").forEach { config("${Constants.MOD_ID}.$it.mixins.json") }
 }
 
-modTemplate {
-    modLoader("Forge")
-}
-
 dependencies {
     minecraft(group = "net.minecraftforge", name = "forge", version = "${Constants.MINECRAFT_VERSION}-${Constants.FORGE_VERSION}")
 
@@ -86,12 +82,8 @@ tasks {
     publishToCurseForge {
         with(upload(Constants.MOD_CURSE_ID, project.buildDir.resolve("libs/${base.archivesName.get()}-$version.jar"))) {
             changelogType = net.darkhax.curseforgegradle.Constants.CHANGELOG_MARKDOWN
-            changelog = Utils.getFullChangelog(project)
-            releaseType = when (Constants.FORGE_RELEASE) {
-                Constants.Release.RELEASE -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_RELEASE
-                Constants.Release.BETA -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_BETA
-                Constants.Release.ALPHA -> net.darkhax.curseforgegradle.Constants.RELEASE_TYPE_ALPHA
-            }
+            changelog = GMUtils.smallChangelog(project, Constants.GIT_REPO)
+            releaseType = Constants.FORGE_RELEASE.curseforge()
             addJavaVersion("Java ${Constants.JAVA_VERSION}")
             addGameVersion("Forge")
             addGameVersion(Constants.MINECRAFT_VERSION)
@@ -113,4 +105,10 @@ tasks {
 
 afterEvaluate {
     tasks.jar.get().finalizedBy(tasks.findByName("reobfJar"))
+}
+
+modrinth {
+    versionName.set("Forge-${Constants.MINECRAFT_VERSION}-$version")
+    versionType.set(Constants.FORGE_RELEASE.modrinth())
+    uploadFile.set(tasks.jar.get())
 }
