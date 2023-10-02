@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import java.util.Collection;
 import java.util.Map;
 
-public final class TypedCommandQueues {
+final class TypedCommandQueues {
     private final Map<JeiCommandType<?>, CommandQueue<?>> delegate;
     
     private TypedCommandQueues(final Map<JeiCommandType<?>, CommandQueue<?>> delegate) {
@@ -28,7 +28,7 @@ public final class TypedCommandQueues {
         return new TypedCommandQueues(delegate);
     }
     
-    public <T> CommandQueue<T> queueFor(final JeiCommandType<T> type) {
+    <T> CommandQueue<T> queueFor(final JeiCommandType<T> type) {
         return GenericUtil.uncheck(this.delegate.get(type));
     }
     

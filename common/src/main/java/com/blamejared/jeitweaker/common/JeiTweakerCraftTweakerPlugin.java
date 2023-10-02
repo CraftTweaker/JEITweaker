@@ -1,10 +1,14 @@
 package com.blamejared.jeitweaker.common;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.command.CommandUtilities;
 import com.blamejared.crafttweaker.api.plugin.CraftTweakerPlugin;
 import com.blamejared.crafttweaker.api.plugin.ICommandRegistrationHandler;
 import com.blamejared.crafttweaker.api.plugin.ICraftTweakerPlugin;
+import com.blamejared.crafttweaker.api.plugin.IListenerRegistrationHandler;
+import com.blamejared.crafttweaker.api.zencode.IScriptLoader;
+import com.blamejared.crafttweaker.api.zencode.scriptrun.ScriptRunConfiguration;
 import com.blamejared.jeitweaker.common.api.JeiTweakerConstants;
 import com.blamejared.jeitweaker.common.util.EnvironmentVerifier;
 import com.blamejared.jeitweaker.common.util.JeiCategoriesState;
@@ -48,6 +52,16 @@ public final class JeiTweakerCraftTweakerPlugin implements ICraftTweakerPlugin {
                     return Command.SINGLE_SUCCESS;
                 })
         );
+    }
+    
+    @Override
+    public void registerListeners(final IListenerRegistrationHandler handler) {
+        
+        handler.onExecuteRun(it -> {
+            if (it.loader().equals(IScriptLoader.find(CraftTweakerConstants.DEFAULT_LOADER_NAME)) && it.runKind() == ScriptRunConfiguration.RunKind.EXECUTE) {
+                JeiTweakerInitializer.get().commandManager().populateCommands();
+            }
+        });
     }
     
 }
