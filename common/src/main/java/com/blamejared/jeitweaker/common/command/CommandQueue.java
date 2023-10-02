@@ -15,52 +15,67 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public final class CommandQueue<T> implements Queue<JeiCommand<T>> {
-    private final Queue<JeiCommand<T>> delegate;
+final class CommandQueue<T> implements Queue<GenerativeCommand<T>> {
+    private final Queue<GenerativeCommand<T>> delegate;
+    private final Queue<GenerativeCommand<T>> buffer;
     
-    private CommandQueue(final Queue<JeiCommand<T>> delegate) {
+    private CommandQueue(final Queue<GenerativeCommand<T>> delegate, final Queue<GenerativeCommand<T>> buffer) {
         this.delegate = delegate;
+        this.buffer = buffer;
     }
     
     static <T> CommandQueue<T> of() {
-        return new CommandQueue<>(Collections.checkedQueue(new ArrayDeque<>(), GenericUtil.uncheck(JeiCommand.class)));
+        return new CommandQueue<>(
+                Collections.checkedQueue(new ArrayDeque<>(), GenericUtil.uncheck(GenerativeCommand.class)),
+                Collections.checkedQueue(new ArrayDeque<>(), GenericUtil.uncheck(GenerativeCommand.class))
+        );
     }
     
-    public void runCommands(final T argument) {
-        JeiCommand<T> head;
+    public void runCommands(final int generation, final T argument) {
+        GenerativeCommand<T> head;
         while ((head = this.poll()) != null) {
-            SafeJeiCommandManager.safeOf(head).execute(argument);
+            if (head.generation() == generation) {
+                SafeJeiCommandManager.safeOf(head.command()).execute(argument);
+                this.buffer.add(head);
+            }
         }
+        
         assert this.isEmpty();
+        
+        while ((head = this.buffer.poll()) != null) {
+            this.add(head);
+        }
+        
+        assert this.buffer.isEmpty();
     }
     
     @Override
-    public boolean add(final JeiCommand<T> tJeiCommand) {
+    public boolean add(final GenerativeCommand<T> tJeiCommand) {
         return this.delegate.add(tJeiCommand);
     }
     
     @Override
-    public boolean offer(final JeiCommand<T> tJeiCommand) {
+    public boolean offer(final GenerativeCommand<T> tJeiCommand) {
         return this.delegate.offer(tJeiCommand);
     }
     
     @Override
-    public JeiCommand<T> remove() {
+    public GenerativeCommand<T> remove() {
         return this.delegate.remove();
     }
     
     @Override
-    public JeiCommand<T> poll() {
+    public GenerativeCommand<T> poll() {
         return this.delegate.poll();
     }
     
     @Override
-    public JeiCommand<T> element() {
+    public GenerativeCommand<T> element() {
         return this.delegate.element();
     }
     
     @Override
-    public JeiCommand<T> peek() {
+    public GenerativeCommand<T> peek() {
         return this.delegate.peek();
     }
     
@@ -81,7 +96,7 @@ public final class CommandQueue<T> implements Queue<JeiCommand<T>> {
     
     @NotNull
     @Override
-    public Iterator<JeiCommand<T>> iterator() {
+    public Iterator<GenerativeCommand<T>> iterator() {
         return this.delegate.iterator();
     }
     
@@ -108,7 +123,7 @@ public final class CommandQueue<T> implements Queue<JeiCommand<T>> {
     }
     
     @Override
-    public boolean addAll(@NotNull final Collection<? extends JeiCommand<T>> c) {
+    public boolean addAll(@NotNull final Collection<? extends GenerativeCommand<T>> c) {
         return this.delegate.addAll(c);
     }
     
@@ -133,27 +148,27 @@ public final class CommandQueue<T> implements Queue<JeiCommand<T>> {
     }
     
     @Override
-    public boolean removeIf(final Predicate<? super JeiCommand<T>> filter) {
+    public boolean removeIf(final Predicate<? super GenerativeCommand<T>> filter) {
         return this.delegate.removeIf(filter);
     }
     
     @Override
-    public Spliterator<JeiCommand<T>> spliterator() {
+    public Spliterator<GenerativeCommand<T>> spliterator() {
         return this.delegate.spliterator();
     }
     
     @Override
-    public Stream<JeiCommand<T>> stream() {
+    public Stream<GenerativeCommand<T>> stream() {
         return this.delegate.stream();
     }
     
     @Override
-    public Stream<JeiCommand<T>> parallelStream() {
+    public Stream<GenerativeCommand<T>> parallelStream() {
         return this.delegate.parallelStream();
     }
     
     @Override
-    public void forEach(final Consumer<? super JeiCommand<T>> action) {
+    public void forEach(final Consumer<? super GenerativeCommand<T>> action) {
         this.delegate.forEach(action);
     }
     
