@@ -148,7 +148,7 @@ final class JavaConventionsPlugin implements Plugin<Project> {
         modTemplate.versionTracker.with {
             enabled true
             endpoint System.getenv('versionTrackerAPI')
-            author Constants.MOD_AUTHOR
+            author "Jared"
             projectName "${Constants.MOD_NAME}-${project.name}"
             homepage Constants.MOD_CURSE
             uid System.getenv('versionTrackerKey')
